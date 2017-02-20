@@ -10,6 +10,10 @@
   },
   "author": "Scott Bowler",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Learning-Fuze/react_starter.git"
+  },
   "dependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
