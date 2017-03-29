@@ -18,6 +18,6 @@
 ### Bundle For Deployment
 
 > 1. Run webpack to bundle files
->    - `npm run pack`
+>    - `npm run bundle`
 > 
 > **NOTE:** *After bundling you can not directly run your app locally. You must run your app from the root directory of a server.*
