@@ -1,10 +1,13 @@
 import React from 'react';
-
 import AppBar from './app_bar';
+
+import LandingForm from './landing_form'
+import LandingFormPaper from './landing_form_paper'
 
 const App = () => (
     <div>
-        <AppBar/>
+        <AppBar />
+        <LandingFormPaper className='landingForm' />
     </div>
 );
 
