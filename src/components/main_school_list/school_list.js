@@ -1,18 +1,27 @@
 import React, {Component} from 'react';
-import { connect } from 'react-router';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { searchForSchools } from '../../actions/actions_index'
 
-console.log('school list: ', searchForSchools)
-
 class SchoolList extends Component {
     componentWillMount(){
-        this.props.searchForSchools
+        this.props.searchForSchools()
     }
     render(){
+        console.log('school list: ', this.props)
         return(
-            <h1>schoolList</h1>
+            <div>
+                <p>{this.props.schools.all.schoolName}</p>
+                <p>{this.props.schools.all.city}</p>
+                <p>{this.props.schools.all.state}</p>
+                <p>{this.props.schools.all.url}</p>
+            </div>
         )
     }
 }
-export default SchoolList
+function mapStateToProps(state){
+    return{
+        schools: state.schools
+    }
+}
+export default connect(mapStateToProps, {searchForSchools: searchForSchools})(SchoolList);

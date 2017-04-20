@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapForm from './mapPageForm/formOnMapPage';
 import Drawer from 'material-ui/Drawer';
 import AppBar from './app_bar';
+import SchoolList from './main_school_list/school_list'
 
 class drawerForm extends React.Component {
 
@@ -26,6 +27,7 @@ class drawerForm extends React.Component {
                     onRequestChange={(open) => this.setState({open})}>
                     <MapForm />
                 </Drawer>
+                <SchoolList/>
             </div>
         );
     }
