@@ -8,7 +8,7 @@ export default [
     <MenuItem key='accounting' value={'accounting'} primaryText="ACCOUNTING"/>,
     <MenuItem key='encriminalJusticeglish' value={'criminalJustice'} primaryText="CRIMINAL JUSTICE"/>,
     <MenuItem key='teacherEduaction' value={'teacherEduaction'} primaryText="TEACHER EDUCATION"/>,
-    <MenuItem key='biologe' value={'biologe'} primaryText="BIOLOGY"/>,
+    <MenuItem key='biology' value={'biology'} primaryText="BIOLOGY"/>,
     <MenuItem key='psychology' value={'psychology'} primaryText="PSYCHOLOGY"/>,
     <MenuItem key='business' value={'business'} primaryText="BUSINESS"/>
 ]

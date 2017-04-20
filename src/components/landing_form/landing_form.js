@@ -32,15 +32,15 @@ const validate = values => {
 }
 
 const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-  <TextField hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    {...custom}
-  />
+    <TextField hintText={label}
+        floatingLabelText={label}
+        errorText={touched && error}
+        {...input}
+        {...custom}
+    />
 )
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
-  <SelectField
+    <SelectField
     floatingLabelText={label}
     errorText={touched && error}
     {...input}
@@ -52,7 +52,7 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
 )
 
 class LandingForm extends Component {
-    formSumbitted = (values) => {
+    formSubmitted = (values) => {
         this.props.searchForSchools(values);
         console.log(values)
     }
@@ -60,7 +60,7 @@ class LandingForm extends Component {
     render(){
         const { handleSubmit, pristine, reset, submitting } = this.props
         return (
-          <form onSubmit={handleSubmit((formValues) => this.formSumbitted(formValues))}>
+            <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
             <div>
               <Field name="location" component={renderTextField} label="LOCATION"/>
             </div>
@@ -73,7 +73,7 @@ class LandingForm extends Component {
               <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting}></RaisedButton>
               <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}></RaisedButton>
             </div>
-          </form>
+            </form>
         )
     }
 }
