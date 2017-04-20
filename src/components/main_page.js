@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import MapForm from './formOnMapPage';
+import MapForm from './mapPageForm/formOnMapPage';
 import Drawer from 'material-ui/Drawer';
-import RaisedButton from 'material-ui/RaisedButton';
-
-
+import AppBar from './app_bar';
 
 class drawerForm extends React.Component {
 
@@ -12,6 +10,7 @@ class drawerForm extends React.Component {
         this.state = {open: false};
     }
 
+
     handleToggle = () => this.setState({open: !this.state.open});
 
     handleClose = () => this.setState({open: false});
@@ -19,10 +18,7 @@ class drawerForm extends React.Component {
     render() {
         return (
             <div>
-                <RaisedButton
-                    label="Open Drawer"
-                    onTouchTap={this.handleToggle}
-                />
+                <i className="material-icons">search</i>
                 <Drawer
                     docked={false}
                     width={290}

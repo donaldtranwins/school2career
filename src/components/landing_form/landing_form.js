@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 
@@ -49,18 +48,18 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
     }}
     children={children}
     {...custom}/>
-)
+);
 
 class LandingForm extends Component {
     formSubmitted = (values) => {
         this.props.searchForSchools(values);
         console.log(values)
-    }
+    };
 
     render(){
         const { handleSubmit, pristine, reset, submitting } = this.props
         return (
-            <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
+          <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
             <div>
               <Field name="location" component={renderTextField} label="LOCATION"/>
             </div>
