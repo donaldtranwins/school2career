@@ -10,12 +10,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './components/app';
 import rootReducer from './reducers/reducers_index'
 
-const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 
+const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 injectTapEventPlugin();
 
 ReactDOM.render(
-
     <MuiThemeProvider>
         <Provider store={createStoreWithMiddleware(rootReducer)}>
             <Router history={browserHistory}>
