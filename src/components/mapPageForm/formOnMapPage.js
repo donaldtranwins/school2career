@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import { connect } from 'react-redux';
+import Slider from 'material-ui/Slider';
 
 import states from './states';
-import DistanceSlider from './distance_slider';
-import TuitionSlider from './tuition_slider';
 import majors from './majors';
+import { searchForSchools } from '../../actions/actions_index'
+
 
 
 const style = {
-    margin: 12,
+    margin: 12
 };
 
 const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
@@ -41,24 +42,32 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
         {...custom}/>
 );
 
-const formSubmitted = (values) => {
-  console.log(values)
-};
+class mapPageForm extends Component {
 
-// addTodoItem(values) {
-//     console.log('e: ', values);
-//
-//     this.props.addTodo(values).then(() => {
-//         this.context.router.push('/');
-//     });
-// }
+    renderSlider({input: {onChange, value}, name, defaultValue, min, max}){
 
-const mapPageForm = props => {
-    const { handleSubmit, reset } = props;
+        if(!value){
+            defaultValue = defaultValue || min;
+            onChange(defaultValue);
+        }
+
+        return <Slider name={name} onChange={(props, val) => onChange(val, props)} defaultValue={defaultValue} min={min} max={max}/>
+    }
+
+    formSubmitted = (values) => {
+        this.props.searchForSchools(values);
+        console.log(values)
+    };
+
+    render() {
+        const { handleSubmit, reset } = this.props;
+        const sliderStyle = {
+            width: 250
+        };
 
     return (
-        <div>
-        <form className="extendedForm" onSubmit={handleSubmit((formValues)=>formSubmitted(formValues))}>
+
+        <form className="extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
             <div>
                 <Field name="zipCode" component={renderTextField} label="Zip Code"/>
             </div>
@@ -71,9 +80,16 @@ const mapPageForm = props => {
                 </Field>
             </div>
             <div>
-                <Field name="distance" component={DistanceSlider} label="distance" >
+                <div>Distance:</div>
+                <Field name="distanceSlider"
+                       component={this.renderSlider}
+                       defaultValue={40}
+                       min={0}
+                       max={300}
+                       step={1}
+                       style = {sliderStyle}
+                />
                 {/*<DistanceSlider />*/}
-                </Field>
             </div>
             <div>{'School Type: '}</div>
             <div className="checkbox">
@@ -88,7 +104,16 @@ const mapPageForm = props => {
                 </Field>
             </div>
             <div>
-                <TuitionSlider />
+                <div>Tuition:</div>
+                <Field name="tuitionSlider"
+                       component={this.renderSlider}
+                       defaultValue={10000}
+                       min={0}
+                       max={80000}
+                       step={1000}
+                       style = {sliderStyle}
+                />
+                {/*<TuitionSlider />*/}
             </div>
 
             <div>
@@ -96,10 +121,11 @@ const mapPageForm = props => {
                 <RaisedButton label="Clear" style={style} type="button" onClick={reset}></RaisedButton>
             </div>
         </form>
-        </div>
-    )
+    )};
 };
 
-export default reduxForm({
+mapPageForm = reduxForm({
     form: 'mapPageForm',  // a unique identifier for this form
 })(mapPageForm)
+
+export default connect(null, { searchForSchools })(mapPageForm);
