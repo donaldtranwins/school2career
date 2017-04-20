@@ -12,4 +12,4 @@ export function searchForSchools(value) {
         type: FETCH_SCHOOLS,
         payload: request
     };
-};
+}

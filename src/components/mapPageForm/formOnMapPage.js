@@ -44,18 +44,36 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
 
 class mapPageForm extends Component {
 
-    renderSlider({input: {onChange, value}, name, defaultValue, min, max}){
+    constructor(props) {
+        super(props);
+    }
 
+    renderSlider({input: {onChange, value, name}, defaultValue, min, max}){
         if(!value){
             defaultValue = defaultValue || min;
             onChange(defaultValue);
         }
-
-        return <Slider name={name} onChange={(props, val) => onChange(val, props)} defaultValue={defaultValue} min={min} max={max}/>
+        if (name === "distanceSlider") {
+            return (
+                <div>Distance: {value} miles
+                    <Slider name={name} onChange={(props, val) => onChange(val, props)} defaultValue={defaultValue}
+                            min={min} max={max}/>
+                </div>
+            )
+        } else {
+            return (
+                <div>Tuition: ${value}
+                    <Slider name={name} onChange={(props, val) => onChange(val, props)} defaultValue={defaultValue}
+                            min={min} max={max}/>
+                </div>
+            )
+        }
     }
 
     formSubmitted = (values) => {
+        console.log('props formSubmitted', this.props);
         this.props.searchForSchools(values);
+        this.props.clickClosed();
         console.log(values)
     };
 
@@ -66,7 +84,6 @@ class mapPageForm extends Component {
         };
 
     return (
-
         <form className="extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
             <div>
                 <Field name="zipCode" component={renderTextField} label="Zip Code"/>
@@ -80,16 +97,14 @@ class mapPageForm extends Component {
                 </Field>
             </div>
             <div>
-                <div>Distance:</div>
                 <Field name="distanceSlider"
                        component={this.renderSlider}
                        defaultValue={40}
-                       min={0}
+                       min={1}
                        max={300}
                        step={1}
                        style = {sliderStyle}
                 />
-                {/*<DistanceSlider />*/}
             </div>
             <div>{'School Type: '}</div>
             <div className="checkbox">
@@ -104,18 +119,15 @@ class mapPageForm extends Component {
                 </Field>
             </div>
             <div>
-                <div>Tuition:</div>
                 <Field name="tuitionSlider"
                        component={this.renderSlider}
-                       defaultValue={10000}
-                       min={0}
+                       defaultValue={50000}
+                       min={1}
                        max={80000}
                        step={1000}
                        style = {sliderStyle}
                 />
-                {/*<TuitionSlider />*/}
             </div>
-
             <div>
                 <RaisedButton label="Submit" style={style} type="submit" ></RaisedButton>
                 <RaisedButton label="Clear" style={style} type="button" onClick={reset}></RaisedButton>
