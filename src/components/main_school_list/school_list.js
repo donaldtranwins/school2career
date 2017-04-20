@@ -9,12 +9,20 @@ class SchoolList extends Component {
     }
     render(){
         console.log('school list: ', this.props)
+        const list = this.props.schools.all.data.data.map((school, index) => {
+            return <ul >
+                <li>{school.INSTNM}</li>
+                <li>{school.INSTURL}</li>
+                <li>{school.ZIP}</li>
+                <li>{school.CITY}</li>
+            </ul>
+        })
         return(
             <div>
-                <p>{this.props.schools.all.schoolName}</p>
-                <p>{this.props.schools.all.city}</p>
-                <p>{this.props.schools.all.state}</p>
-                <p>{this.props.schools.all.url}</p>
+                <h1>List of Schools</h1>
+                <div>
+                    {list}
+                </div>
             </div>
         )
     }
