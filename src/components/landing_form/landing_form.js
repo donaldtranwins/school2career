@@ -3,10 +3,19 @@ import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 
 import majors from './majors';
-import searchForSchools from '../actions/actions_index'
+import { searchForSchools } from '../../actions/actions_index'
+
+const btnStyle = {
+    margin: 12,
+    textAlign: 'center',
+};
+const selectStyle = {
+    textAlign: 'none'
+}
 
 const validate = values => {
   const errors = {}
@@ -41,27 +50,32 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
     children={children}
     {...custom}/>
 )
-const formSumbitted = (values) => {
-    console.log(values)
-}
-let LandingForm = props => {
-    const { handleSubmit, pristine, reset, submitting } = props
-    return (
-      <form onSubmit={handleSubmit((formValues) => formSumbitted(formValues))}>
-        <div>
-          <Field name="location" component={renderTextField} label="LOCATION"/>
-        </div>
-        <div>
-            <Field name="pickAMajor" component={renderSelectField} label="PICK A MAJOR">
-                {majors}
-            </Field>
-        </div>
-        <div>
-          <button type="submit" disabled={pristine || submitting}>Submit</button>
-          <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
-        </div>
-      </form>
-    )
+
+class LandingForm extends Component {
+    formSumbitted = (values) => {
+        this.props.searchForSchools(values);
+        console.log(values)
+    }
+
+    render(){
+        const { handleSubmit, pristine, reset, submitting } = this.props
+        return (
+          <form onSubmit={handleSubmit((formValues) => this.formSumbitted(formValues))}>
+            <div>
+              <Field name="location" component={renderTextField} label="LOCATION"/>
+            </div>
+            <div>
+                <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
+                    {majors}
+                </Field>
+            </div>
+            <div>
+              <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting}></RaisedButton>
+              <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}></RaisedButton>
+            </div>
+          </form>
+        )
+    }
 }
 LandingForm = reduxForm({
   form: 'LandingForm',  // a unique identifier for this form
