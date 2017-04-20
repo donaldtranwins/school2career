@@ -52,8 +52,9 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
 )
 
 class LandingForm extends Component {
-    formSubmitted = (formData) => {
-        this.props.searchForSchools(formData);
+    formSubmitted = (values) => {
+        this.props.searchForSchools(values);
+        console.log(values)
     }
 
     render(){

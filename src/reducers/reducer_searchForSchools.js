@@ -5,8 +5,9 @@ const defaultState = {all:[]}
 export default function(state = defaultState, action){ // if undfined set to defalut_state
   switch(action.type){
     case FETCH_SCHOOLS:
-      console.log('fetch schools action: ', action.type);
-      return { ...state, all: action.payload.cityName };
+      console.log('fetch schools in reducer: ', action.type);
+      console.log('reducer: ', action.payload)
+      return { ...state, all: action.payload };
     default:
       return state;
   }
