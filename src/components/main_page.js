@@ -18,13 +18,14 @@ class drawerForm extends React.Component {
     render() {
         return (
             <div>
-                <i className="material-icons">search</i>
+                <div>Refine Search</div>
+                <i className="material-icons" onTouchTap={this.handleToggle}>search</i>
                 <Drawer
                     docked={false}
                     width={290}
                     open={this.state.open}
                     onRequestChange={(open) => this.setState({open})}>
-                    <MapForm />
+                    <MapForm clickClosed = {()=>{this.handleClose}}/>
                 </Drawer>
             </div>
         );

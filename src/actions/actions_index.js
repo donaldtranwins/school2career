@@ -13,10 +13,10 @@ export function searchForSchools(value) {
         city: 'Honolulu',
         state: 'Hawaii',
         url: 'http://www.hawaii.edu/'
-    }
+    };
     //axios.get(`${BASE_URL}${API_KEY}`);
     return {
         type: FETCH_SCHOOLS,
         payload: request
     };
-};
+}
