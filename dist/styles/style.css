@@ -1,0 +1,15 @@
+.landingForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bgImage {
+    height: 100vh;
+    background-image: url(/images/college.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.landingForm {
+    display: flex;
+    height: 100vh;
+}
