@@ -14,7 +14,6 @@ class distanceRangeSlider extends Component {
         this.setState({distanceSlider: value});
     };
 
-
     render() {
 
         const sliderStyle = {

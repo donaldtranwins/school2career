@@ -3,12 +3,18 @@ import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import SelectField from 'material-ui/SelectField';
+import RaisedButton from 'material-ui/RaisedButton';
 
-import states from './mapPageForm/states';
-import DistanceSlider from './mapPageForm/distance_slider';
-import TuitionSlider from './mapPageForm/tuition_slider';
-import majors from './mapPageForm/majors';
 
+import states from './states';
+import DistanceSlider from './distance_slider';
+import TuitionSlider from './tuition_slider';
+import majors from './majors';
+
+
+const style = {
+    margin: 12,
+};
 
 const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
     <TextField hintText={label}
@@ -48,14 +54,11 @@ const formSubmitted = (values) => {
 // }
 
 const mapPageForm = props => {
-    const { handleSubmit, pristine, reset, submitting } = props;
-
-    const checkboxStyle = {
-        width: 100
-    };
+    const { handleSubmit, reset } = props;
 
     return (
-        <form onSubmit={handleSubmit((formValues)=>formSubmitted(formValues))}>
+        <div>
+        <form className="extendedForm" onSubmit={handleSubmit((formValues)=>formSubmitted(formValues))}>
             <div>
                 <Field name="zipCode" component={renderTextField} label="Zip Code"/>
             </div>
@@ -68,11 +71,16 @@ const mapPageForm = props => {
                 </Field>
             </div>
             <div>
-                <DistanceSlider />
+                <Field name="distance" component={DistanceSlider} label="distance" >
+                {/*<DistanceSlider />*/}
+                </Field>
             </div>
-            <div>
-                <Field style={checkboxStyle} name="Public" component={renderCheckbox} label="Public" value="Public"/>
-                <Field style={checkboxStyle} name="Private" component={renderCheckbox} label="Private" value="Private"/>
+            <div>{'School Type: '}</div>
+            <div className="checkbox">
+                <Field name="Public" component={renderCheckbox} label="Public" value="Public"/>
+            </div>
+            <div className="checkbox">
+                <Field name="Private" component={renderCheckbox} label="Private" value="Private"/>
             </div>
             <div>
                 <Field name="majors" component={renderSelectField} label="Majors">
@@ -84,10 +92,11 @@ const mapPageForm = props => {
             </div>
 
             <div>
-                <button type="submit" disabled={pristine || submitting}>Submit</button>
-                <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+                <RaisedButton label="Submit" style={style} type="submit" ></RaisedButton>
+                <RaisedButton label="Clear" style={style} type="button" onClick={reset}></RaisedButton>
             </div>
         </form>
+        </div>
     )
 };
 

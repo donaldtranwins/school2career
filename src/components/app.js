@@ -1,12 +1,14 @@
 import React from 'react';
 
 import AppBar from './app_bar';
-import MapPage from './map_page';
+// import MapPage from './mapPageForm/formOnMapPage';
+import DrawerForm from './mapPageForm/formInDrawer'
 
 const App = () => (
     <div>
         <AppBar/>
-        <MapPage/>
+        {/*<MapPage/>*/}
+        <DrawerForm/>
     </div>
 );
 
