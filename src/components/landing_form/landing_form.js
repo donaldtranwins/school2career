@@ -31,15 +31,15 @@ const validate = values => {
 }
 
 const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-  <TextField hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    {...custom}
-  />
-);
+    <TextField hintText={label}
+        floatingLabelText={label}
+        errorText={touched && error}
+        {...input}
+        {...custom}
+    />
+)
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
-  <SelectField
+    <SelectField
     floatingLabelText={label}
     errorText={touched && error}
     {...input}
@@ -72,7 +72,7 @@ class LandingForm extends Component {
               <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting}></RaisedButton>
               <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}></RaisedButton>
             </div>
-          </form>
+            </form>
         )
     }
 }
