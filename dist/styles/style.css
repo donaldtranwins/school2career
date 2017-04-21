@@ -1,18 +1,8 @@
-/*.landingForm {*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-    /*height: 100vh;*/
-/*}*/
 .bgImage {
     height: 100vh;
     background-image: url(/images/college.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-.landingImg {
-    z-index: -1;
 }
 
 /*Map Page Form styles*/
@@ -26,3 +16,7 @@
     width: 280px;
     margin-left: 10px;
 }
+.sliderStyle {
+    width: 150px;
+}
+

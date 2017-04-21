@@ -71,16 +71,19 @@ class mapPageForm extends Component {
     }
 
     formSubmitted = (values) => {
-        console.log('props formSubmitted', this.props);
+        console.log("this.props from formSubmitted", this.props.clickClosed);
         this.props.searchForSchools(values);
         this.props.clickClosed();
-        console.log(values)
     };
+
+    // clickClosed() {
+    //     _this2.handleClose;
+    // }
 
     render() {
         const { handleSubmit, reset } = this.props;
         const sliderStyle = {
-            width: 250
+            width: 230
         };
 
     return (
@@ -104,6 +107,7 @@ class mapPageForm extends Component {
                        max={300}
                        step={1}
                        style = {sliderStyle}
+                       className = "sliderStyle "
                 />
             </div>
             <div>{'School Type: '}</div>
@@ -126,6 +130,7 @@ class mapPageForm extends Component {
                        max={80000}
                        step={1000}
                        style = {sliderStyle}
+                       className = "sliderStyle"
                 />
             </div>
             <div>
