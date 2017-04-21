@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { searchForSchools } from '../../actions/actions_index'
 
 class SchoolList extends Component {
@@ -8,12 +7,12 @@ class SchoolList extends Component {
         this.props.searchForSchools()
     }
     render(){
-        debugger
+        let list;
         const data = this.props.schools.all.data;
         if(!data){
-            const list = <p>Loading...</p>;
+            list = <p>Loading...</p>;
         } else {
-            const list = this.props.schools.all.data.data.map((school, index) => {
+            list = this.props.schools.all.data.data.map((school, index) => {
                 return <ul key={index}>
                     <li>{school.INSTNM}</li>
                     <li>{school.INSTURL}</li>
