@@ -19,4 +19,16 @@
 .sliderStyle {
     width: 150px;
 }
-
+.schoolListSchool {
+    text-align: left;
+    font-size: 20px;
+    color: blue;
+}
+.schoolListAddressUl{
+    text-align: left;
+}
+.schoolListAddressli {
+    list-style-type: none;
+    display: inline-block;
+    margin: 10px;
+}

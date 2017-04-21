@@ -2,24 +2,46 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { searchForSchools } from '../../actions/actions_index'
+import Paper from 'material-ui/Paper';
 
+const style = {
+  height: '20vh',
+  width: '80vw',
+  margin: 20,
+  textAlign: 'center',
+  display: 'inline-block',
+};
+const ul = {
+    listStyleType: 'none'
+}
+const school = {
+    color: 'red'
+}
 class SchoolList extends Component {
     componentWillMount(){
         this.props.searchForSchools()
     }
     render(){
-        debugger
+        let list;
         const data = this.props.schools.all.data;
+        console.log('schoolList data: ',data);
         if(!data){
-            const list = <p>Loading...</p>;
+            list = () => { return <p>Loading...</p>};
         } else {
-            const list = this.props.schools.all.data.data.map((school, index) => {
-                return <ul key={index}>
-                    <li>{school.INSTNM}</li>
-                    <li>{school.INSTURL}</li>
-                    <li>{school.ZIP}</li>
-                    <li>{school.CITY}</li>
-                </ul>
+            list = data.data.map((school, index) => {
+                return(
+                    <Paper style={style} key={index}>
+                        <ul style={ul}>
+                            <li className='schoolListSchool'>{school.INSTNM}</li>
+                            <ul className='schoolListAddressUl'>
+                                <li className='schoolListAddressli'>{school.CITY}</li>
+                                <li className='schoolListAddressli'>{school.STABBR}</li>
+                                <li className='schoolListAddressli'>{school.ZIP}</li>
+                            </ul>
+                            <li>{school.INSTURL}</li>
+                        </ul>
+                    </Paper>
+                )
             });
         };
         return(

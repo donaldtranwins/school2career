@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapForm from './mapPageForm/formOnMapPage';
 import Drawer from 'material-ui/Drawer';
 import SchoolList from './main_school_list/school_list'
+import PaperExampleSimple from './main_school_list/main_paper'
 
 class drawerForm extends React.Component {
 
