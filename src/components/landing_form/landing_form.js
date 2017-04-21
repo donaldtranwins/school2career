@@ -51,11 +51,12 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
 );
 
 class LandingForm extends Component {
-    formSubmitted = (values) => {
-        this.props.searchForSchools(values);
-        console.log(values)
+    static contextTypes = {
+        router: PropTypes.object
     };
-
+    formSubmitted = (values) => {
+        this.props.searchForSchools(values).then(() => {this.context.router.push('/home')});
+    };
     render(){
         const { handleSubmit, pristine, reset, submitting } = this.props
         return (

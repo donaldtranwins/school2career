@@ -8,15 +8,20 @@ class SchoolList extends Component {
         this.props.searchForSchools()
     }
     render(){
-        console.log('school list: ', this.props)
-        const list = this.props.schools.all.data.data.map((school, index) => {
-            return <ul >
-                <li>{school.INSTNM}</li>
-                <li>{school.INSTURL}</li>
-                <li>{school.ZIP}</li>
-                <li>{school.CITY}</li>
-            </ul>
-        })
+        debugger
+        const data = this.props.schools.all.data;
+        if(!data){
+            const list = <p>Loading...</p>;
+        } else {
+            const list = this.props.schools.all.data.data.map((school, index) => {
+                return <ul key={index}>
+                    <li>{school.INSTNM}</li>
+                    <li>{school.INSTURL}</li>
+                    <li>{school.ZIP}</li>
+                    <li>{school.CITY}</li>
+                </ul>
+            });
+        };
         return(
             <div>
                 <h1>List of Schools</h1>
@@ -24,7 +29,7 @@ class SchoolList extends Component {
                     {list}
                 </div>
             </div>
-        )
+        );
     }
 }
 function mapStateToProps(state){
