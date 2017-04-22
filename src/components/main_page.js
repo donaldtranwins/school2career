@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import MapForm from './mapPageForm/formOnMapPage';
 import Drawer from 'material-ui/Drawer';
-import SchoolList from './main_school_list/school_list';
+
+import SchoolList from './main_school_list/school_list'
+import PaperExampleSimple from './main_school_list/main_paper'
+import AppBar from './app_bar'
 import MapContainer from './google_maps/container';
 import wrapper from '../GoogleApiComponent';
+
 
 class drawerForm extends Component {
 
@@ -21,7 +25,7 @@ class drawerForm extends Component {
     render() {
         return (
             <div>
-                <div>Refine Search</div>
+                <AppBar/>
                 <i className="material-icons" onTouchTap={this.handleToggle}>search</i>
                 <Drawer
                     docked={false}
