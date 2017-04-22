@@ -35,10 +35,10 @@ const landingImage = {
 };
 
 const paperForm = () => (
-    <divc>
+    <div>
         <img className="landingImg" style={landingImage} src="images/college.jpg"/>
         <LandingFormPaper className='landingForm' />
-    </divc>
+    </div>
 );
 
 ReactDOM.render(
