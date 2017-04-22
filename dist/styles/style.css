@@ -1,11 +1,6 @@
-.bgImage {
-    height: 100vh;
-    background-image: url(/images/college.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
-/*Map Page Form styles*/
+
+/*Main Page Form styles*/
 .checkbox {
     width: 125px;
     display: inline-block;
@@ -17,6 +12,22 @@
 }
 .sliderStyle {
     width: 150px;
+}
+
+.jumboImg {
+    width: 100%;
+}
+.listContainer {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.searchIcon {
+    position:absolute;
+    color: white;
+    font-size: 50px;
+    cursor: pointer;
+    margin: 15px;
 }
 
 /*googlemaps*/
