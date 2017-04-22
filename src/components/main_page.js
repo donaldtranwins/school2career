@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import MapForm from './mapPageForm/formOnMapPage';
 import Drawer from 'material-ui/Drawer';
-import SchoolList from './main_school_list/school_list'
+import SchoolList from './main_school_list/school_list';
+import MapContainer from './google_maps/container';
+import wrapper from '../GoogleApiComponent';
 
-class drawerForm extends React.Component {
+class drawerForm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {open: false};
     }
 
+    // initialCenter = { lng: -90.1056957, lat: 29.9717272 }
 
     handleToggle = () => this.setState({open: !this.state.open});
 
@@ -27,7 +30,9 @@ class drawerForm extends React.Component {
                     onRequestChange={(open) => this.setState({open})}>
                     <MapForm clickClosed = {this.handleClose}/>
                 </Drawer>
-                <SchoolList/>
+                <MapContainer/>
+                <wrapper />
+                {/*<SchoolList/>*/}
             </div>
         );
     }
