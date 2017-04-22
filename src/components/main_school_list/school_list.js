@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { searchForSchools } from '../../actions/actions_index'
 import Paper from 'material-ui/Paper';
 

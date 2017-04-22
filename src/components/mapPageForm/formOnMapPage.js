@@ -71,7 +71,7 @@ class mapPageForm extends Component {
     }
 
     formSubmitted = (values) => {
-        console.log("this.props from formSubmitted", this.props.clickClosed);
+        console.log("values", values);
         this.props.searchForSchools(values);
         this.props.clickClosed();
     };
