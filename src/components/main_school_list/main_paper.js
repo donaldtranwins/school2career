@@ -15,7 +15,7 @@ const style = {
 
 const PaperExampleSimple = () => (
   <div>
-    <Paper style={style} zDepth={1}>
+    <Paper style={style} zDepth={0}>
         <MainToolbar/>
         <SchoolList/>
     </Paper>

@@ -5,14 +5,21 @@ import { searchForSchools } from '../../actions/actions_index'
 import Paper from 'material-ui/Paper';
 
 const style = {
-  height: '20vh',
-  width: '80vw',
-  margin: 20,
-  textAlign: 'center',
-  display: 'inline-block',
+    height: '20%',
+    width: '80%',
+    margin: '15px',
+    display: 'flex',
+    alignItems: 'center',
 };
+const homeMainDiv = {
+    height: '30%',
+    width: '80%',
+    margin: '20px'
+}
 const ul = {
-    listStyleType: 'none'
+    listStyleType: 'none',
+    padding: '10px',
+    margin: '10px'
 }
 const school = {
     color: 'red'
@@ -33,12 +40,10 @@ class SchoolList extends Component {
                     <Paper style={style} key={index}>
                         <ul style={ul}>
                             <li className='schoolListSchool'>{school.INSTNM}</li>
-                            <ul className='schoolListAddressUl'>
-                                <li className='schoolListAddressli'>{school.CITY}</li>
-                                <li className='schoolListAddressli'>{school.STABBR}</li>
-                                <li className='schoolListAddressli'>{school.ZIP}</li>
-                            </ul>
-                            <li>{school.INSTURL}</li>
+                            <li className='schoolListAddressli'>{school.CITY}, </li>
+                            <li className='schoolListAddressli'>{school.STABBR}</li>
+                            <li className='schoolListUrl'><a target="_blank" href={'http://' + school.INSTURL}>{school.INSTURL}</a></li>
+                            <li>Admission Rate: {school.ADM_RATE}</li>
                         </ul>
                     </Paper>
                 )
@@ -46,10 +51,12 @@ class SchoolList extends Component {
         };
         return(
             <div>
-                <h1>List of Schools</h1>
-                <div>
-                    {list}
-                </div>
+                <Paper style={homeMainDiv}>
+                    <h1>College Finder</h1>
+                    <p>Helps you find majors that fit your profile.</p>
+                    <img src="../images/school.jpg" alt=""/>
+                </Paper>
+                {list}
             </div>
         );
     }

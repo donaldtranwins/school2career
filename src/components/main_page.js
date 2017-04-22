@@ -4,6 +4,8 @@ import Drawer from 'material-ui/Drawer';
 import SchoolList from './main_school_list/school_list'
 import PaperExampleSimple from './main_school_list/main_paper'
 
+import AppBar from './app_bar'
+
 class drawerForm extends React.Component {
 
     constructor(props) {
@@ -19,7 +21,7 @@ class drawerForm extends React.Component {
     render() {
         return (
             <div>
-                <div>Refine Search</div>
+                <AppBar/>
                 <i className="material-icons" onTouchTap={this.handleToggle}>search</i>
                 <Drawer
                     docked={false}
