@@ -28,15 +28,16 @@ const muiTheme = getMuiTheme({
     },
 });
 
-const style = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+const landingImage = {
+    position : 'absolute',
+    top : 0,
+    zIndex : -10
 };
 
 const paperForm = () => (
-    <div className="bgImage">
-        <LandingFormPaper style={style} className='landingForm' />
+    <div>
+        <img className="landingImg" style={landingImage} src="images/college.jpg"/>
+        <LandingFormPaper className='landingForm' />
     </div>
 );
 
