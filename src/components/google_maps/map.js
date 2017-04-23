@@ -21,7 +21,8 @@ class GMap extends Component {
         const data = this.props.schools.all.data;
         console.log('data', data)
         if(!data){
-            list = () => { return <p>Loading...</p>};
+            console.log("IN HERE NOW")
+            return () => { return <p>Loading...</p>};
         } else {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
@@ -80,11 +81,21 @@ class GMap extends Component {
             + '<div>' + data.CITY + ', ' + data.STABBR + '</div>'
             + '<div><a target="_blank" href=http://' + data.INSTURL + '>' + data.INSTURL + '</a></div>';
         let contentString = "<div class='InfoWindow'>" + content + "</div>"; //changed to display specific content
-        return new google.maps.InfoWindow({
-            map: this.map,
-            anchor: marker,  //changed this from this.marker
-            content: contentString
-        })
+        let infoWindow =  new google.maps.InfoWindow({
+                map: this.map,
+                anchor: marker,
+                content: contentString
+            });
+        infoWindow.close();
+        this.marker.addListener('click', function() {
+            infoWindow.open(this.map, marker);
+        });
+        this.map.addListener('click', function () {
+            infoWindow.close();
+        });
+        this.marker.addListener('mouseover', function() {
+            infoWindow.open(this.map, marker);
+        });
     }
 
     handleZoomChange() {
