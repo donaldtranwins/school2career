@@ -5,8 +5,12 @@ import Drawer from 'material-ui/Drawer';
 import SchoolList from './main_school_list/school_list'
 import PaperExampleSimple from './main_school_list/main_paper'
 import AppBar from './app_bar'
-import MapContainer from './google_maps/container';
+import Map from './google_maps/map';
 
+const initialCenter = {
+    lng: -117.8231107,
+    lat: 33.6694649
+};
 
 class drawerForm extends Component {
 
@@ -15,7 +19,6 @@ class drawerForm extends Component {
         this.state = {open: false};
     }
 
-    // initialCenter = { lng: -90.1056957, lat: 29.9717272 }
 
     handleToggle = () => this.setState({open: !this.state.open});
 
@@ -34,7 +37,7 @@ class drawerForm extends Component {
                     <MapForm clickClosed = {this.handleClose}/>
                 </Drawer>
                 <SchoolList/>
-                <MapContainer/>
+                <Map initialCenter = { initialCenter }/>
             </div>
         );
     }
