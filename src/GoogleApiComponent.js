@@ -35,7 +35,7 @@ export const wrapper = (options) => (WrappedComponent) => {
 
                 let mapConfig = Object.assign({}, defaultMapConfig, {
                     center, zoom: this.props.zoom
-                })
+                });
 
                 this.map = new maps.Map(node, mapConfig);
 

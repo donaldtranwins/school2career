@@ -33,8 +33,8 @@ class drawerForm extends Component {
                     onRequestChange={(open) => this.setState({open})}>
                     <MapForm clickClosed = {this.handleClose}/>
                 </Drawer>
-                {/*<MapContainer/>*/}
                 <SchoolList/>
+                <MapContainer/>
             </div>
         );
     }
