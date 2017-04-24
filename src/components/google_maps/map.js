@@ -14,7 +14,6 @@ class GMap extends Component {
         };
     }
 
-
     static propTypes() {
         initialCenter: React.PropTypes.objectOf(React.PropTypes.number).isRequired
     }
@@ -27,9 +26,8 @@ class GMap extends Component {
 
     componentDidMount() {
         const data = this.props.schools.all.data;
-        console.log('data', data);
+        this.clearMarkers();
         if(!data){
-            console.log("IN HERE NOW");
             return () => { return <p>Loading...</p>};
         } else {
             // create the map, marker and infoWindow after the component has
@@ -77,25 +75,60 @@ class GMap extends Component {
         )
     }
 
+    clearMarkers() {
+        for (let m in this.state.markers) {
+            this.state.markers[m].setMap(null)
+        }
+        this.setState ({
+            markers : []
+        });
+    }
+
+    colorForMarker(sizeOfSchool) {
+        switch (true) {
+            case (sizeOfSchool <= 10000):
+                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                break;
+            case (sizeOfSchool <= 20000):
+                return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+                break;
+            case (sizeOfSchool <= 30000):
+                return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                break;
+            case (sizeOfSchool <= 40000):
+                return 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
+                break;
+            case (sizeOfSchool > 40000):
+                return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+                break;
+            default:
+                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                break;
+        }
+
+    }
+
     createMarker(data) { //would add in (pos) as a parameter
-        console.log('createMarker', data);
+        console.log("data", data.UGDS);
+        debugger;
+        const iconForSchool = this.colorForMarker(parseInt(data.UGDS));
         const newMarker = new google.maps.Marker({
             position: this.createLatLng(data),  //this would have to change to likely take in positions and
             //then create markers for specific positions. this.createLatLng(pos);
-            map: this.map
+            map: this.map,
+            icon: iconForSchool
         });
         let tempMarkers = this.state.markers;
         tempMarkers.push(newMarker);
         this.setState({
             markers : tempMarkers
         });
-        console.log("this.state.markers", this.state.markers);
         return newMarker;
     }
 
     createInfoWindow(marker, data) {  //added in both params
 
-        {/*const content = <div><h6>{data.INSTNM}</h6></div>;*/}
+        {/*const content = <div><h6>{data.INSTNM}</h6></div>*/}
 
         let content = '<div><h6>' + data.INSTNM + '</h6></div>'
             + '<div>' + data.CITY + ', ' + data.STABBR + '</div>'
@@ -112,9 +145,6 @@ class GMap extends Component {
         });
         this.map.addListener('click', function () {
             infoWindow.close();
-        });
-        this.marker.addListener('mouseover', function() {
-            infoWindow.open(this.map, marker);
         });
     }
 
