@@ -28,7 +28,7 @@
     margin: 15px;
 }
 
-googlemaps
+/*googlemaps*/
 html,
 body,
 .GMap {
@@ -39,8 +39,9 @@ body,
 .GMap-canvas {
     top: 20px;
     display: block;
-    width: 50%;
-    height: 50%;
+    width: 80%;
+    height: 90%;
+    margin: 0 auto;
 }
 .UpdatedText {
     color: red;

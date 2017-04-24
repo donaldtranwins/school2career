@@ -4,7 +4,15 @@ import { searchForSchools } from '../../actions/actions_index'
 
 class GMap extends Component {
 
-    state = { zoom: 12 };
+    // state = { zoom: 7 };
+
+    constructor(props){
+        super(props);
+        this.state = {
+            zoom: 7,
+            markers: []
+        };
+    }
 
 
     static propTypes() {
@@ -19,13 +27,14 @@ class GMap extends Component {
 
     componentDidMount() {
         const data = this.props.schools.all.data;
-        console.log('data', data)
+        console.log('data', data);
         if(!data){
-            list = () => { return <p>Loading...</p>};
+            console.log("IN HERE NOW");
+            return () => { return <p>Loading...</p>};
         } else {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
-            this.map = this.createMap();
+            this.map = this.createMap(data.data[1]);
             for (var i = 0; i < data.data.length; i++) {
                 this.marker = this.createMarker(data.data[i]);
                 this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
@@ -42,18 +51,21 @@ class GMap extends Component {
         google.maps.event.clearListeners(map, 'zoom_changed')
     }
 
-    createMap() {
+    createMap(data) {
         let mapOptions = {
             zoom: this.state.zoom,
-            center: this.mapCenter()
+            center: this.mapCenter(data)
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }
 
-    mapCenter() {
+    mapCenter(data) {
+        console.log('mapCenter: ', data);
         return new google.maps.LatLng(
-            this.props.initialCenter.lat,
-            this.props.initialCenter.lng
+            // this.props.initialCenter.lat,
+            // this.props.initialCenter.lng
+            data.LATITUDE,
+            data.LONGITUDE
         )
     }
 
@@ -66,25 +78,44 @@ class GMap extends Component {
     }
 
     createMarker(data) { //would add in (pos) as a parameter
-            console.log('createMarker', data);
-            return new google.maps.Marker({
-                position: this.createLatLng(data),  //this would have to change to likely take in positions and
-                //then create markers for specific positions. this.createLatLng(pos);
-                map: this.map
-            })
-
+        console.log('createMarker', data);
+        const newMarker = new google.maps.Marker({
+            position: this.createLatLng(data),  //this would have to change to likely take in positions and
+            //then create markers for specific positions. this.createLatLng(pos);
+            map: this.map
+        });
+        let tempMarkers = this.state.markers;
+        tempMarkers.push(newMarker);
+        this.setState({
+            markers : tempMarkers
+        });
+        console.log("this.state.markers", this.state.markers);
+        return newMarker;
     }
 
     createInfoWindow(marker, data) {  //added in both params
+
+        {/*const content = <div><h6>{data.INSTNM}</h6></div>;*/}
+
         let content = '<div><h6>' + data.INSTNM + '</h6></div>'
             + '<div>' + data.CITY + ', ' + data.STABBR + '</div>'
             + '<div><a target="_blank" href=http://' + data.INSTURL + '>' + data.INSTURL + '</a></div>';
         let contentString = "<div class='InfoWindow'>" + content + "</div>"; //changed to display specific content
-        return new google.maps.InfoWindow({
-            map: this.map,
-            anchor: marker,  //changed this from this.marker
-            content: contentString
-        })
+        let infoWindow =  new google.maps.InfoWindow({
+                map: this.map,
+                anchor: marker,
+                content: contentString
+            });
+        infoWindow.close();
+        this.marker.addListener('click', function() {
+            infoWindow.open(this.map, marker);
+        });
+        this.map.addListener('click', function () {
+            infoWindow.close();
+        });
+        this.marker.addListener('mouseover', function() {
+            infoWindow.open(this.map, marker);
+        });
     }
 
     handleZoomChange() {
