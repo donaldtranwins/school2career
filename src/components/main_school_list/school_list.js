@@ -30,7 +30,6 @@ class SchoolList extends Component {
     render(){
         let list;
         const data = this.props.schools.all.data;
-        console.log('schoolList data: ',data);
         if(!data){
             list = () => { return <p>Loading...</p>};
         } else {
