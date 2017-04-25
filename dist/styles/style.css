@@ -46,3 +46,6 @@ body,
 .UpdatedText {
     color: red;
 }
+.landingForm {
+    z-index: 1;
+}

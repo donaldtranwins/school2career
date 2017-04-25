@@ -6,6 +6,7 @@ import SchoolList from './main_school_list/school_list'
 import PaperExampleSimple from './main_school_list/main_paper'
 import AppBar from './app_bar'
 import Map from './google_maps/map';
+// import GeoInput from './geocoding/geocode';
 
 const initialCenter = {
     lng: -117.8231107,
