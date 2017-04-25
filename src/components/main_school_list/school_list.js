@@ -50,8 +50,7 @@ class SchoolList extends Component {
         };
         return(
             <div>
-                <img className="jumboImg" src="/images/mainpage_school.png" alt=""/>
-                <div className="listContainer">
+                <div id="schoolList" className="listContainer hidden">
                     {list}
                 </div>
             </div>

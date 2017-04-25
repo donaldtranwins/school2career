@@ -6,6 +6,7 @@ import SchoolList from './main_school_list/school_list'
 import PaperExampleSimple from './main_school_list/main_paper'
 import AppBar from './app_bar'
 import Map from './google_maps/map';
+import MapButton from './button_legend/legend';
 
 const initialCenter = {
     lng: -117.8231107,
@@ -18,7 +19,6 @@ class drawerForm extends Component {
         super(props);
         this.state = {open: false};
     }
-
 
     handleToggle = () => this.setState({open: !this.state.open});
 
@@ -36,8 +36,10 @@ class drawerForm extends Component {
                     onRequestChange={(open) => this.setState({open})}>
                     <MapForm clickClosed = {this.handleClose}/>
                 </Drawer>
-                <SchoolList/>
-                <Map initialCenter = { initialCenter }/>
+                <img className="jumboImg" src="/images/mainpage_school.png" alt=""/>
+                <MapButton />
+                <SchoolList id="schoolListShowing"/>
+                <Map id="mapShowing" className="hidden" initialCenter = { initialCenter }/>
             </div>
         );
     }
