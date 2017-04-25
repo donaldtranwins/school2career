@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { geocodeByAddress } from 'react-places-autocomplete';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 
 import majors from './majors';
-import { searchForSchools } from '../../actions/actions_index'
+import { searchForSchools } from '../../actions/actions_index';
+import GeoCode from '../geocoding/geocoding';
 
 const btnStyle = {
     margin: 12,
@@ -30,16 +32,22 @@ const validate = values => {
   return errors
 }
 
-const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-    <TextField hintText={label}
-        floatingLabelText={label}
-        errorText={touched && error}
-        {...input}
-        {...custom}
-    />
-)
+const renderTextField = ({ input: { onChange, name }, label, meta: { touched, error }, ...custom }) => {
+    return (
+        <GeoCode hintText={label}
+            floatingLabelText={label}
+            errorText={touched && error}
+            onChange={ val => {
+                onChange(val);
+            }}
+            name={name}
+            {...custom}
+        />
+    )
+}
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
     <SelectField
+    className='landingForm'
     floatingLabelText={label}
     errorText={touched && error}
     {...input}
@@ -55,6 +63,10 @@ class LandingForm extends Component {
         router: PropTypes.object
     };
     formSubmitted = (values) => {
+          geocodeByAddress(values.location,  (err, latLng) => {
+            if (err) { console.warn('error', err) }
+            values.latLng = latLng;
+          })
         this.props.searchForSchools(values).then(() => {this.context.router.push('/home')});
     };
     render(){
@@ -78,7 +90,7 @@ class LandingForm extends Component {
     }
 }
 LandingForm = reduxForm({
-  form: 'LandingForm',  // a unique identifier for this form
+  form: 'LandingForm',
   validate: validate
   // asyncValidate
 })(LandingForm)
