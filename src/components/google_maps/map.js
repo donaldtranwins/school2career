@@ -19,7 +19,7 @@ class GMap extends Component {
     }
 
     render() {
-        return <div className="GMap">
+        return <div id="mapBox" className="GMap">
             <div className='GMap-canvas' ref="mapCanvas"></div>
         </div>
     }
@@ -110,7 +110,6 @@ class GMap extends Component {
 
     createMarker(data) { //would add in (pos) as a parameter
         console.log("data", data.UGDS);
-        debugger;
         const iconForSchool = this.colorForMarker(parseInt(data.UGDS));
         const newMarker = new google.maps.Marker({
             position: this.createLatLng(data),  //this would have to change to likely take in positions and

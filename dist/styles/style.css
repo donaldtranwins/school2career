@@ -28,6 +28,16 @@
     margin: 15px;
 }
 
+.hidden {
+    display: none;
+}
+
+mapButton {
+    width: 50px;
+    height: 25px;
+    display: block;
+}
+
 /*googlemaps*/
 html,
 body,
