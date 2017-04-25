@@ -12,6 +12,11 @@ class GeoCode extends React.Component {
     };
   }
   render() {
+    const cssClasses = {
+        root: 'form-group',
+        input: 'form-control landingForm',
+        autocompleteContainer: 'autocomplete-container'
+    }
     const inputProps = {
       value: this.state.address,
       onChange: this.onChange,
@@ -22,7 +27,7 @@ class GeoCode extends React.Component {
       autoFocus: true,
     }
     return (
-        <PlacesAutocomplete inputProps={inputProps} />
+        <PlacesAutocomplete inputProps={inputProps} classNames={cssClasses} />
     )
   }
 }

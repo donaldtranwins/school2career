@@ -47,5 +47,8 @@ body,
     color: red;
 }
 .landingForm {
-    z-index: 1;
+    z-index: 10;
+}
+.autocomplete-container{
+    z-index: 10;
 }
