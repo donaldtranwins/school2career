@@ -13,10 +13,10 @@ class GeoCode extends React.Component {
   }
   render() {
     const cssClasses = {
-        root: 'form-group',
-        input: 'form-control landingForm',
-        autocompleteContainer: 'autocomplete-container'
-    }
+        root: 'form-group', //everything  // react-places-autocomplete
+        input: 'form-control landingForm', //input is the text
+        autocompleteContainer: 'autocomplete-container' //this is the container, likely pushing
+    };
     const inputProps = {
         value: this.state.address,
         onChange: this.onChange,

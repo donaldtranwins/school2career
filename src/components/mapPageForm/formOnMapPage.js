@@ -6,10 +6,11 @@ import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import Slider from 'material-ui/Slider';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
 import states from './states';
 import majors from './majors';
-import { searchForSchools } from '../../actions/actions_index'
+import { searchForSchools } from '../../actions/actions_index';
 
 
 
@@ -24,6 +25,12 @@ const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) 
                {...input}
                {...custom}
     />
+);
+
+const renderRadioGroup = ({ input, ...rest }) => (
+    <RadioButtonGroup {...input} {...rest}
+                      valueSelected={input.value}
+                      onChange={(event, value) => input.onChange(value)}/>
 );
 
 const renderCheckbox = ({ input, label }) => (
@@ -85,6 +92,10 @@ class mapPageForm extends Component {
         const sliderStyle = {
             width: 230
         };
+        const radioStyle = {
+            display: 'inline-block',
+            width: '138px'
+        };
 
     return (
         <form className="extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
@@ -107,8 +118,14 @@ class mapPageForm extends Component {
                        max={300}
                        step={1}
                        style = {sliderStyle}
-                       className = "sliderStyle "
                 />
+            </div>
+            <div>{'Type of Degree: '}</div>
+            <div>
+                <Field name="numOfYears" component={renderRadioGroup}>
+                    <RadioButton style={radioStyle} value="aaDegree" label="AA Degree"/>
+                    <RadioButton style={radioStyle} value="baDegree" label="BA Degree"/>
+                </Field>
             </div>
             <div>{'School Type: '}</div>
             <div className="checkbox">
@@ -130,7 +147,6 @@ class mapPageForm extends Component {
                        max={80000}
                        step={1000}
                        style = {sliderStyle}
-                       className = "sliderStyle"
                 />
             </div>
             <div>

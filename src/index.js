@@ -30,6 +30,7 @@ const muiTheme = getMuiTheme({
 
 const landingImage = {
     position : 'absolute',
+    width: '100%',
     top : 0,
     zIndex : -10
 };
