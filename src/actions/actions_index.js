@@ -30,6 +30,7 @@ export function toggleMap(value) {
 }
 
 export function userInput(value){
+    console.log(value);
     return {
         type: USER_INPUT,
         payload: value

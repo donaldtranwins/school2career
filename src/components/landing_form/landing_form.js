@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 
 import majors from './majors';
-import { searchForSchools, centerOfMap } from '../../actions/actions_index';
+import { searchForSchools, centerOfMap, userInput } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
 
 const btnStyle = {
@@ -54,6 +54,7 @@ class LandingForm extends Component {
             lat: values.latLng.lat
         };
         this.props.centerOfMap(center);
+        this.props.userInput(values);
     };
     formSubmitted = (values) => {
         geocodeByAddress(values.location,  (err, latLng) => {
@@ -90,4 +91,4 @@ LandingForm = reduxForm({
   form: 'LandingForm',
 })(LandingForm)
 
-export default connect(null, { searchForSchools, centerOfMap })(LandingForm);
+export default connect(null, { searchForSchools, centerOfMap, userInput })(LandingForm);

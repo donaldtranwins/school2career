@@ -24,7 +24,6 @@ class GMap extends Component {
     componentWillReceiveProps(){
         const data = this.props.schools.all.data;
         console.log('props: ', this.props);
-        console.log('willReceiveProps: ', this.props.center);
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};
