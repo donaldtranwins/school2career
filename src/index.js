@@ -18,7 +18,7 @@ const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 injectTapEventPlugin();
 
 const muiTheme = getMuiTheme({
-    fontFamily: 'Roboto, sans-serif',
+    // fontFamily: 'Roboto, sans-serif',
     palette: {
         textColor: blueGrey300,
         primary1Color: green300,

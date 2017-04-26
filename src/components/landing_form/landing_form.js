@@ -43,7 +43,6 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
     children={children}
     {...custom}/>
 );
-
 class LandingForm extends Component {
     static contextTypes = {
         router: PropTypes.object

@@ -30,5 +30,3 @@ export function toggleMap(value) {
         payload: !value  //may change back to ternary value ? false : true
     }
 }
-
-
