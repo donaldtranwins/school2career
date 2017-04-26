@@ -14,7 +14,7 @@ class GeoCode extends React.Component {
   render() {
     const cssClasses = {
         root: 'form-group', //everything  // react-places-autocomplete
-        input: 'form-control autoCompleteForm', //input is the text
+        input: 'autoCompleteForm', //input is the text
         autocompleteContainer: 'autocomplete-container' //this is the container, likely pushing
     };
     const inputProps = {
@@ -23,7 +23,7 @@ class GeoCode extends React.Component {
         onBlur: () => {
         },
         type: 'search',
-        placeholder: 'Location',
+        placeholder: 'LOCATION',
         autoFocus: true,
     }
     return (
