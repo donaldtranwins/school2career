@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-import { FETCH_SCHOOLS, SHOW_MAP, CENTER_COORDS, USER_INPUT } from './actions_types';
+import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT } from './actions_types';
+
 
 const BASE_URL = 'http://54.213.197.41/api/school/data.php?action=getData';
+const ONESCHOOL_URL = 'http://54.213.197.41/api/school/data.php?action=getDataOne';
 const API_KEY = '';
 
 export function searchForSchools(value) {
@@ -11,6 +13,14 @@ export function searchForSchools(value) {
         type: FETCH_SCHOOLS,
         payload: request
     };
+}
+
+export function searchOneSchool(value) {
+    const request = axios.post(`${ONESCHOOL_URL}`);
+    return {
+        type: ONE_SCHOOL,
+        payload: request
+    }
 }
 
 export function centerOfMap(value) {

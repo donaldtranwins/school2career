@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { searchForSchools } from '../../actions/actions_index'
 import Paper from 'material-ui/Paper';
+import { Link } from 'react-router';
 
 const style = {
     height: '20%',
@@ -37,7 +38,7 @@ class SchoolList extends Component {
                 return(
                     <Paper className="listOfSchools" style={style} key={index}>
                         <ul style={ul}>
-                            <li className='schoolListSchool'>{school.INSTNM}</li>
+                            <li className='schoolListSchool'><Link to={`/school/${school.OPEID}`}>{school.INSTNM} </Link></li>
                             <li className='schoolListAddressli'>{school.CITY}, </li>
                             <li className='schoolListAddressli'>{school.STABBR}</li>
                             <li className='schoolListUrl'><a target="_blank" href={'http://' + school.INSTURL}>{school.INSTURL}</a></li>
@@ -61,4 +62,4 @@ function mapStateToProps(state){
         schools: state.schools
     }
 }
-export default connect(mapStateToProps, {searchForSchools: searchForSchools})(SchoolList);
+export default connect(mapStateToProps, {searchForSchools})(SchoolList);
