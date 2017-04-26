@@ -28,7 +28,11 @@ class drawerForm extends Component {
         return (
             <div>
                 <AppBar/>
-                <i className="material-icons searchIcon" onTouchTap={this.handleToggle}>search</i>
+                <div className="refineBox" onTouchTap={this.handleToggle}>
+                    <div className="searchIcon refineText">
+                        <i className="material-icons searchIcon" >search</i> refine search
+                    </div>
+                </div>
                 <Drawer
                     docked={false}
                     width={290}
@@ -36,7 +40,7 @@ class drawerForm extends Component {
                     onRequestChange={(open) => this.setState({open})}>
                     <MapForm clickClosed = {this.handleClose}/>
                 </Drawer>
-                <img className="jumboImg" src="/images/mainpage_school.png" alt=""/>
+                <img className="jumboImg" src="/images/Lewis-University.png" alt=""/>
                 <MapButton />
                 <SchoolList id="schoolListShowing"/>
                 <Map id="mapShowing" className="hidden" initialCenter = { initialCenter }/>
