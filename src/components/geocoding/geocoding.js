@@ -18,16 +18,20 @@ class GeoCode extends React.Component {
         autocompleteContainer: 'autocomplete-container'
     }
     const inputProps = {
-      value: this.state.address,
-      onChange: this.onChange,
-      onBlur: () => {
-      },
-      type: 'search',
-      placeholder: 'Search Places...',
-      autoFocus: true,
+        value: this.state.address,
+        onChange: this.onChange,
+        onBlur: () => {
+        },
+        type: 'search',
+        placeholder: 'Search Places...',
+        autoFocus: true,
     }
     return (
-        <PlacesAutocomplete inputProps={inputProps} classNames={cssClasses} />
+        <div className='placesContainer'>
+            <div className='placesAuto'>
+                <PlacesAutocomplete inputProps={inputProps} classNames={cssClasses} />
+            </div>
+        </div>
     )
   }
 }
