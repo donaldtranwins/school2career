@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS } from './actions_types';
+import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT } from './actions_types';
+
 
 const BASE_URL = 'http://54.213.197.41/api/school/data.php?action=getData';
 const ONESCHOOL_URL = 'http://54.213.197.41/api/school/data.php?action=getDataOne';
@@ -23,7 +24,6 @@ export function searchOneSchool(value) {
 }
 
 export function centerOfMap(value) {
-    console.log('centerOfMap: ', value);
     return {
         type: CENTER_COORDS,
         payload: value
@@ -32,10 +32,16 @@ export function centerOfMap(value) {
 
 
 export function toggleMap(value) {
-    console.log('value', !value);
-
     return {
         type: SHOW_MAP,
         payload: !value  //may change back to ternary value ? false : true
+    }
+}
+
+export function userInput(value){
+    console.log('userInput action: ', value);
+    return {
+        type: USER_INPUT,
+        payload: value
     }
 }
