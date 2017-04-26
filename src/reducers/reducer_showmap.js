@@ -13,4 +13,3 @@ export default function(state = defaultState, action){ // if undefined set to de
             return state;
     }
 }
-

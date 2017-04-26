@@ -66,9 +66,12 @@ body,
 .UpdatedText {
     color: red;
 }
-.landingForm {
-    z-index: 10;
+.placesContainer{
+    width: 250.99px;
+    height: 37.08px;
 }
-.autocomplete-container{
+.placesAuto {
+    position: absolute;
     z-index: 10;
+    width: 250px;
 }
