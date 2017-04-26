@@ -64,6 +64,7 @@ class LandingForm extends Component {
     };
     formSubmitted = (values) => {
           geocodeByAddress(values.location,  (err, latLng) => {
+              console.log(values)
             if (err) { console.warn('error', err) }
             values.latLng = latLng;
           })
