@@ -22,6 +22,13 @@ class GMap extends Component {
         </div>
     }
 
+    callback = (place) => {
+        let holder = place[0].photos;
+        let hoping = holder[0].getUrl({'maxWidth': 400, 'maxHeight': 400});
+        console.log(hoping);
+
+    };
+
     componentDidMount() {
         const data = this.props.schools.all.data;
         this.clearMarkers();
@@ -30,9 +37,15 @@ class GMap extends Component {
         } else {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
-            debugger;
             console.log('inside map get center: ', this.props.center)
             this.map = this.createMap(this.props.center);
+            let request = {
+                query: 'Harvard University'
+            };
+            //get photo infomration, the textSearch() sends the data and when it gets returned we go to
+            //a function to resolve the information.
+            var search = new google.maps.places.PlacesService(this.map);
+            search.textSearch(request, this.callback);
             for (var i = 0; i < data.data.length; i++) {
                 this.marker = this.createMarker(data.data[i]);
                 this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);

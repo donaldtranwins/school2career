@@ -48,7 +48,6 @@ class LandingForm extends Component {
         router: PropTypes.object
     };
     getCenterCoords = (values) => {
-        debugger;
         console.log('values', values);
         const center = {
             lng: values.latLng.lng,
@@ -89,6 +88,6 @@ class LandingForm extends Component {
 }
 LandingForm = reduxForm({
   form: 'LandingForm',
-})(LandingForm)
+})(LandingForm);
 
 export default connect(null, { searchForSchools, centerOfMap })(LandingForm);
