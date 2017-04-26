@@ -10,7 +10,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { geocodeByAddress } from 'react-places-autocomplete';
 
 import majors from './majors';
-import { searchForSchools, centerOfMap } from '../../actions/actions_index';
+import { searchForSchools, centerOfMap, userInput } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
 
 
@@ -87,6 +87,7 @@ class mapPageForm extends Component {
             lng: values.latLng.lng
         }
         this.props.centerOfMap(center);
+        this.props.userInput(values);
     }
     formSubmitted = (values) => {
         geocodeByAddress(values.location, (err, latLng) => {
@@ -167,4 +168,4 @@ mapPageForm = reduxForm({
     form: 'mapPageForm',  // a unique identifier for this form
 })(mapPageForm)
 
-export default connect(null, { searchForSchools, centerOfMap })(mapPageForm);
+export default connect(null, { searchForSchools, centerOfMap, userInput })(mapPageForm);
