@@ -8,10 +8,6 @@ import AppBar from './app_bar'
 import Map from './google_maps/map';
 import MapButton from './button_legend/legend';
 
-const initialCenter = {
-    lng: -117.8231107,
-    lat: 33.6694649
-};
 
 class drawerForm extends Component {
 
@@ -43,7 +39,7 @@ class drawerForm extends Component {
                 <img className="jumboImg" src="/images/Lewis-University.png" alt=""/>
                 <MapButton />
                 <SchoolList id="schoolListShowing"/>
-                <Map id="mapShowing" className="hidden" initialCenter = { initialCenter }/>
+                <Map id="mapShowing" className="hidden"/>
             </div>
         );
     }
