@@ -88,6 +88,6 @@ class LandingForm extends Component {
 }
 LandingForm = reduxForm({
   form: 'LandingForm',
-})(LandingForm)
+})(LandingForm);
 
 export default connect(null, { searchForSchools, centerOfMap })(LandingForm);
