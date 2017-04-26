@@ -7,10 +7,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import Slider from 'material-ui/Slider';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import { geocodeByAddress } from 'react-places-autocomplete';
 
-import states from './states';
 import majors from './majors';
-import { searchForSchools } from '../../actions/actions_index';
+import { searchForSchools, centerOfMap } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
 
 
@@ -60,7 +60,6 @@ class mapPageForm extends Component {
     constructor(props) {
         super(props);
     }
-
     renderSlider({input: {onChange, value, name}, defaultValue, min, max}){
         if(!value){
             defaultValue = defaultValue || min;
@@ -82,13 +81,22 @@ class mapPageForm extends Component {
             )
         }
     }
-
+    getCenterCoords = (values) => {
+        const center = {
+            lat: values.latLng.lat,
+            lng: values.latLng.lng
+        }
+        this.props.centerOfMap(center);
+    }
     formSubmitted = (values) => {
-        console.log("values", values);
+        geocodeByAddress(values.location, (err, latLng) => {
+            if(err) { console.warn('error: ', err)};
+            values.latLng = latLng;
+            this.getCenterCoords(values);
+        })
         this.props.searchForSchools(values);
         this.props.clickClosed();
     };
-
     // clickClosed() {
     //     _this2.handleClose;
     // }
@@ -159,4 +167,4 @@ mapPageForm = reduxForm({
     form: 'mapPageForm',  // a unique identifier for this form
 })(mapPageForm)
 
-export default connect(null, { searchForSchools })(mapPageForm);
+export default connect(null, { searchForSchools, centerOfMap })(mapPageForm);

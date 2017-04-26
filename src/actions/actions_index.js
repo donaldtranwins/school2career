@@ -14,7 +14,7 @@ export function searchForSchools(value) {
 }
 
 export function centerOfMap(value) {
-    console.log(value);
+    console.log('centerOfMap: ', value);
     return {
         type: CENTER_COORDS,
         payload: value

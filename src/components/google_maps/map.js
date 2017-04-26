@@ -21,15 +21,13 @@ class GMap extends Component {
             <div className='GMap-canvas' ref="mapCanvas"></div>
         </div>
     }
-
     callback = (place) => {
         let holder = place[0].photos;
         let hoping = holder[0].getUrl({'maxWidth': 400, 'maxHeight': 400});
         console.log(hoping);
 
     };
-
-    componentDidMount() {
+    componentWillReceiveProps(){
         const data = this.props.schools.all.data;
         this.clearMarkers();
         if(!data){
@@ -37,7 +35,6 @@ class GMap extends Component {
         } else {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
-            console.log('inside map get center: ', this.props.center)
             this.map = this.createMap(this.props.center);
             let request = {
                 query: 'Harvard University'
@@ -55,7 +52,6 @@ class GMap extends Component {
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
         }
     }
-
     // clean up event listeners when component unmounts
     componentDidUnMount() {
         google.maps.event.clearListeners(map, 'zoom_changed')
@@ -70,7 +66,6 @@ class GMap extends Component {
     }
 
     mapCenter(data) {
-        console.log('mapCenter: ', data);
         return new google.maps.LatLng(
             // this.props.initialCenter.lat,
             // this.props.initialCenter.lng
@@ -121,7 +116,6 @@ class GMap extends Component {
     }
 
     createMarker(data) { //would add in (pos) as a parameter
-        console.log("data", data.UGDS);
         const iconForSchool = this.colorForMarker(parseInt(data.UGDS));
         const newMarker = new google.maps.Marker({
             position: this.createLatLng(data),  //this would have to change to likely take in positions and
