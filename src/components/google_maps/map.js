@@ -23,6 +23,8 @@ class GMap extends Component {
     }
     componentWillReceiveProps(){
         const data = this.props.schools.all.data;
+        console.log('props: ', this.props);
+        console.log('willReceiveProps: ', this.props.center);
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};
@@ -34,6 +36,16 @@ class GMap extends Component {
                 this.marker = this.createMarker(data.data[i]);
                 this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
             }
+            this.radius = new google.maps.Circle({
+                strokeColor: '#0000FF',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0,
+                map: this.map,
+                center: this.props.center,
+                radius: Math.sqrt(1000) * 100
+            })
             // have to define google maps event listeners here too
             // because we can't add listeners on the map until its created
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
