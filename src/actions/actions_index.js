@@ -14,7 +14,6 @@ export function searchForSchools(value) {
 }
 
 export function centerOfMap(value) {
-    console.log('centerOfMap: ', value);
     return {
         type: CENTER_COORDS,
         payload: value
@@ -30,7 +29,7 @@ export function toggleMap(value) {
 }
 
 export function userInput(value){
-    console.log(value);
+    console.log('userInput action: ', value);
     return {
         type: USER_INPUT,
         payload: value
