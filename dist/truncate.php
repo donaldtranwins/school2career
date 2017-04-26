@@ -6,8 +6,7 @@ if(empty($zip)){
     $zip = 'database connection error';
 } else {
     $rows = mysqli_affected_rows($conn);
-    $zip = $rows > 0 ? "SUCCESS: $zip zip codes changed"
-        : $rows === 0 ? 'Zip codes not updated' :  'Error in Query' ;
+    $zip = $rows > 0 ? "SUCCESS: $zip zip codes changed" : $rows === 0 ? 'Zip codes not updated' :  'Error in Query' ;
 //    if ($rows > 0) {
 //        $zip = "SUCCESS: $zip zip codes changed";
 //    } else {
