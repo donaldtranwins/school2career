@@ -44,7 +44,7 @@ const renderTextField = ({ input: { onChange, name }, label, meta: { touched, er
             {...custom}
         />
     )
-}
+};
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
     <SelectField
     className='landingForm'
@@ -57,14 +57,13 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
     children={children}
     {...custom}/>
 );
-
 class LandingForm extends Component {
     static contextTypes = {
         router: PropTypes.object
     };
     formSubmitted = (values) => {
+
           geocodeByAddress(values.location,  (err, latLng) => {
-              console.log(values)
             if (err) { console.warn('error', err) }
             values.latLng = latLng;
           })

@@ -75,3 +75,16 @@ body,
     z-index: 10;
     width: 250px;
 }
+/*.form-control:focus {
+    color: #78909C;
+    border-color: transparent;
+}*/
+.autoCompleteForm, .autoCompleteForm:focus {
+    color: #78909C;
+    border: 0px;
+    border-bottom: 1px solid #78909C;
+
+}
+.autocomplete-container div{
+    color: #78909C;
+}

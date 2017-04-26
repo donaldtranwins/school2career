@@ -11,6 +11,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import states from './states';
 import majors from './majors';
 import { searchForSchools } from '../../actions/actions_index';
+import GeoCode from '../geocoding/geocoding';
 
 
 
@@ -18,14 +19,19 @@ const style = {
     margin: 12
 };
 
-const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-    <TextField hintText={label}
-               floatingLabelText={label}
-               errorText={touched && error}
-               {...input}
-               {...custom}
-    />
-);
+const renderTextField = ({ input: { onChange, name }, label, meta: { touched, error }, ...custom }) => {
+    return (
+        <GeoCode hintText={label}
+            floatingLabelText={label}
+            errorText={touched && error}
+            onChange={ val => {
+                onChange(val);
+            }}
+            name={name}
+            {...custom}
+        />
+    )
+};
 
 const renderRadioGroup = ({ input, ...rest }) => (
     <RadioButtonGroup {...input} {...rest}
@@ -100,15 +106,7 @@ class mapPageForm extends Component {
     return (
         <form className="extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
             <div>
-                <Field name="zipCode" component={renderTextField} label="Zip Code"/>
-            </div>
-            <div>
-                <Field name="city" component={renderTextField} label="City"/>
-            </div>
-            <div>
-                <Field name="state" component={renderSelectField} label="State">
-                    {states}
-                </Field>
+                <Field name="location" component={renderTextField} label="City"/>
             </div>
             <div>
                 <Field name="distanceSlider"
