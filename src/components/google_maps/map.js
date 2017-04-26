@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { searchForSchools } from '../../actions/actions_index'
+import { searchForSchools } from '../../actions/actions_index';
 
 class GMap extends Component {
-
-    // state = { zoom: 7 };
 
     constructor(props){
         super(props);
@@ -14,9 +12,9 @@ class GMap extends Component {
         };
     }
 
-    static propTypes() {
-        initialCenter: React.PropTypes.objectOf(React.PropTypes.number).isRequired
-    }
+    // static propTypes() {
+    //     initialCenter: React.PropTypes.objectOf(React.PropTypes.number).isRequired
+    // }
 
     render() {
         return <div id="mapBox" className="GMap">
@@ -32,12 +30,13 @@ class GMap extends Component {
         } else {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
-            this.map = this.createMap(data.data[1]);
+            debugger;
+            console.log('inside map get center: ', this.props.center)
+            this.map = this.createMap(this.props.center);
             for (var i = 0; i < data.data.length; i++) {
                 this.marker = this.createMarker(data.data[i]);
                 this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
             }
-
             // have to define google maps event listeners here too
             // because we can't add listeners on the map until its created
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
@@ -62,8 +61,8 @@ class GMap extends Component {
         return new google.maps.LatLng(
             // this.props.initialCenter.lat,
             // this.props.initialCenter.lng
-            data.LATITUDE,
-            data.LONGITUDE
+            data.lat,
+            data.lng
         )
     }
 
@@ -156,7 +155,8 @@ class GMap extends Component {
 
 function mapStateToProps(state){
     return{
-        schools: state.schools
+        schools: state.schools,
+        center: state.center.center
     }
 }
 export default connect(mapStateToProps, {searchForSchools: searchForSchools})(GMap);

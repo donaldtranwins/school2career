@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 
 import majors from './majors';
-import { searchForSchools } from '../../actions/actions_index';
+import { searchForSchools, centerOfMap } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
 
 const btnStyle = {
@@ -16,21 +16,7 @@ const btnStyle = {
 };
 const selectStyle = {
     textAlign: 'none'
-}
-
-const validate = values => {
-  const errors = {}
-  // const requiredFields = [ 'firstName', 'lastName', 'email', 'favoriteColor', 'notes' ]
-  // requiredFields.forEach(field => {
-  //   if (!values[ field ]) {
-  //     errors[ field ] = 'Required'
-  //   }
-  // })
-  // if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-  //   errors.email = 'Invalid email address'
-  // }
-  return errors
-}
+};
 
 const renderTextField = ({ input: { onChange, name }, label, meta: { touched, error }, ...custom }) => {
     return (
@@ -44,7 +30,7 @@ const renderTextField = ({ input: { onChange, name }, label, meta: { touched, er
             {...custom}
         />
     )
-}
+};
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
     <SelectField
     className='landingForm'
@@ -62,13 +48,25 @@ class LandingForm extends Component {
     static contextTypes = {
         router: PropTypes.object
     };
+    getCenterCoords = (values) => {
+        debugger;
+        console.log('values', values);
+        const center = {
+            lng: values.latLng.lng,
+            lat: values.latLng.lat
+        };
+        this.props.centerOfMap(center);
+    };
     formSubmitted = (values) => {
-          geocodeByAddress(values.location,  (err, latLng) => {
-              console.log(values)
-            if (err) { console.warn('error', err) }
-            values.latLng = latLng;
-          })
-        this.props.searchForSchools(values).then(() => {this.context.router.push('/home')});
+        geocodeByAddress(values.location,  (err, latLng) => {
+          console.log("formSubmitted values", values);
+
+        if (err) { console.warn('error', err) }
+        values.latLng = latLng;
+        this.getCenterCoords(values);
+      });
+
+    this.props.searchForSchools(values).then(() => {this.context.router.push('/home')});
     };
     render(){
         const { handleSubmit, pristine, reset, submitting } = this.props
@@ -92,8 +90,6 @@ class LandingForm extends Component {
 }
 LandingForm = reduxForm({
   form: 'LandingForm',
-  validate: validate
-  // asyncValidate
 })(LandingForm)
 
-export default connect(null, { searchForSchools })(LandingForm);
+export default connect(null, { searchForSchools, centerOfMap })(LandingForm);
