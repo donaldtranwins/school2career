@@ -2,7 +2,7 @@
 
 $columns = [
     0 => [
-        'name' => 'id',
+        'name' => 'uid',
         'type' => 'number'
     ],
     1 => [

@@ -1,5 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "csv_db");
+$dbname = "csv_db";
+$conn = mysqli_connect("localhost", "root", "", $dbname);
 
 ?>
