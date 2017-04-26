@@ -23,7 +23,7 @@ class GMap extends Component {
     }
     componentWillReceiveProps(){
         const data = this.props.schools.all.data;
-        console.log('props: ', this.props);
+        console.log('props: ', this.props.distanceSlider);
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};
@@ -35,6 +35,7 @@ class GMap extends Component {
                 this.marker = this.createMarker(data.data[i]);
                 this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
             }
+            const distance = this.props.userInput.value.distanceSlider;
             this.radius = new google.maps.Circle({
                 strokeColor: '#0000FF',
                 strokeOpacity: 0.8,
@@ -43,8 +44,8 @@ class GMap extends Component {
                 fillOpacity: 0,
                 map: this.map,
                 center: this.props.center,
-                radius: Math.sqrt(1000) * 100
-            })
+                radius: distance * 1609.3
+            });
             // have to define google maps event listeners here too
             // because we can't add listeners on the map until its created
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
@@ -161,7 +162,8 @@ class GMap extends Component {
 function mapStateToProps(state){
     return{
         schools: state.schools,
-        center: state.center.center
+        center: state.center.center,
+        userInput: state.userInput
     }
 }
 export default connect(mapStateToProps, {searchForSchools: searchForSchools})(GMap);
