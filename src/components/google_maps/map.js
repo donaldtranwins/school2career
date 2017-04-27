@@ -59,6 +59,8 @@ class GMap extends Component {
                 center: this.props.center,
                 radius: distance * 1609.3
             });
+            const mapBounds = this.map.getBounds();
+            console.log(mapBounds);
             // have to define google maps event listeners here too
             // because we can't add listeners on the map until its created
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
