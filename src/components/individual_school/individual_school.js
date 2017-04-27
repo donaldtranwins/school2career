@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchOneSchool } from '../../actions/actions_index';
+import Photo from './places_image';
 
 class School extends Component {
 
@@ -17,6 +18,7 @@ class School extends Component {
             return (
                 <div>
                     <h2>TITLE</h2>
+                    <Photo/>
                 </div>
             );
         };
