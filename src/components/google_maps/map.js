@@ -24,7 +24,7 @@ class GMap extends Component {
     callback = (place) => {
         let holder = place[0].photos;
         let hoping = holder[0].getUrl({'maxWidth': 400, 'maxHeight': 400});
-        console.log(hoping);
+        // console.log(hoping);
 
     };
     componentWillReceiveProps(){
@@ -59,11 +59,8 @@ class GMap extends Component {
                 center: this.props.center,
                 radius: distance * 1609.3
             });
-            const mapBounds = this.map.getBounds();
-            console.log(mapBounds);
-            // have to define google maps event listeners here too
-            // because we can't add listeners on the map until its created
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
+            google.maps.event.addListener(this.map, 'idle', () => this.getBounds());
         }
     }
     // clean up event listeners when component unmounts
@@ -166,7 +163,22 @@ class GMap extends Component {
             infoWindow.close();
         });
     }
-
+    getBounds() {
+        const bounds = this.map.getBounds();
+        const ne = bounds.getNorthEast();
+        const sw = bounds.getSouthWest();
+        const mapBounds = {
+            ne: {
+                lat: ne.lat(),
+                lng: ne.lng()
+            },
+            sw: {
+                lat: sw.lat(),
+                lng: sw.lng()
+            }
+        };
+        console.log(mapBounds);
+    }
     handleZoomChange() {
         this.setState({
             zoom: this.map.getZoom()
