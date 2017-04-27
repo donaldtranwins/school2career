@@ -1,6 +1,6 @@
 import { USER_INPUT } from '../actions/actions_types';
 
-const defaultState = {value: {}};
+const defaultState = {value: null};
 
 export default function (state = defaultState, action){
     switch (action.type) {

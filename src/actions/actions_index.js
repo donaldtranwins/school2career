@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT } from './actions_types';
+import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT, MAP_BOUNDS_INPUT } from './actions_types';
 
 
 const BASE_URL = 'http://54.213.197.41/api/school/data.php?action=getData';
@@ -42,6 +42,14 @@ export function userInput(value){
     console.log('userInput action: ', value);
     return {
         type: USER_INPUT,
+        payload: value
+    }
+}
+
+export function mapBoundsInput(value){
+    // console.log('mapBoundsInput: ', value)
+    return {
+        type: MAP_BOUNDS_INPUT,
         payload: value
     }
 }

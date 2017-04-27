@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { searchForSchools } from '../../actions/actions_index';
+import { searchForSchools, mapBoundsInput } from '../../actions/actions_index';
 
 class GMap extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            zoom: 7,
+            zoom: 10,
             markers: []
         };
     }
@@ -29,14 +29,14 @@ class GMap extends Component {
     };
     componentWillReceiveProps(){
         const data = this.props.schools.all.data;
-        console.log('props: ', this.props.distanceSlider);
+        const userInput = this.props.userInput.value;
         this.clearMarkers();
-        if(!data){
-            return () => { return <p>Loading...</p>};
+        if(!userInput){
+            return <p>Loading...</p>;
         } else {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
-            this.map = this.createMap(this.props.center);
+            this.map = this.createMap(userInput.latLng);
             let request = {
                 query: 'Harvard University'
             };
@@ -44,23 +44,25 @@ class GMap extends Component {
             //a function to resolve the information.
             var search = new google.maps.places.PlacesService(this.map);
             search.textSearch(request, this.callback);
-            for (var i = 0; i < data.data.length; i++) {
-                this.marker = this.createMarker(data.data[i]);
-                this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
+            if(data){
+                for (var i = 0; i < data.data.length; i++) {
+                    this.marker = this.createMarker(data.data[i]);
+                    this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
+                }
             }
-            const distance = this.props.userInput.value.distanceSlider;
-            this.radius = new google.maps.Circle({
-                strokeColor: '#0000FF',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0,
-                map: this.map,
-                center: this.props.center,
-                radius: distance * 1609.3
-            });
+            // const distance = this.props.userInput.value.distanceSlider;
+            // this.radius = new google.maps.Circle({
+            //     strokeColor: '#0000FF',
+            //     strokeOpacity: 0.8,
+            //     strokeWeight: 2,
+            //     fillColor: '#FF0000',
+            //     fillOpacity: 0,
+            //     map: this.map,
+            //     center: this.props.center,
+            //     radius: distance * 1609.3
+            // });
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
-            google.maps.event.addListener(this.map, 'idle', () => this.getBounds());
+            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
         }
     }
     // clean up event listeners when component unmounts
@@ -163,7 +165,7 @@ class GMap extends Component {
             infoWindow.close();
         });
     }
-    getBounds() {
+    getMapBounds() {
         const bounds = this.map.getBounds();
         const ne = bounds.getNorthEast();
         const sw = bounds.getSouthWest();
@@ -177,7 +179,16 @@ class GMap extends Component {
                 lng: sw.lng()
             }
         };
-        console.log(mapBounds);
+        const userInputMapBounds = this.props.userInput.value;
+        userInputMapBounds.mapBounds = mapBounds;
+        console.log('getBounds: ', userInputMapBounds);
+        console.log('boundsInput: ', this.props.boundsInput);
+
+        // this.props.mapBoundsInput(userInputMapBounds);
+        if (this.props.boundsInput.mapBoundsInput !== userInputMapBounds){
+            this.props.mapBoundsInput(userInputMapBounds);
+            this.props.searchForSchools(userInputMapBounds);
+        }
     }
     handleZoomChange() {
         this.setState({
@@ -190,7 +201,8 @@ function mapStateToProps(state){
     return{
         schools: state.schools,
         center: state.center.center,
-        userInput: state.userInput
+        userInput: state.userInput,
+        boundsInput: state.mapBoundsInput
     }
 }
-export default connect(mapStateToProps, {searchForSchools: searchForSchools})(GMap);
+export default connect(mapStateToProps, { searchForSchools, mapBoundsInput })(GMap);
