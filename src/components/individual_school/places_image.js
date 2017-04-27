@@ -1,22 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { searchForSchools } from '../../actions/actions_index';
+import { searchOneSchool } from '../../actions/actions_index';
 
 
 class Photo extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            zoom: 7,
+            markers: []
+        };
+    }
+
     render() {
-        return <div id="schoolPhoto"></div>
+        return <div id="mapBox" className="GMap">
+            <div className='GMap-canvas' ref="mapCanvas"></div>
+        </div>
     }
     callback = (place) => {
         let holder = place[0].photos;
-        let finalPhoto = holder[0].getUrl({'maxWidth': 400, 'maxHeight': 400});
-        console.log(finalPhoto);
+        let hoping = holder[0].getUrl({'maxWidth': 400, 'maxHeight': 400});
+        console.log(hoping);
 
     };
-    componentDidMount(){
-        console.log('Place', this.props.schools);
+    componentWillReceiveProps(){
         const data = this.props.schools.all.data;
+        console.log('props: ', this.props.distanceSlider);
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};
@@ -35,6 +45,17 @@ class Photo extends Component {
                 this.marker = this.createMarker(data.data[i]);
                 this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
             }
+            const distance = this.props.userInput.value.distanceSlider;
+            this.radius = new google.maps.Circle({
+                strokeColor: '#0000FF',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0,
+                map: this.map,
+                center: this.props.center,
+                radius: distance * 1609.3
+            });
             // have to define google maps event listeners here too
             // because we can't add listeners on the map until its created
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
