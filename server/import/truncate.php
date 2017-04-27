@@ -7,11 +7,6 @@ if(empty($zip)){
 } else {
     $rows = mysqli_affected_rows($conn);
     $zip = $rows > 0 ? "SUCCESS: $zip zip codes changed" : $rows === 0 ? 'Zip codes not updated' :  'Error in Query' ;
-//    if ($rows > 0) {
-//        $zip = "SUCCESS: $zip zip codes changed";
-//    } else {
-//        $zip = 'Zip codes not updated';
-//    }
 }
 print "<br>=-=-=-=-= ".$zip." =-=-=-=-=";
 

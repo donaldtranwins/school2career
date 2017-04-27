@@ -15,8 +15,8 @@ $handle = fopen($filename, "r")
     Include:  Imports a @var array  $columns    Columns to import from the CSV */
 
 //require("includes/private/connect_to_dev.php");
-require("includes/connect_to_localbox.php");
-require("includes/columns_to_import.php");
+require("includes/connect_to_localbox.php");    // $conn
+require("includes/columns_to_import.php");      // $columns
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
@@ -56,11 +56,6 @@ while($data = fgetcsv($handle, "r")){
     } else {
         $inserted = mysqli_affected_rows($conn);
         $result = $inserted === 1 ? 'SUCCESS' : "some sort of insert error on Row $row" ;
-//        if ($inserted === 1) {
-//            $result = 'SUCCESS';
-//        } else {
-//            $result = 'some sort of insert error';
-//        }
     }
     print "<br>++++++++ ".$result." ++++++++";
 }
