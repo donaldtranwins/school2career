@@ -3,10 +3,8 @@ print("hi <br>");
 
 /** @var    boolean $ignore_header  If true, will run fgetcsv once */
 /** @var    string  $filename       Path to csv file to import*/
-/** @var    string  $csv_db         Name of table within the database*/
 $ignore_header = true;
 $filename = 'includes/smalltest.csv';
-$tablename = 'csv_db';
 
 $handle = fopen($filename, "r")
     or exit("Could not open file ($filename)");
@@ -34,21 +32,23 @@ while($data = fgetcsv($handle, "r")){
     print "<br>Row $row from CSV: ";
     print_r($data);
     //$query = "INSERT INTO `database` ({$columns[0]}`, `{$columns[3]}`) VALUES (\"{$data[0]}\", \"{$data[3]}\")";
-    $insertStart = "INSERT INTO `$tablename` (";
+    $insertStart = "INSERT INTO `";
+    $insertTable = "school_data` (";
     $insertMiddle = ') VALUES (';
     $insertEnd = ');';
     $firstValue = true;
     foreach($columns as $index => $column){
+        $insertTable = $column['table']."` (";
         if ($firstValue){
             $insertStart .= ', ';
             $insertMiddle .= ', ';
         } else {
             $firstValue = false;
         }
-        $queryStart .= "`$column[name]`";
-        $queryMiddle .= "\"{$data[$index]}\"";
+        $insertStart .= "`$column[name]`";
+        $insertMiddle .= "\"{$data[$index]}\"";
     }
-    $insert = $insertStart.$insertMiddle.$insertEnd;
+    $insert = $insertStart.$insertTable.$insertMiddle.$insertEnd;
     print "<br>======= ".$insert." ==========";
     $result = mysqli_query($conn,$insert);
     if(empty($result)){

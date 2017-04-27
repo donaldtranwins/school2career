@@ -10,7 +10,7 @@ if(empty($zip)){
 }
 print "<br>=-=-=-=-= ".$zip." =-=-=-=-=";
 
-// Removes schools that are Currently not in operation
+// Removes schools that are Distance Only
 
 // Removes ITT Tech id_system = 7329
 
