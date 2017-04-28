@@ -25,12 +25,11 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `school_query`
 --
-
 CREATE TABLE `school_query` (
-  `uid_q` int(8) UNSIGNED DEFAULT NULL,
-  `zip` varchar(10) DEFAULT NULL,
-  `lat` decimal(9,7) DEFAULT NULL,
-  `lng` decimal(10,7) DEFAULT NULL,
+  `uid` int(8) UNSIGNED NOT NULL,
+  `zip` varchar(5) NOT NULL,
+  `lat` decimal(9,7) NOT NULL,
+  `lng` decimal(10,7) NOT NULL,
   `prog_agri` float UNSIGNED NOT NULL DEFAULT '0',
   `prog_anthro` float UNSIGNED NOT NULL DEFAULT '0',
   `prog_arch` float UNSIGNED NOT NULL DEFAULT '0',
@@ -148,7 +147,7 @@ CREATE TABLE `school_query` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `school_query`
-  ADD UNIQUE(`uid_q`);
+  ADD UNIQUE(`uid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

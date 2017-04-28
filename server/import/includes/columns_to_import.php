@@ -4,12 +4,27 @@ $columns = [
     0 => [
         'name' => 'uid',
         'type' => 'number',
-        'table' => 'school_data'
+        'table' => 'both'
     ],
     1 => [
         'name' => 'id_school',
         'type' => 'number',
         'table' => 'school_data'
+    ],
+    6 => [
+        'name' => 'zip',
+        'type' => 'string',
+        'table' => 'school_query'
+    ],
+    21 => [
+        'name' => 'lat',
+        'type' => 'number',
+        'table' => 'school_query'
+    ],
+    22 => [
+        'name' => 'lng',
+        'type' => 'number',
+        'table' => 'school_query'
     ],
     2 => [
         'name' => 'id_system',
