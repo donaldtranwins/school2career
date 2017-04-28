@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { searchForSchools } from '../../actions/actions_index';
+import ReactDOMServer from 'react-dom/server';
 
 class GMap extends Component {
 
@@ -12,21 +14,11 @@ class GMap extends Component {
         };
     }
 
-    // static propTypes() {
-    //     initialCenter: React.PropTypes.objectOf(React.PropTypes.number).isRequired
-    // }
-
     render() {
         return <div id="mapBox" className="GMap">
             <div className='GMap-canvas' ref="mapCanvas"></div>
         </div>
     }
-    callback = (place) => {
-        let holder = place[0].photos;
-        let hoping = holder[0].getUrl({'maxWidth': 400, 'maxHeight': 400});
-        console.log(hoping);
-
-    };
     componentWillReceiveProps(){
         const data = this.props.schools.all.data;
         console.log('props: ', this.props.distanceSlider);
@@ -37,13 +29,8 @@ class GMap extends Component {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
             this.map = this.createMap(this.props.center);
-            let request = {
-                query: 'Harvard University'
-            };
             //get photo infomration, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
-            var search = new google.maps.places.PlacesService(this.map);
-            search.textSearch(request, this.callback);
             for (var i = 0; i < data.data.length; i++) {
                 this.marker = this.createMarker(data.data[i]);
                 this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
@@ -147,16 +134,16 @@ class GMap extends Component {
 
     createInfoWindow(marker, data) {  //added in both params
 
-        {/*const content = <div><h6>{data.INSTNM}</h6></div>*/}
+        // let content = <div><div><h6><Link to={`/school/${data.OPEID}`}>{data.INSTNM}</Link></h6></div><div>{data.CITY}, {data.STABBR}</div><div><a target="_blank" href="http://{data.INSTURL}">data.INSTURL</a></div></div>;
 
-        let content = '<div><h6>' + data.INSTNM + '</h6></div>'
+        let content = '<div><h6 >' + data.INSTNM + '</h6></div>'
             + '<div>' + data.CITY + ', ' + data.STABBR + '</div>'
             + '<div><a target="_blank" href=http://' + data.INSTURL + '>' + data.INSTURL + '</a></div>';
-        let contentString = "<div class='InfoWindow'>" + content + "</div>"; //changed to display specific content
+        // let contentString = ReactDOMServer.renderToString(<div className='InfoWindow'>{content} </div>);
         let infoWindow =  new google.maps.InfoWindow({
                 map: this.map,
                 anchor: marker,
-                content: contentString
+                content: content
             });
         infoWindow.close();
         this.marker.addListener('click', function() {
