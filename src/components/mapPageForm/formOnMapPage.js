@@ -13,8 +13,6 @@ import majors from './majors';
 import { searchForSchools, centerOfMap, userInput } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
 
-
-
 const style = {
     margin: 12
 };
@@ -86,8 +84,8 @@ class mapPageForm extends Component {
             lat: values.latLng.lat,
             lng: values.latLng.lng
         }
-        this.props.centerOfMap(center);
         this.props.userInput(values);
+        this.props.centerOfMap(center);
     }
     formSubmitted = (values) => {
         geocodeByAddress(values.location, (err, latLng) => {
@@ -98,10 +96,6 @@ class mapPageForm extends Component {
         this.props.searchForSchools(values);
         this.props.clickClosed();
     };
-    // clickClosed() {
-    //     _this2.handleClose;
-    // }
-
     render() {
         const { handleSubmit, reset } = this.props;
         const sliderStyle = {
@@ -111,7 +105,6 @@ class mapPageForm extends Component {
             display: 'inline-block',
             width: '138px'
         };
-
     return (
         <form className="extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
             <div>

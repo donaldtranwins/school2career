@@ -57,12 +57,11 @@ class LandingForm extends Component {
     };
     formSubmitted = (values) => {
         geocodeByAddress(values.location,  (err, latLng) => {
-        if (err) { console.warn('error', err) }
+        if (err) { console.warn('error', err) };
         values.latLng = latLng;
         this.getCenterCoords(values);
+        this.context.router.push('/home');
       });
-    this.context.router.push('/home')
-    // this.props.searchForSchools(values).then(() => {this.context.router.push('/home')});
     };
     render(){
         const { handleSubmit, pristine, reset, submitting } = this.props
