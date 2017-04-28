@@ -1,0 +1,18 @@
+{
+  "latLng" : {
+    "lat" : 37.7749295,
+    "lng" : -122.41941550000001
+  },
+  "location" : "San Francisco, CA, United States",
+  "mapBounds" : {
+    "ne" : {
+      "lat" : 38.15171077202175,
+      "lng" : -122.08501913769533
+    },
+    "sw" : {
+      "lat" : 37.39621820157396,
+      "lng" : -122.7538118632047
+    }
+  },
+  "pickAMajor" : "english"
+}
