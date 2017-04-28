@@ -5,6 +5,7 @@ import Map from './places_image';
 import AppBar from '../app_bar';
 import Paper from 'material-ui/Paper';
 import MfChart from './male_female_chart';
+import DegreesOffered from './degree_offered';
 
 class School extends Component {
 
@@ -77,6 +78,7 @@ class School extends Component {
                     <div className="row">
                         <MfChart />
                     </div>
+                    <DegreesOffered />
                 </div>
             </div>
         );
