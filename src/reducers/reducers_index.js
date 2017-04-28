@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
     center: mapCenter,
     form: formReducer,
     userInput: userInputReducer,
-    mapBoundsInput: mapBoundsReducer
+    mapBoundsInput: mapBoundsReducer,
 //     userInput: userInput,
     schoolImgURL: schoolImage
 });

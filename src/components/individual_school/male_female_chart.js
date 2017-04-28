@@ -26,8 +26,8 @@ class mfChart extends Component {
                     <CartesianGrid />
                     <Tooltip/>
                     <Legend />
-                    <Bar dataKey="m" fill="blue"/>
-                    <Bar dataKey="f" fill="pink"/>
+                    <Bar dataKey="m" fill="#00008B"/>
+                    <Bar dataKey="f" fill="#FF7AD6"/>
                 </BarChart>
             </div>
         );
