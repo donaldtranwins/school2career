@@ -21,13 +21,11 @@ class Photo extends Component {
     callback = (place) => {
         let holder = place[0].photos;
         let imageURL = holder[0].getUrl({'maxWidth': 1200, 'maxHeight': 1200});
-        console.log(imageURL);
         this.props.schoolURL(imageURL);
 
     };
     componentDidMount(){
         const data = this.props.schools;
-        console.log('places props: ', this.props.schools);
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};

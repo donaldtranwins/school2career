@@ -142,3 +142,11 @@ body,
 .statsWrapper {
     padding: 15px;
 }
+.titleMenWomanChart {
+    text-align: center;
+    margin-top: 15px;
+}
+.mfChart {
+    text-align: center;
+    border: 1px solid blue;
+}
