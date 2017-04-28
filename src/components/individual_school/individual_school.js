@@ -4,6 +4,7 @@ import { searchOneSchool } from '../../actions/actions_index';
 import Map from './places_image';
 import AppBar from '../app_bar';
 import Paper from 'material-ui/Paper';
+import MfChart from './male_female_chart';
 
 class School extends Component {
 
@@ -13,12 +14,10 @@ class School extends Component {
 
     render() {
         let data = this.props.schools;
-        console.log('data', data);
         if(!data){
             return <p>Loading...</p>
         }
         data = data[0];
-        console.log("data", data);
         //Admissions Rate Math
         let admissionRate = parseFloat(data.ADM_RATE);
         if (parseFloat(admissionRate) > 0) {
@@ -74,6 +73,9 @@ class School extends Component {
                                 <h4 className="col-md-6">Tuition (out of state): ${data.TUITIONFEE_OUT}</h4>
                             </div>
                         </Paper>
+                    </div>
+                    <div className="row">
+                        <MfChart />
                     </div>
                 </div>
             </div>
