@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { searchOneSchool } from '../../actions/actions_index';
+import { schoolURL } from '../../actions/actions_index';
 
 
 class Photo extends Component {
@@ -8,54 +8,39 @@ class Photo extends Component {
     constructor(props){
         super(props);
         this.state = {
-            zoom: 7,
+            zoom: 16,
             markers: []
         };
     }
 
     render() {
-        return <div id="mapBox" className="GMap">
-            <div className='GMap-canvas' ref="mapCanvas"></div>
+        return <div id="mapBox" className="soloMap col-xs col-md-10"  >
+            <div className='solo-canvas' ref="mapCanvas"></div>
         </div>
     }
     callback = (place) => {
         let holder = place[0].photos;
-        let hoping = holder[0].getUrl({'maxWidth': 400, 'maxHeight': 400});
-        console.log(hoping);
+        let imageURL = holder[0].getUrl({'maxWidth': 1200, 'maxHeight': 1200});
+        this.props.schoolURL(imageURL);
 
     };
-    componentWillReceiveProps(){
-        const data = this.props.schools.all.data;
-        console.log('props: ', this.props.distanceSlider);
+    componentDidMount(){
+        const data = this.props.schools;
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};
         } else {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
-            this.map = this.createMap(this.props.center);
+            this.map = this.createMap(data[0]);
             let request = {
-                query: 'Harvard University'
+                query: `${data[0].INSTNM} admin`
             };
             //get photo infomration, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
             var search = new google.maps.places.PlacesService(this.map);
             search.textSearch(request, this.callback);
-            for (var i = 0; i < data.data.length; i++) {
-                this.marker = this.createMarker(data.data[i]);
-                this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
-            }
-            const distance = this.props.userInput.value.distanceSlider;
-            this.radius = new google.maps.Circle({
-                strokeColor: '#0000FF',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0,
-                map: this.map,
-                center: this.props.center,
-                radius: distance * 1609.3
-            });
+            this.marker = this.createMarker(data[0]);
             // have to define google maps event listeners here too
             // because we can't add listeners on the map until its created
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
@@ -69,7 +54,12 @@ class Photo extends Component {
     createMap(data) {
         let mapOptions = {
             zoom: this.state.zoom,
-            center: this.mapCenter(data)
+            center: this.mapCenter(data),
+            draggable: false,
+            zoomControl: false,
+            scrollwheel: false,
+            disableDoubleClickZoom: true,
+            streetview: true,
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }
@@ -78,8 +68,8 @@ class Photo extends Component {
         return new google.maps.LatLng(
             // this.props.initialCenter.lat,
             // this.props.initialCenter.lng
-            data.lat,
-            data.lng
+            data.LATITUDE,
+            data.LONGITUDE
         )
     }
 
@@ -140,28 +130,6 @@ class Photo extends Component {
         return newMarker;
     }
 
-    createInfoWindow(marker, data) {  //added in both params
-
-        {/*const content = <div><h6>{data.INSTNM}</h6></div>*/}
-
-        let content = '<div><h6>' + data.INSTNM + '</h6></div>'
-            + '<div>' + data.CITY + ', ' + data.STABBR + '</div>'
-            + '<div><a target="_blank" href=http://' + data.INSTURL + '>' + data.INSTURL + '</a></div>';
-        let contentString = "<div class='InfoWindow'>" + content + "</div>"; //changed to display specific content
-        let infoWindow =  new google.maps.InfoWindow({
-            map: this.map,
-            anchor: marker,
-            content: contentString
-        });
-        infoWindow.close();
-        this.marker.addListener('click', function() {
-            infoWindow.open(this.map, marker);
-        });
-        this.map.addListener('click', function () {
-            infoWindow.close();
-        });
-    }
-
     handleZoomChange() {
         this.setState({
             zoom: this.map.getZoom()
@@ -171,8 +139,7 @@ class Photo extends Component {
 
 function mapStateToProps(state){
     return{
-        schools: state.schools.single,
-        center: state.center.center
+        schools: state.schools.single
     }
 }
-export default connect(mapStateToProps, {searchOneSchool})(Photo);
+export default connect(mapStateToProps, {schoolURL})(Photo);

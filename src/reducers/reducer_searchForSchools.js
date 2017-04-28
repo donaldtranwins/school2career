@@ -11,7 +11,6 @@ export default function(state = defaultState, action){ // if undefined set to de
           console.log('all schools action payload: ', action.payload.data.data);
         return { ...state, all: action.payload };
       case ONE_SCHOOL:
-          console.log('action payload: ', action.payload.data.data);
         return { ...state, single: action.payload.data.data };
 
     default:
