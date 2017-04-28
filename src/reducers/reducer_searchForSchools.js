@@ -7,6 +7,7 @@ const defaultState = {
 
 export default function(state = defaultState, action){ // if undefined set to default_state
   switch(action.type){
+
       case FETCH_SCHOOLS:
           console.log('all schools action payload: ', action.payload.data.data);
         return { ...state, all: action.payload };
@@ -17,3 +18,5 @@ export default function(state = defaultState, action){ // if undefined set to de
       return state;
   }
 }
+
+

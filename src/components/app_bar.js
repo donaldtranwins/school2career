@@ -8,7 +8,15 @@ import { Link } from 'react-router';
  * By default, the left icon is a navigation-menu.
  */
 
+const styles = {
+    stylesTab: {
+        marginRight: '25px'
+    }
+};
+
 class NavBar extends Component {
+
+
 
     render() {
         return(
@@ -17,8 +25,8 @@ class NavBar extends Component {
                 showMenuIconButton={false}
                 iconElementRight={
                     <Tabs>
-                        <Tab label="Home" containerElement={<Link to="/home"/>}/>
-                        <Tab label="About" containerElement={<Link to="/about"/>}/>
+                        <Tab style={styles.stylesTab} className="navBarLink" label="Home" containerElement={<Link to="/home"/>}/>
+                        <Tab style={styles.stylesTab} className="navBarLink" label="About" containerElement={<Link to="/about"/>}/>
                     </Tabs>
                 }
             />
@@ -28,17 +36,3 @@ class NavBar extends Component {
 
 export default NavBar;
 
-
-// export default () => (
-//     <nav className="navbar navbar-inverse bg-inverse">
-//         <ul className="navbar-nav">
-//             <li className="nav-item">
-//                 <Link to="/" className="nav-link">Home</Link>
-//             </li>
-//             <li className="nav-item">
-//                 <Link to="/new-todo" className="nav-link">Create New Todo</Link>
-//             </li>
-//         </ul>
-//     </nav>
-//
-// )
