@@ -1,1 +1,3 @@
-dist/server/class/connectDb.php
+.idea
+.DS_Store
+node_modules
