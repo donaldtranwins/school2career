@@ -1,8 +1,7 @@
 <?php
     spl_autoload_register(function ($class_name) {
-        include './class/'.$class_name . '.php';
+        require_once '../../server/includes/'.$class_name . '.php';
     });
-//    require './class/connectDb.php';
     header::declare();
 
     if (!empty($_SERVER['CONTENT_TYPE'])){

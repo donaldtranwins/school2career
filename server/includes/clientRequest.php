@@ -33,18 +33,12 @@ class clientRequest{
             }
         }
 
-
-        foreach ($this->output['schools'] as $schools ){
-            $schools['distance'][]= $this->getDistance($this->values['latLng']['lat'],$this->values['latLng']['lng'],floatval($schools['lat']),floatval($schools['lng']));
+        foreach ($this->output['schools'] as $row=>$school ){
+            $this->output['schools'][$row]['distance'] = $this->getDistance($this->values['latLng']['lat'],$this->values['latLng']['lng'],floatval($school['lat']),floatval($school['lng']));
         }
 
-//        usort($this->output['data'], array($this, "cmp"));
-        var_dump($this->output['schools']);
-
-
-
-
-//        return json_encode($this->output);
+        usort($this->output['schools'], array($this, "cmp"));
+        return json_encode($this->output);
     }
 
     public function getDistance($centerLatitude, $centerLongitude, $schoolLatitude, $schoolLongitude) {
@@ -60,8 +54,8 @@ class clientRequest{
 
     }
 
-    function cmp($a, $b){
-        return $a['distance'] < $b['distance'] ? 1 : -1;
+    public function cmp($a, $b){
+        return $a['distance'] < $b['distance'] ? -1 : 1;
     }
 }
 
