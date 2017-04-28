@@ -48,7 +48,7 @@ CREATE TABLE `school_query` (
   `prog_health` float UNSIGNED NOT NULL DEFAULT '0',
   `prog_history` float UNSIGNED NOT NULL DEFAULT '0',
   `prog_humanities` float UNSIGNED NOT NULL DEFAULT '0',
-  `prog_law_enfor` float UNSIGNED NOT NULL DEFAULT '0',
+  `prog_law_enf_secur` float UNSIGNED NOT NULL DEFAULT '0',
   `prog_legal` float UNSIGNED NOT NULL DEFAULT '0',
   `prog_library_sci` float UNSIGNED NOT NULL DEFAULT '0',
   `prog_linguistics` float UNSIGNED NOT NULL DEFAULT '0',
@@ -144,6 +144,7 @@ CREATE TABLE `school_query` (
   `deg_transportation_4` tinyint(1) NOT NULL DEFAULT '0',
   `deg_vis_perf_arts_2` tinyint(1) NOT NULL DEFAULT '0',
   `deg_vis_perf_arts_4` tinyint(1) NOT NULL DEFAULT '0'
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `school_query`

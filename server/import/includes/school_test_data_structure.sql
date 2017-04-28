@@ -50,8 +50,7 @@ CREATE TABLE `school_data` (
   `tuition_in` mediumint(5) UNSIGNED NOT NULL DEFAULT '0',
   `tuition_out` mediumint(5) UNSIGNED NOT NULL DEFAULT '0',
   `aid_grant` float UNSIGNED DEFAULT NULL,
-  `aid_loan` float UNSIGNED DEFAULT NULL,
-  `online` int(1) UNSIGNED NOT NULL DEFAULT '1'
+  `aid_loan` float UNSIGNED DEFAULT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
