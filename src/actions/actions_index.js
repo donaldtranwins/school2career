@@ -39,7 +39,6 @@ export function toggleMap(value) {
 }
 
 export function userInput(value){
-    console.log('userInput action: ', value);
     return {
         type: USER_INPUT,
         payload: value
@@ -47,7 +46,6 @@ export function userInput(value){
 }
 
 export function mapBoundsInput(value){
-    // console.log('mapBoundsInput: ', value)
     return {
         type: MAP_BOUNDS_INPUT,
         payload: value

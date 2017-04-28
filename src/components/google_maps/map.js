@@ -28,7 +28,6 @@ class GMap extends Component {
 
     };
     initMap(){
-        console.log('map inited')
         const data = this.props.schools.all.data;
         const userInput = this.props.userInput.value;
         this.clearMarkers();
