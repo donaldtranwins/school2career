@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchOneSchool } from '../../actions/actions_index';
-import Photo from './places_image';
+import Map from './places_image';
+import AppBar from '../app_bar';
+import Paper from 'material-ui/Paper';
 
 class School extends Component {
 
@@ -10,52 +12,80 @@ class School extends Component {
     }
 
     render() {
-        let list;
-        const data = this.props.schools;
+        let data = this.props.schools;
+        console.log('data', data);
         if(!data){
-            list = () => { return <p>Loading...</p>};
+            return <p>Loading...</p>
+        }
+        data = data[0];
+        console.log("data", data);
+        //Admissions Rate Math
+        let admissionRate = parseFloat(data.ADM_RATE);
+        if (parseFloat(admissionRate) > 0) {
+            admissionRate = admissionRate * 100;
         } else {
-            return (
-                <div>
-                    <h2>TITLE</h2>
-                    <Photo/>
-                </div>
-            );
-        };
-        return(
+            admissionRate = 'Admissions Rate Is Not Available';
+        }
+        //SAT SCORE
+        let satAvg = parseInt(data.SAT_AVG);
+        if (satAvg===0) {
+            satAvg = "SAT Score Average Is Not Available";
+        }
+        //School Type
+        let instType = data.CONTROL;
+        instType = parseInt(instType);
+        switch (instType) {
+            case 1:
+                instType = "Public";
+                break;
+            case 2:
+                instType = "Private (nonprofit)";
+                break;
+            case 3:
+                instType = "Private (for-profit)";
+                break;
+        }
+
+
+        return (
             <div>
-                <div id="schoolList" className="listContainer hidden">
-                    <h2>Temp</h2>
+                <AppBar/>
+                <div className="container">
+                    <img className="schoolImg col-sm-12 offset-lg-1 col-lg-10 " src={this.props.schoolImgURL} />
+                    <div className="schoolInfo">
+                        <h2>{data.INSTNM} </h2>
+                        <h4>{data.CITY}, {data.STABBR}</h4>
+                        <div className="row">
+                        <h5 className="webAddress col-md-3"><a target="_blank" href={'http://' + data.INSTURL}>{data.INSTURL}</a></h5>
+                        <h5 className="col-md-3">{instType} School</h5>
+                        </div>
+                    </div>
+                    <Map id="mapShowing"/>
+                    <div className="scores col-sm">
+                        <Paper className="statsWrapper">
+                            <div className="row">
+                                <h4 className="col-md-4">Admissions Rate: {admissionRate}%</h4>
+                                <h4 className="col-md-4">SAT Average: {satAvg}</h4>
+                                <h4 className="col-md-4">Undergraduate Size: {data.UGDS} students</h4>
+                            </div>
+                            <br/>
+                            <div className="row">
+                                <h4 className="col-md-6">Tuition (in state): ${data.TUITIONFEE_IN}</h4>
+                                <h4 className="col-md-6">Tuition (out of state): ${data.TUITIONFEE_OUT}</h4>
+                            </div>
+                        </Paper>
+                    </div>
                 </div>
             </div>
         );
     }
-            //
-            // if (!todo) {
-            //     return (<h3>Loading...</h3>);
-            // }
-            //
-            // return(
-            //     <div>
-            //         <h2>{todo.title}</h2>
-            //         <p>{todo.details}</p>
-            //         <p className={todo.complete ? "text-success" : "text-danger"}>{todo.complete ? "To Do Item Complete" : "To Do Item Incomplete"}</p>
-            //         <p>Created: {this.toTimeString(todo.created)}</p>
-            //         <p>Complete: {todo.complete ? this.toTimeString(todo.completed) : "Not Complete"}</p>
-            //         <hr/>
-            //         <button onClick={() => {this.handleDelete(todo._id)}} className="btn btn-outline-danger">Delete To Do Item</button>
-            //         <button onClick={()=> {this.handleToggle(todo._id)}} className="btn btn-outline-success" >{ todo.complete ? "Re-Open" : "Complete Task" }</button>
-            //     </div>
-            // );
-
-
 
 }
 
 function mapStateToProps(state) {
-    console.log("state in map", state);
     return {
-        schools: state.schools.single
+        schools: state.schools.single,
+        schoolImgURL: state.schoolImgURL.image
     };
 }
 
