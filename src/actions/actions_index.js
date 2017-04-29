@@ -1,5 +1,5 @@
 import axios from 'axios';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT, SCHOOL_IMAGE, MAP_BOUNDS_INPUT } from './actions_types';
 
@@ -21,7 +21,8 @@ export function searchForSchools(value) {
 }
 
 export function searchOneSchool(value) {
-    const request = axios.post(`${ONESCHOOL_URL}`);
+    const newVal = JSON.stringify(value);
+    const request = axios.post(`${ONESCHOOL_URL}`, newVal);
     return {
         type: ONE_SCHOOL,
         payload: request
