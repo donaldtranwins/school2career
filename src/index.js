@@ -9,6 +9,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './components/app';
 import MainPage from './components/main_page';
 import School from './components/individual_school/individual_school';
+import About from './components/about_us/about';
 import rootReducer from './reducers/reducers_index';
 import LandingFormPaper from './components/landing_form/landing_form_paper';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -51,7 +52,7 @@ ReactDOM.render(
                     <IndexRoute component={paperForm}/>
                     <Route path="home" component={MainPage}/>
                     <Route path="school/:id" component={School}/>
-                    {/*<Route path="about" component={About}/>*/}
+                    <Route path="about" component={About}/>
                 </Route>
             </Router>
         </Provider>

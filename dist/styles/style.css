@@ -1,8 +1,9 @@
 /*appbar*/
 
 .navBarLink {
-    margin-right: 15px;
+    color: black !important;
 }
+
 
 /*Main Page Form styles*/
 .checkbox {
@@ -152,10 +153,6 @@ body,
     text-align: center;
     margin-top: 15px;
 }
-.mfChart {
-    text-align: center;
-    border: 1px solid blue;
-}
 .degreePaper {
     padding: 15px;
     margin: 5px;
@@ -163,4 +160,7 @@ body,
 }
 .degree {
     color: white;
+}
+.mfChart, .circleChart {
+    margin: 0 auto;
 }
