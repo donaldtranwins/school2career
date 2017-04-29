@@ -51,16 +51,19 @@ class GMap extends Component {
         }
     }
     componentDidMount(){
+                console.log('cdm')
         this.initMap();
     }
-    nextProps = null;
     componentWillReceiveProps(nextProps){
+        console.log('cwrp')
         if(nextProps.center.lat !== this.props.center.lat){
             this.initMap();
             this.createSchoolMarkers();
         }
+        debugger;
+        // this.createSchoolMarkers();
+
     }
-    componentDidRec
     // clean up event listeners when component unmounts
     componentDidUnMount() {
         google.maps.event.clearListeners(map, 'zoom_changed')
