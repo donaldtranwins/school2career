@@ -1,4 +1,6 @@
 <?php
+// DEPRECATED
+
 
 // Changes Query table
 // ALTER TABLE `school_query` CHANGE COLUMN `uid` `uid_q` int(8) UNSIGNED NOT NULL;
