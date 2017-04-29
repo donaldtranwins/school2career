@@ -182,17 +182,20 @@ class MajorChart extends Component {
     };
     render () {
         return (
-            <PieChart width={800} height={400} onMouseEnter={this.onPieEnter}>
-            <Pie
-            activeIndex={this.state.activeIndex}
-            activeShape={this.renderActiveShape}
-            data={data}
-            cx={400}
-            cy={200}
-            innerRadius={80}
-            outerRadius={100}
-            fill="#338833"/>
-            </PieChart>
+            <div className="circleChart hidden-sm-down">
+                <h3 className="titleMenWomanChart">Percentage of Degrees Awarded </h3>
+                <PieChart width={800} height={400} onMouseEnter={this.onPieEnter}>
+                <Pie
+                activeIndex={this.state.activeIndex}
+                activeShape={this.renderActiveShape}
+                data={data}
+                cx={400}
+                cy={200}
+                innerRadius={120}
+                outerRadius={150}
+                fill="#338833"/>
+                </PieChart>
+            </div>
         )
     }
 }

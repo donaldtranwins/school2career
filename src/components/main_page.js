@@ -4,7 +4,6 @@ import Drawer from 'material-ui/Drawer';
 
 import SchoolList from './main_school_list/school_list'
 import PaperExampleSimple from './main_school_list/main_paper'
-import AppBar from './app_bar'
 import Map from './google_maps/map';
 import MapButton from './button_legend/legend';
 
@@ -23,7 +22,6 @@ class drawerForm extends Component {
     render() {
         return (
             <div>
-                <AppBar/>
                 <div className="refineBox" onTouchTap={this.handleToggle}>
                     <div className="searchIcon refineText">
                         <i className="material-icons searchIcon" >search</i> refine search

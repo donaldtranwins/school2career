@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchOneSchool } from '../../actions/actions_index';
 import Map from './places_image';
-import AppBar from '../app_bar';
 import Paper from 'material-ui/Paper';
 import MfChart from './male_female_chart';
 import MajorChart from './majors_percentage';
@@ -51,7 +50,6 @@ class School extends Component {
 
         return (
             <div>
-                <AppBar/>
                 <div className="container">
                     <img className="schoolImg col-sm-12 offset-lg-1 col-lg-10 " src={this.props.schoolImgURL} />
                     <div className="schoolInfo">

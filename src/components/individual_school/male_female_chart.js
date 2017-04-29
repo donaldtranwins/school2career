@@ -17,9 +17,9 @@ class mfChart extends Component {
             {name: 'ratio of male to female', m: male, f: female}
             ];
         return (
-            <div>
+            <div className="mfChart">
                 <h3 className="titleMenWomanChart">Percentage of Men To Women </h3>
-                <BarChart className="mfChart"  width={500} height={300} data={chart}
+                <BarChart width={500} height={300} data={chart}
                           margin={{top: 5, right: 25, left: 0, bottom: 5}}>
                     <XAxis dataKey="name"/>
                     <YAxis/>
