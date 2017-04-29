@@ -19,8 +19,9 @@ class GMap extends Component {
             <div className='GMap-canvas' ref="mapCanvas"></div>
         </div>
     }
-  
+
     initMap(){
+        console.log('initMap');
         const data = this.props.schools.all.data;
         const userInput = this.props.userInput.value;
         this.clearMarkers();
@@ -39,7 +40,7 @@ class GMap extends Component {
         const data = this.props.schools.all.data;
         if(data){
 
-      
+
             //get photo infomration, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
 
@@ -54,11 +55,12 @@ class GMap extends Component {
     }
     nextProps = null;
     componentWillReceiveProps(nextProps){
-        this.createSchoolMarkers();
         if(nextProps.center.lat !== this.props.center.lat){
             this.initMap();
+            this.createSchoolMarkers();
         }
     }
+    componentDidRec
     // clean up event listeners when component unmounts
     componentDidUnMount() {
         google.maps.event.clearListeners(map, 'zoom_changed')

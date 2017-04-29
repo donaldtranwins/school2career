@@ -21,7 +21,8 @@ export function searchForSchools(value) {
 }
 
 export function searchOneSchool(value) {
-    const request = axios.post(`${ONESCHOOL_URL}`);
+    const newVal = JSON.stringify(value);
+    const request = axios.post(`${ONESCHOOL_URL}`, newVal);
     return {
         type: ONE_SCHOOL,
         payload: request
