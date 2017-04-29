@@ -10,7 +10,6 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -50,14 +49,9 @@ CREATE TABLE `school_data` (
   `tuition_in` mediumint(5) UNSIGNED NOT NULL DEFAULT '0',
   `tuition_out` mediumint(5) UNSIGNED NOT NULL DEFAULT '0',
   `aid_grant` float UNSIGNED DEFAULT NULL,
-  `aid_loan` float UNSIGNED DEFAULT NULL,
-  `online` int(1) UNSIGNED NOT NULL DEFAULT '1'
+  `aid_loan` float UNSIGNED DEFAULT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for dumped tables
---
 
 --
 -- Indexes for table `school_data`

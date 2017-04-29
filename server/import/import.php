@@ -1,16 +1,16 @@
 <?php
 print("hi <br>");
 
+set_time_limit(120);
+
 /** @var    boolean $ignore_header  If true, will run fgetcsv once */
 /** @var    string  $filename       Path to csv file to import*/
 $ignore_header = true;
-$filename = 'includes/smalltest.csv';
+$filename = 'includes/private/MERGED2014_15_PP.csv';
 
-$handle = fopen($filename, "r")
-    or exit("Could not open file ($filename)");
-
-/** Require:  Imports a @var object $conn       Value returned from mysqli_connect
+/** Require:  Imports a @var object $conn       Object returned from mysqli_connect
     Include:  Imports a @var array  $columns    Columns to import from the CSV */
+$handle = fopen($filename, "r") or exit("Could not open file ($filename)");
 //require("includes/private/connect_to_dev.php");
 require("includes/connect_to_localbox.php");    // $conn
 require("includes/columns_to_import.php");      // $columns
@@ -19,70 +19,88 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
+$initiateQuery = file_get_contents('includes/create_both_tables.sql');
+if (mysqli_query($conn,$initiateQuery)){
+    unset($initiateQuery);
+} else {
+    die('Could not create initial tables');
+};
+
+
 if($ignore_header){
-    fgetcsv($handle, "r"); //run once to skip the header
+    fgetcsv($handle, "r");
     $ignore_header = false;
 }
 
 $row = 1;
 while($data = fgetcsv($handle, "r")){
     $row++;
-    print_r($data);
-    if ($data[2]===7329 || $data[289]===1 || empty($data[21]) || empty($data[22]) ) { //ITT Tech, Distance Only, No lat, No lng
-        print "<br>Skipping #$row: {$data[3]}";
+    if ($data[2]==="7329" || $data[289]==="1" || $data[21]==="NULL" || $data[22]==="NULL" ) { //ITT Tech, Distance Only, No lat, No lng
+        print "<br>Skipping row #$row: {$data[3]}";
         continue;
     }
-    print "<br>Row $row from CSV: ";
 
     //$query = "INSERT INTO `database` ({$columns[0]}`, `{$columns[3]}`) VALUES (\"{$data[0]}\", \"{$data[3]}\")";
     $insertStart = "INSERT INTO `";
-    $queryColumns = "school_query` (";
     $dataColumns = "school_data` (";
-    $queryValues = ') VALUES (';
+    $queryColumns = "school_query` (";
     $dataValues = ') VALUES (';
+    $queryValues = ') VALUES (';
     $insertEnd = ');';
-
-    $firstValue = true;
+//    $firstValue = true;
     foreach($columns as $index => $column) {
-        if ($firstValue){
-            $firstValue = false;
-        } else {
-            $queryColumns .= ', ';
-            $dataColumns .= ', ';
-            $queryValues .= ', ';
-            $dataValues .= ', ';
-        }
-        if ($column['table'] === 'school_query') {
-            $queryColumns .= "`$column[name]`";
-            $queryValues .= "\"{$data[$index]}\"";
-        } else if ($column['table'] === 'school_data') {
-            $dataColumns .= "`$column[name]`";
-            $dataValues .= "\"{$data[$index]}\"";
-        } else if ($column['table'] === 'both') {
-            $queryColumns .= "`$column[name]`";
-            $queryValues .= "\"{$data[$index]}\"";
-            $dataColumns .= "`$column[name]`";
-            $dataValues .= "\"{$data[$index]}\"";
+//        if ($firstValue){
+//            $firstValue = false;
+//        } else {
+//            $dataColumns .= ', ';
+//            $queryColumns .= ', ';
+//            $dataValues .= ', ';
+//            $queryValues .= ', ';
+//        }
+//        if ($column['table'] === 'school_query') {
+//            $queryColumns .= ", `$column[name]`";
+//            $queryValues .= ", \"{$data[$index]}\"";
+//        } else if ($column['table'] === 'school_data') {
+//            $dataColumns .= ", `$column[name]`";
+//            $dataValues .= ", \"{$data[$index]}\"";
+//        } else if ($column['table'] === 'both') {
+//            $dataColumns .= "`$column[name]`";
+//            $dataValues .= "\"{$data[$index]}\"";
+//            $queryColumns .= "`$column[name]`";
+//            $queryValues .= "\"{$data[$index]}\"";
+//        }
+        switch ($column['table']){
+            case 'both':
+                $dataColumns .= "`$column[name]`";
+                $dataValues .= "\"{$data[$index]}\"";
+            case 'school_query':
+                $queryColumns .= ", `$column[name]`";
+                $queryValues .= ", \"{$data[$index]}\"";
+                break;
+            case 'school_data':
+                $dataColumns .= "`$column[name]`";
+                $dataValues .= "\"{$data[$index]}\"";
+                break;
+            default:
+                continue;
         }
     }
-    $insertToQuery = $insertStart.$queryColumns.$queryValues.$insertEnd;
     $insertToData = $insertStart.$dataColumns.$dataValues.$insertEnd;
-    print "<br>======= ".$insertToData." ==========";
-    print "<br>======= ".$insertToQuery." ==========";
-    $result = mysqli_query($conn,$insertToData);
-    $result = mysqli_query($conn,$insertToQuery);
-    if(empty($result)){
-        $result = 'database connection error';
-    } else {
-        $inserted = mysqli_affected_rows($conn);
-        $result = $inserted === 1 ? 'SUCCESS' : "some sort of insert error on Row $row" ;
+    $insertToQuery = $insertStart.$queryColumns.$queryValues.$insertEnd;
+
+
+    if (!mysqli_query($conn,$insertToData)){
+        printf("<br>Error: %s\n", mysqli_error($conn));
     }
-    print "<br>++++++++ ".$result." ++++++++";
+
+    if (!mysqli_query($conn,$insertToQuery)){
+        print "<br>".mysqli_errno($conn).mysqli_error($conn);
+    }
 }
 
 
-//include("truncate.php"); //comment in, if you want to modify the data after creating everything
-
+//include("truncate.php"); //deprecated  //comment in, if you want to modify the data after creating everything
+mysqli_query($conn,"ALTER TABLE `school_query` CHANGE COLUMN `uid` `uid_q` int(8) UNSIGNED NOT NULL;");
 
 mysqli_close($conn);
 fclose($handle);
