@@ -148,11 +148,19 @@ body,
 .statsWrapper {
     padding: 15px;
 }
-.titleMenWomanChart {
+.titleMenWomanChart, .degreeList {
     text-align: center;
     margin-top: 15px;
 }
 .mfChart {
     text-align: center;
     border: 1px solid blue;
+}
+.degreePaper {
+    padding: 15px;
+    margin: 5px;
+    background-color: mediumseagreen;
+}
+.degree {
+    color: white;
 }
