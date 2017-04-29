@@ -1,5 +1,5 @@
 <?php
-// DEPRECATED
+// DEPRECATED,  all of these are incorporated in the import script.
 
 
 // Changes Query table

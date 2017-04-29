@@ -28,7 +28,7 @@ if (mysqli_query($conn,$initiateQuery)){
 
 
 if($ignore_header){
-    fgetcsv($handle, "r"); //run once to skip the header
+    fgetcsv($handle, "r");
     $ignore_header = false;
 }
 
@@ -57,6 +57,18 @@ while($data = fgetcsv($handle, "r")){
 //            $dataValues .= ', ';
 //            $queryValues .= ', ';
 //        }
+//        if ($column['table'] === 'school_query') {
+//            $queryColumns .= ", `$column[name]`";
+//            $queryValues .= ", \"{$data[$index]}\"";
+//        } else if ($column['table'] === 'school_data') {
+//            $dataColumns .= ", `$column[name]`";
+//            $dataValues .= ", \"{$data[$index]}\"";
+//        } else if ($column['table'] === 'both') {
+//            $dataColumns .= "`$column[name]`";
+//            $dataValues .= "\"{$data[$index]}\"";
+//            $queryColumns .= "`$column[name]`";
+//            $queryValues .= "\"{$data[$index]}\"";
+//        }
         switch ($column['table']){
             case 'both':
                 $dataColumns .= "`$column[name]`";
@@ -72,50 +84,18 @@ while($data = fgetcsv($handle, "r")){
             default:
                 continue;
         }
-        if ($column['table'] === 'school_query') {
-            $queryColumns .= ", `$column[name]`";
-            $queryValues .= ", \"{$data[$index]}\"";
-        } else if ($column['table'] === 'school_data') {
-            $dataColumns .= ", `$column[name]`";
-            $dataValues .= ", \"{$data[$index]}\"";
-        } else if ($column['table'] === 'both') {
-            $dataColumns .= "`$column[name]`";
-            $dataValues .= "\"{$data[$index]}\"";
-            $queryColumns .= "`$column[name]`";
-            $queryValues .= "\"{$data[$index]}\"";
-        }
     }
     $insertToData = $insertStart.$dataColumns.$dataValues.$insertEnd;
     $insertToQuery = $insertStart.$queryColumns.$queryValues.$insertEnd;
 
 
-//    print "<br>======= ".$insertToData." ==========";
-    $dataResult = mysqli_query($conn,$insertToData);
-    if (!$dataResult){
+    if (!mysqli_query($conn,$insertToData)){
         printf("<br>Error: %s\n", mysqli_error($conn));
     }
-//    if(empty($dataResult)){
-//        $dataResult = 'database error';
-//    } else {
-//        $dataInserted = mysqli_affected_rows($conn);
-//        $dataResult = $dataInserted === 1 ? 'SUCCESS' : "some sort of insert error on Row $row" ;
-//    }
-//    print "<br>++++++++ ".$dataResult." ++++++++";
-//    print "<br>======= ".$insertToQuery." ==========";
 
-
-
-    $queryResult = mysqli_query($conn,$insertToQuery);
-    if (!$queryResult){
+    if (!mysqli_query($conn,$insertToQuery)){
         print "<br>".mysqli_errno($conn).mysqli_error($conn);
     }
-//    if(empty($queryResult)){
-//        $queryResult = 'database error';
-//    } else {
-//        $queryInserted = mysqli_affected_rows($conn);
-//        $queryResult = $queryInserted === 1 ? 'SUCCESS' : "some sort of insert error on Row $row" ;
-//    }
-//    print "<br>++++++++ ".$queryResult." ++++++++";
 }
 
 
