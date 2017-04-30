@@ -6,11 +6,11 @@ $columns = [
         'type' => 'number',
         'table' => 'both'
     ],
-//    1 => [
-//        'name' => 'id_school',
-//        'type' => 'number',
-//        'table' => 'school_data'
-//    ],
+    1 => [
+        'name' => 'id_school',
+        'type' => 'number',
+        'table' => 'school_data'
+    ],
     6 => [
         'name' => 'zip',
         'type' => 'string',
@@ -26,11 +26,11 @@ $columns = [
         'type' => 'number',
         'table' => 'school_query'
     ],
-//    2 => [
-//        'name' => 'id_system',
-//        'type' => 'number',
-//        'table' => 'school_data'
-//    ],
+    2 => [
+        'name' => 'id_system',
+        'type' => 'number',
+        'table' => 'school_data'
+    ],
     3 => [
         'name' => 'name',
         'type' => 'string',

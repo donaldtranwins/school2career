@@ -23,8 +23,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `metadata_imported` (
   `uid` int(8) UNSIGNED NOT NULL,
-#   `id_school` int(8) UNSIGNED NOT NULL,
-#   `id_system` int(5) UNSIGNED NOT NULL,
+  `id_school` int(8) UNSIGNED NOT NULL,
+  `id_system` int(5) UNSIGNED NOT NULL,
   `name` varchar(91) NOT NULL,
   `city` varchar(24) NOT NULL,
   `state` varchar(2) NOT NULL,
