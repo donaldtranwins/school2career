@@ -16,16 +16,16 @@ require("includes/connect_to_localbox.php");    // $conn
 require("includes/columns_to_import.php");      // $columns
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
+    die();
 }
 
-$initiateQuery = file_get_contents('includes/create_both_tables.sql');
-if (mysqli_query($conn,$initiateQuery)){
-    unset($initiateQuery);
-} else {
-    die('Could not create initial tables');
-};
-
+//$initiateQuery = file_get_contents('includes/create_both_tables.sql');
+//if (mysqli_query($conn,$initiateQuery)){
+//    unset($initiateQuery);
+//} else {
+//    print $initiateQuery;
+//    die('Could not create initial tables');
+//};
 
 if($ignore_header){
     fgetcsv($handle, "r");
@@ -42,8 +42,8 @@ while($data = fgetcsv($handle, "r")){
 
     //$query = "INSERT INTO `database` ({$columns[0]}`, `{$columns[3]}`) VALUES (\"{$data[0]}\", \"{$data[3]}\")";
     $insertStart = "INSERT INTO `";
-    $dataColumns = "school_data` (";
-    $queryColumns = "school_query` (";
+    $dataColumns = "metadata_imported` (";
+    $queryColumns = "query_imported` (";
     $dataValues = ') VALUES (';
     $queryValues = ') VALUES (';
     $insertEnd = ');';
@@ -57,32 +57,17 @@ while($data = fgetcsv($handle, "r")){
 //            $dataValues .= ', ';
 //            $queryValues .= ', ';
 //        }
-//        if ($column['table'] === 'school_query') {
-//            $queryColumns .= ", `$column[name]`";
-//            $queryValues .= ", \"{$data[$index]}\"";
-//        } else if ($column['table'] === 'school_data') {
-//            $dataColumns .= ", `$column[name]`";
-//            $dataValues .= ", \"{$data[$index]}\"";
-//        } else if ($column['table'] === 'both') {
-//            $dataColumns .= "`$column[name]`";
-//            $dataValues .= "\"{$data[$index]}\"";
-//            $queryColumns .= "`$column[name]`";
-//            $queryValues .= "\"{$data[$index]}\"";
-//        }
-        switch ($column['table']){
-            case 'both':
-                $dataColumns .= "`$column[name]`";
-                $dataValues .= "\"{$data[$index]}\"";
-            case 'school_query':
-                $queryColumns .= ", `$column[name]`";
-                $queryValues .= ", \"{$data[$index]}\"";
-                break;
-            case 'school_data':
-                $dataColumns .= "`$column[name]`";
-                $dataValues .= "\"{$data[$index]}\"";
-                break;
-            default:
-                continue;
+        if ($column['table'] === 'query_imported') {
+            $queryColumns .= ", `$column[name]`";
+            $queryValues .= ", \"{$data[$index]}\"";
+        } else if ($column['table'] === 'metadata_imported') {
+            $dataColumns .= ", `$column[name]`";
+            $dataValues .= ", \"{$data[$index]}\"";
+        } else if ($column['table'] === 'both') {
+            $dataColumns .= "`$column[name]`";
+            $dataValues .= "\"{$data[$index]}\"";
+            $queryColumns .= "`$column[name]`";
+            $queryValues .= "\"{$data[$index]}\"";
         }
     }
     $insertToData = $insertStart.$dataColumns.$dataValues.$insertEnd;
@@ -100,7 +85,6 @@ while($data = fgetcsv($handle, "r")){
 
 
 //include("truncate.php"); //deprecated  //comment in, if you want to modify the data after creating everything
-mysqli_query($conn,"ALTER TABLE `school_query` CHANGE COLUMN `uid` `uid_q` int(8) UNSIGNED NOT NULL;");
 
 mysqli_close($conn);
 fclose($handle);
