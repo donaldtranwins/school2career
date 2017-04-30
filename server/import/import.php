@@ -90,11 +90,11 @@ while($data = fgetcsv($handle, "r")){
 
 
     if (!mysqli_query($conn,$insertToData)){
-        printf("<br>Error: %s\n", mysqli_error($conn));
+        printf("<br>Error: %s\n".mysqli_error($conn), mysqli_errno($conn));
     }
 
     if (!mysqli_query($conn,$insertToQuery)){
-        print "<br>".mysqli_errno($conn).mysqli_error($conn);
+        printf("<br>Error: %s\n".mysqli_error($conn), mysqli_errno($conn));
     }
 }
 
