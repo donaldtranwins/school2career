@@ -57,32 +57,17 @@ while($data = fgetcsv($handle, "r")){
 //            $dataValues .= ', ';
 //            $queryValues .= ', ';
 //        }
-//        if ($column['table'] === 'school_query') {
-//            $queryColumns .= ", `$column[name]`";
-//            $queryValues .= ", \"{$data[$index]}\"";
-//        } else if ($column['table'] === 'school_data') {
-//            $dataColumns .= ", `$column[name]`";
-//            $dataValues .= ", \"{$data[$index]}\"";
-//        } else if ($column['table'] === 'both') {
-//            $dataColumns .= "`$column[name]`";
-//            $dataValues .= "\"{$data[$index]}\"";
-//            $queryColumns .= "`$column[name]`";
-//            $queryValues .= "\"{$data[$index]}\"";
-//        }
-        switch ($column['table']){
-            case 'both':
-                $dataColumns .= "`$column[name]`";
-                $dataValues .= "\"{$data[$index]}\"";
-            case 'school_query':
-                $queryColumns .= ", `$column[name]`";
-                $queryValues .= ", \"{$data[$index]}\"";
-                break;
-            case 'school_data':
-                $dataColumns .= "`$column[name]`";
-                $dataValues .= "\"{$data[$index]}\"";
-                break;
-            default:
-                continue;
+        if ($column['table'] === 'school_query') {
+            $queryColumns .= ", `$column[name]`";
+            $queryValues .= ", \"{$data[$index]}\"";
+        } else if ($column['table'] === 'school_data') {
+            $dataColumns .= ", `$column[name]`";
+            $dataValues .= ", \"{$data[$index]}\"";
+        } else if ($column['table'] === 'both') {
+            $dataColumns .= "`$column[name]`";
+            $dataValues .= "\"{$data[$index]}\"";
+            $queryColumns .= "`$column[name]`";
+            $queryValues .= "\"{$data[$index]}\"";
         }
     }
     $insertToData = $insertStart.$dataColumns.$dataValues.$insertEnd;
@@ -100,7 +85,6 @@ while($data = fgetcsv($handle, "r")){
 
 
 //include("truncate.php"); //deprecated  //comment in, if you want to modify the data after creating everything
-mysqli_query($conn,"ALTER TABLE `school_query` CHANGE COLUMN `uid` `uid_q` int(8) UNSIGNED NOT NULL;");
 
 mysqli_close($conn);
 fclose($handle);
