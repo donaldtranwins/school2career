@@ -5,8 +5,7 @@ class clientRequest{
     private $locationQuery;
     function __construct($passedValues){
         $this->values = $passedValues;
-        $this->locationQuery = "SELECT * FROM `school_data` WHERE (`lat` BETWEEN " .$this->values['mapBounds']['sw']['lat']. " AND " . $this->values['mapBounds']['ne']['lat'] . ") AND (`lng` BETWEEN " . $this->values['mapBounds']['sw']['lng'] . " AND ". $this->values['mapBounds']['ne']['lng'].")";
-    }
+        $this->locationQuery = "SELECT * FROM `metadata` m JOIN `query` q ON m.uid=q.uid WHERE (`lat` BETWEEN " .$this->values['mapBounds']['sw']['lat']. " AND " . $this->values['mapBounds']['ne']['lat'] . ") AND (`lng` BETWEEN " . $this->values['mapBounds']['sw']['lng'] . " AND ". $this->values['mapBounds']['ne']['lng'].")";    }
 
     public $output = [
         'success' => false,
@@ -15,6 +14,7 @@ class clientRequest{
 
 
     public function processRequest(){
+//        require_once 'realconnectDb.php';
         require_once 'connectDb.php';
         if(empty($this->values)) {
             die('invalid values');
@@ -22,7 +22,7 @@ class clientRequest{
 
         $result = $dbConn->query($this->locationQuery);
         if(empty($result)) {
-            $this->output['errors'][] = 'database error!';
+            $this->output['errors'][] = 'Query failed to reach database.';
         } else {
             if(mysqli_num_rows($result) > 0){
                 $this->output['success'] = true;
@@ -30,11 +30,13 @@ class clientRequest{
                 while($row = mysqli_fetch_assoc($result)){
                     $this->output['schools'][] = $row;
                 }
+                foreach ($this->output['schools'] as $row=>$school ){
+                    $this->output['schools'][$row]['distance'] = $this->getDistance($this->values['latLng']['lat'],$this->values['latLng']['lng'],floatval($school['lat']),floatval($school['lng']));
+                }
+            } else {
+                $this->output['success'] = true;
+                $this->output['errors'][] = 'Search returned zero results';
             }
-        }
-
-        foreach ($this->output['schools'] as $row=>$school ){
-            $this->output['schools'][$row]['distance'] = $this->getDistance($this->values['latLng']['lat'],$this->values['latLng']['lng'],floatval($school['lat']),floatval($school['lng']));
         }
 
         usort($this->output['schools'], array($this, "cmp"));
