@@ -13,9 +13,7 @@ const ONESCHOOL_URL = 'http://ninojoseph.com/api/school/data.php?action=getDataO
 const API_KEY = '';
 
 export function searchForSchools(value) {
-    console.log('value', value);
     const newVal = JSON.stringify(value);
-    console.log('newValue',newVal);
     const request = axios.post(`${BASE_URL}`, newVal);
     return {
         type: FETCH_SCHOOLS,

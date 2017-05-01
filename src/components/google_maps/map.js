@@ -21,8 +21,7 @@ class GMap extends Component {
     }
 
     initMap(){
-        console.log('initMap');
-        const data = this.props.schools;
+        // const data = this.props.schools;
         const userInput = this.props.userInput.value;
         this.clearMarkers();
         if(!userInput){
@@ -33,35 +32,32 @@ class GMap extends Component {
 
             this.map = this.createMap(userInput.latLng);
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
-            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds(this.nextProps));
+            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
         }
     }
-    createSchoolMarkers(){
-        const data = this.props.schools.all.data;
+    createSchoolMarkers(nextProps){
+        console.log("nextProps", nextProps);
+        const data = nextProps.schools.all;
+        console.log('data', data);
         if(data){
-
-
             //get photo infomration, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
-
-            for (var i = 0; i < data.data.length; i++) {
-                this.marker = this.createMarker(data.data[i]);
-                this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
+            for (var i = 0; i < data.length; i++) {
+                this.marker = this.createMarker(data[i]);
+                this.infoWindow = this.createInfoWindow(this.marker, data[i]);
             }
         }
     }
     componentDidMount(){
-                console.log('cdm')
         this.initMap();
     }
     componentWillReceiveProps(nextProps){
-        console.log('cwrp')
+        console.log('this.props', this.props, "next.props", nextProps);
         if(nextProps.center.lat !== this.props.center.lat){
             this.initMap();
-            this.createSchoolMarkers();
+            this.createSchoolMarkers(nextProps);
         }
-        // this.createSchoolMarkers();
-
+        this.createSchoolMarkers(nextProps);
     }
     // clean up event listeners when component unmounts
     componentDidUnMount() {
@@ -84,7 +80,7 @@ class GMap extends Component {
     }
 
     createLatLng(pos){                      //added this function, would set the lat and lng, may
-                                             //not be needed. could potentially do this all in create markers
+                                         //not be needed. could potentially do this all in create markers
         return new google.maps.LatLng(
             pos.lat,
             pos.lng
@@ -175,12 +171,8 @@ class GMap extends Component {
                 lng: sw.lng()
             }
         };
-        if (this.props.boundsInput.mapBoundsInput === null){
-            const userInputMapBounds = this.props.userInput.value;  // TODO fix this
-            userInputMapBounds.mapBounds = mapBounds;
-            this.props.mapBoundsInput(userInputMapBounds);
-            this.props.searchForSchools(userInputMapBounds);
-        } else if (this.props.boundsInput.mapBoundsInput.mapBounds.ne.lat !== mapBounds.ne.lat) {
+        if (this.props.boundsInput.mapBoundsInput === null ||
+                this.props.boundsInput.mapBoundsInput.mapBounds.ne.lat !== mapBounds.ne.lat){
             const userInputMapBounds = this.props.userInput.value;  // TODO fix this
             userInputMapBounds.mapBounds = mapBounds;
             this.props.mapBoundsInput(userInputMapBounds);
