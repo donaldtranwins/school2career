@@ -9,9 +9,9 @@ class mfChart extends Component {
             return <p>Loading...</p>
         }
         data = data[0];
-        let male = data.UGDS_MEN * 100;
+        let male = data.demog_men * 100;
         male = Math.round(parseFloat(male));
-        let female = data.UGDS_WOMEN * 100;
+        let female = data.demog_women * 100;
         female = Math.round(parseFloat(female));
         let chart = [
             {name: 'ratio of male to female', m: male, f: female}

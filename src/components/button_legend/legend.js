@@ -17,7 +17,6 @@ class mapButton extends Component {
             mapArea.classList.remove('hidden');
             schools.classList.add('hidden');
             mainButton.innerHTML = 'Show List';
-
         }
     }
 

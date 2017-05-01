@@ -22,7 +22,7 @@ class GMap extends Component {
 
     initMap(){
         console.log('initMap');
-        const data = this.props.schools.all.data;
+        const data = this.props.schools;
         const userInput = this.props.userInput.value;
         this.clearMarkers();
         if(!userInput){
@@ -51,16 +51,18 @@ class GMap extends Component {
         }
     }
     componentDidMount(){
+                console.log('cdm')
         this.initMap();
     }
-    nextProps = null;
     componentWillReceiveProps(nextProps){
+        console.log('cwrp')
         if(nextProps.center.lat !== this.props.center.lat){
             this.initMap();
             this.createSchoolMarkers();
         }
+        // this.createSchoolMarkers();
+
     }
-    componentDidRec
     // clean up event listeners when component unmounts
     componentDidUnMount() {
         google.maps.event.clearListeners(map, 'zoom_changed')
@@ -76,8 +78,6 @@ class GMap extends Component {
 
     mapCenter(data) {
         return new google.maps.LatLng(
-            // this.props.initialCenter.lat,
-            // this.props.initialCenter.lng
             data.lat,
             data.lng
         )
@@ -86,8 +86,8 @@ class GMap extends Component {
     createLatLng(pos){                      //added this function, would set the lat and lng, may
                                              //not be needed. could potentially do this all in create markers
         return new google.maps.LatLng(
-            pos.LATITUDE,
-            pos.LONGITUDE
+            pos.lat,
+            pos.lng
         )
     }
 
@@ -125,7 +125,7 @@ class GMap extends Component {
     }
 
     createMarker(data) { //would add in (pos) as a parameter
-        const iconForSchool = this.colorForMarker(parseInt(data.UGDS));
+        const iconForSchool = this.colorForMarker(parseInt(data.size));
         const newMarker = new google.maps.Marker({
             position: this.createLatLng(data),  //this would have to change to likely take in positions and
             //then create markers for specific positions. this.createLatLng(pos);
@@ -144,9 +144,9 @@ class GMap extends Component {
 
         // let content = <div><div><h6><Link to={`/school/${data.OPEID}`}>{data.INSTNM}</Link></h6></div><div>{data.CITY}, {data.STABBR}</div><div><a target="_blank" href="http://{data.INSTURL}">data.INSTURL</a></div></div>;
 
-        let content = '<div><h6 >' + data.INSTNM + '</h6></div>'
-            + '<div>' + data.CITY + ', ' + data.STABBR + '</div>'
-            + '<div><a target="_blank" href=http://' + data.INSTURL + '>' + data.INSTURL + '</a></div>';
+        let content = '<div><h6 >' + data.name + '</h6></div>'
+            + '<div>' + data.city + ', ' + data.state + '</div>'
+            + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         // let contentString = ReactDOMServer.renderToString(<div className='InfoWindow'>{content} </div>);
         let infoWindow =  new google.maps.InfoWindow({
                 map: this.map,
@@ -195,6 +195,7 @@ class GMap extends Component {
 }
 
 function mapStateToProps(state){
+    console.log('mstp: map', state.schools)
     return{
         schools: state.schools,
         center: state.center.center,
