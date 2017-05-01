@@ -30,19 +30,25 @@ class SchoolList extends Component {
     }
     render(){
         let list;
-        const data = this.props.schools.all.data;
+        const data = this.props.schools.all;
         if(!data){
             list = () => { return <p>Loading...</p>};
         } else {
-            list = data.data.map((school, index) => {
+            list = data.map((school, index) => {
+                let admissionRate = parseFloat(school.adm_rate);
+                if (parseFloat(admissionRate) > 0) {
+                    admissionRate = (admissionRate * 100).toFixed(2);
+                } else {
+                    admissionRate = 'Admissions Rate Is Not Available';
+                }
                 return(
                     <Paper className="listOfSchools" style={style} key={index}>
                         <ul style={ul}>
-                            <li className='schoolListSchool'><Link to={`/school/${school.OPEID}`}>{school.INSTNM} </Link></li>
-                            <li className='schoolListAddressli'>{school.CITY}, </li>
-                            <li className='schoolListAddressli'>{school.STABBR}</li>
-                            <li className='schoolListUrl'><a target="_blank" href={'http://' + school.INSTURL}>{school.INSTURL}</a></li>
-                            <li>Admission Rate: {school.ADM_RATE}</li>
+                            <li className='schoolListSchool'><Link to={`/school/${school.OPEID}`}>{school.name} </Link></li>
+                            <li className='schoolListAddressli'>{school.city}, </li>
+                            <li className='schoolListAddressli'>{school.state}</li>
+                            <li className='schoolListUrl'><a target="_blank" href={'http://' + school.url}>{school.url}</a></li>
+                            <li>Admission Rate: {admissionRate}</li>
                         </ul>
                     </Paper>
                 )
