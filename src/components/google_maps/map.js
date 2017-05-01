@@ -52,7 +52,6 @@ class GMap extends Component {
         this.initMap();
     }
     componentWillReceiveProps(nextProps){
-        debugger;
         console.log('this.props', this.props, "next.props", nextProps);
         if(nextProps.center.lat !== this.props.center.lat){
             this.initMap();
