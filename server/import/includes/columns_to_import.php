@@ -56,21 +56,21 @@ $columns = [
         'type' => 'string',
         'table' => 'school_data'
     ],
-    18 => [
-        'name' => 'region',
-        'type' => 'number',
-        'table' => 'school_data'
-    ],
-    19 => [
-        'name' => 'locale',
-        'type' => 'number',
-        'table' => 'school_data'
-    ],
-    25 => [
-        'name' => 'cc_setting_size_time',
-        'type' => 'number',
-        'table' => 'school_data'
-    ],
+//    18 => [
+//        'name' => 'region',
+//        'type' => 'number',
+//        'table' => 'school_data'
+//    ],
+//    19 => [
+//        'name' => 'locale',
+//        'type' => 'number',
+//        'table' => 'school_data'
+//    ],
+//    25 => [
+//        'name' => 'cc_setting_size_time',
+//        'type' => 'number',
+//        'table' => 'school_data'
+//    ],
     290 => [
         'name' => 'size',
         'type' => 'string',
@@ -86,11 +86,11 @@ $columns = [
         'type' => 'number',
         'table' => 'school_data'
     ],
-    35 => [
-        'name' => 'religion',
-        'type' => 'number',
-        'table' => 'school_data'
-    ],
+//    35 => [
+//        'name' => 'religion',
+//        'type' => 'number',
+//        'table' => 'school_data'
+//    ],
     36 => [
         'name' => 'adm_rate',
         'type' => 'number',
@@ -101,16 +101,16 @@ $columns = [
         'type' => 'number',
         'table' => 'school_data'
     ],
-    24 => [
-        'name' => 'cc_selective_time',
-        'type' => 'number',
-        'table' => 'school_data'
-    ],
-    23 => [
-        'name' => 'cc_focus',
-        'type' => 'number',
-        'table' => 'school_data'
-    ],
+//    24 => [
+//        'name' => 'cc_selective_time',
+//        'type' => 'number',
+//        'table' => 'school_data'
+//    ],
+//    23 => [
+//        'name' => 'cc_focus',
+//        'type' => 'number',
+//        'table' => 'school_data'
+//    ],
     16 => [
         'name' => 'ownership',
         'type' => 'number',
@@ -126,16 +126,16 @@ $columns = [
         'type' => 'number',
         'table' => 'school_data'
     ],
-    385 => [
-        'name' => 'aid_grant',
-        'type' => 'number',
-        'table' => 'school_data'
-    ],
-    437 => [
-        'name' => 'aid_loan',
-        'type' => 'number',
-        'table' => 'school_data'
-    ],
+//    385 => [
+//        'name' => 'aid_grant',
+//        'type' => 'number',
+//        'table' => 'school_data'
+//    ],
+//    437 => [
+//        'name' => 'aid_loan',
+//        'type' => 'number',
+//        'table' => 'school_data'
+//    ],
     61 => [
         'name' => 'prog_agri',
         'type' => 'number',
