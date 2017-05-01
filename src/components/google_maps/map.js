@@ -52,11 +52,14 @@ class GMap extends Component {
         this.initMap();
     }
     componentWillReceiveProps(nextProps){
+        debugger;
         console.log('this.props', this.props, "next.props", nextProps);
         if(nextProps.center.lat !== this.props.center.lat){
             this.initMap();
-            this.createSchoolMarkers(nextProps);
+            // this.clearMarkers();
+            // this.createSchoolMarkers(nextProps);
         }
+        this.clearMarkers();   //TODO: drops markers quite often
         this.createSchoolMarkers(nextProps);
     }
     // clean up event listeners when component unmounts
