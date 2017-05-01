@@ -2,7 +2,6 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 
 import SchoolList from './school_list';
-import MainToolbar from './main_toolbar';
 
 
 const style = {
@@ -16,7 +15,6 @@ const style = {
 const PaperExampleSimple = () => (
   <div>
     <Paper style={style} zDepth={0}>
-        <MainToolbar/>
         <SchoolList/>
     </Paper>
   </div>
