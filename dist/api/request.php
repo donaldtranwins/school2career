@@ -4,18 +4,14 @@
     });
     header::declare();
 
-    if (!empty($_SERVER['CONTENT_TYPE'])){
-        switch ($_SERVER['CONTENT_TYPE']){
-            case 'application/json':    //  Body is encoded in JSON
-                $clientRequest = new clientRequest(json_decode(file_get_contents('php://input'), true));
-                echo $clientRequest->processRequest();
-                break;
-            case 'application/x-www-form-urlencoded':   //  Body is url-encoded
-                echo "Please configure application/json";
-                break;
-            default:
-                break;
-        }
-    }
+    $clientRequest = isset($_GET['schid'])
+        ? new singleSchoolRequest()
+        : (
+        $_SERVER['CONTENT_TYPE'] == 'application/json' && empty($_GET)
+            ? new multipleSchoolRequest(json_decode(file_get_contents('php://input'), true))
+            : new requestError()
+        );
+
+    echo json_encode($clientRequest ->processRequest());
 
 ?>
