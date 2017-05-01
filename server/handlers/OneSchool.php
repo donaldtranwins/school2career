@@ -1,5 +1,5 @@
 <?php
-    class singleSchoolRequest{
+    class OneSchool{
 
         public $output = [
             'success' => false,

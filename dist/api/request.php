@@ -5,11 +5,11 @@
     header::declare();
 
     $clientRequest = isset($_GET['schid'])
-        ? new singleSchoolRequest()
+        ? new OneSchool()
         : (
         $_SERVER['CONTENT_TYPE'] == 'application/json' && empty($_GET)
-            ? new multipleSchoolRequest(json_decode(file_get_contents('php://input'), true))
-            : new requestError()
+            ? new FetchSchools(json_decode(file_get_contents('php://input'), true))
+            : new RequestError()
         );
 
     echo json_encode($clientRequest ->processRequest());

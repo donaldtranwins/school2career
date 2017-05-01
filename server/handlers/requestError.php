@@ -1,5 +1,5 @@
 <?php
-class requestError{
+class RequestError{
     public static function validateClientRequest(){
         return 'error';
     }

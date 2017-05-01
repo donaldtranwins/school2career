@@ -1,5 +1,5 @@
 <?php
-    class header{
+    class Header{
         public static function declare(){
             header('Content-type: application/json');
             header("Access-Control-Allow-Origin: *");

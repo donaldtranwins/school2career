@@ -1,6 +1,6 @@
 <?php
 
-class multipleSchoolRequest{
+class FetchSchools{
     public $values;
     private $locationQuery;
     function __construct($passedValues){
