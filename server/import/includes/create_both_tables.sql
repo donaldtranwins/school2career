@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `school_data`
+-- Table structure for table `metadata_imported`
 --
 
-CREATE TABLE `school_data` (
+CREATE TABLE `metadata_imported` (
   `uid` int(8) UNSIGNED NOT NULL,
   `id_school` int(8) UNSIGNED NOT NULL,
   `id_system` int(5) UNSIGNED NOT NULL,
@@ -30,22 +30,22 @@ CREATE TABLE `school_data` (
   `state` varchar(2) NOT NULL,
   `url` varchar(124) NOT NULL DEFAULT '',
   `alias` varchar(680) NOT NULL DEFAULT '',
-  `region` int(1) UNSIGNED NOT NULL,
-  `locale` int(2) UNSIGNED NOT NULL DEFAULT '0',
-  `cc_setting_size_time` int(2) NOT NULL DEFAULT '0',
+#   `region` int(1) UNSIGNED NOT NULL,
+#   `locale` int(2) UNSIGNED NOT NULL DEFAULT '0',
+#   `cc_setting_size_time` int(2) NOT NULL DEFAULT '0',
   `size` mediumint(6) UNSIGNED NOT NULL DEFAULT '0',
   `demog_men` float UNSIGNED DEFAULT NULL,
   `demog_women` float UNSIGNED DEFAULT NULL,
-  `religion` int(3) NOT NULL DEFAULT '0',
+#   `religion` int(3) NOT NULL DEFAULT '0',
   `adm_rate` float UNSIGNED NOT NULL DEFAULT '0',
   `sat_avg` float UNSIGNED NOT NULL DEFAULT '0',
-  `cc_selective_time` int(2) NOT NULL DEFAULT '0',
-  `cc_focus` int(2) NOT NULL DEFAULT '0',
+#   `cc_selective_time` int(2) NOT NULL DEFAULT '0',
+#   `cc_focus` int(2) NOT NULL DEFAULT '0',
   `ownership` int(1) UNSIGNED NOT NULL,
   `tuition_in` mediumint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `tuition_out` mediumint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `aid_grant` float UNSIGNED DEFAULT NULL,
-  `aid_loan` float UNSIGNED DEFAULT NULL
+  `tuition_out` mediumint(5) UNSIGNED NOT NULL DEFAULT '0'
+#   `aid_grant` float UNSIGNED DEFAULT NULL,
+#   `aid_loan` float UNSIGNED DEFAULT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -54,17 +54,17 @@ CREATE TABLE `school_data` (
 --
 
 --
--- Indexes for table `school_data`
+-- Indexes for table `metadata_imported`
 --
-ALTER TABLE `school_data`
+ALTER TABLE `metadata_imported`
   ADD UNIQUE(`uid`);
 
 
 --
--- Table structure for table `school_query`
+-- Table structure for table `query_imported`
 --
 
-CREATE TABLE `school_query` (
+CREATE TABLE `query_imported` (
   `uid` int(8) UNSIGNED NOT NULL,
   `zip` varchar(5) NOT NULL,
   `lat` decimal(9,7) NOT NULL,
@@ -186,7 +186,7 @@ CREATE TABLE `school_query` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `school_query`
+ALTER TABLE `query_imported`
   ADD UNIQUE(`uid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
