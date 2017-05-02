@@ -1,5 +1,9 @@
 <?php
 class RequestError{
+    function __construct($passedValues){
+        $this->errorMessage = $passedValues;
+    }
+
     public static function validateClientRequest(){
         return 'error';
     }
@@ -10,7 +14,7 @@ class RequestError{
     ];
 
     public function processRequest(){
-        $this->output['errors']['message'][] = !empty($_SERVER['CONTENT_TYPE']) && empty($_GET) ? 'Invalid Request! Please configure application/json!' : 'Invalid URL Parameters';
+        $this->output['errors']['message'][] = $this->errorMessage;
         return $this->output;
     }
 }
