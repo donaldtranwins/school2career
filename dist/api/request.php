@@ -11,7 +11,7 @@
         isset($_SERVER['CONTENT_TYPE']) && empty($_GET)
             ? ($_SERVER['CONTENT_TYPE'] == 'application/json'
                 ? new FetchSchools(json_decode(file_get_contents('php://input'), true))
-                : 'error')
+                : new RequestError())
             : new RequestError()
         );
 
