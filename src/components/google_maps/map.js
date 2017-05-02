@@ -67,18 +67,12 @@ class GMap extends Component {
         let zoomLevel = null;
         if(this.props.userInput.value.distanceSlider !== undefined) {
             const distance = this.props.userInput.value.distanceSlider;
-            if (distance <= 50) {
-                zoomLevel = 8;
-            } else if (distance <= 100) {
+            if (distance <= 100) {
                 zoomLevel = 10;
-            } else if (distance <= 150) {
-                zoomLevel = 11;
             } else if (distance <= 200) {
                 zoomLevel = 12;
-            } else if (distance <= 250) {
-                zoomLevel = 14;
             } else if (distance <= 300) {
-                zoomLevel = 16;
+                zoomLevel = 14;
             }
         } else {
             zoomLevel = 10;

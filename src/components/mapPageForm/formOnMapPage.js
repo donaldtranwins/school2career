@@ -103,7 +103,9 @@ class mapPageForm extends Component {
             width: '138px'
         };
         const sliderStyle = {
-            width: 200
+            width: 200,
+            height: 4,
+            backgroundColor: 'red'
         };
     return (
         <form className="extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
