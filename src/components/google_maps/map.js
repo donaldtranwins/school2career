@@ -45,13 +45,13 @@ class GMap extends Component {
                 this.marker = this.createMarker(data[i]);
                 this.infoWindow = this.createInfoWindow(this.marker, data[i]);
             }
+            this.markerCluster();
         }
     }
     componentDidMount(){
         this.initMap();
     }
     componentWillReceiveProps(nextProps){
-        debugger;
         if(this.props.userInput.value === null) {
             if(nextProps.center.lat !== this.props.center.lat) {
                 this.initMap();
@@ -143,7 +143,10 @@ class GMap extends Component {
                 return '/images/gradhat_red.png';
                 break;
         }
+    }
 
+    markerCluster = new MarkerClusterer(map, markers,
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     }
 
     createMarker(data) { //would add in (pos) as a parameter
@@ -166,7 +169,7 @@ class GMap extends Component {
 
         // let content = <div><div><h6><Link to={`/school/${data.OPEID}`}>{data.INSTNM}</Link></h6></div><div>{data.CITY}, {data.STABBR}</div><div><a target="_blank" href="http://{data.INSTURL}">data.INSTURL</a></div></div>;
 
-        let content = '<div><h6 >' + data.name + '</h6></div>'
+        let content = '<div><h6><a href=http://localhost:3000/school/' + data.uid + '>' + data.name + '</h6></div>'
             + '<div>' + data.city + ', ' + data.state + '</div>'
             + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         // let contentString = ReactDOMServer.renderToString(<div className='InfoWindow'>{content} </div>);
