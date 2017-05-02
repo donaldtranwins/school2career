@@ -10,10 +10,6 @@ import DegreesOffered from './degree_offered';
 
 class School extends Component {
 
-    componentWillMount() {
-        var pathArray = window.location.pathname.split( '/' );
-        this.props.searchOneSchool(pathArray[pathArray.length -1]);
-    }
     componentDidMount() {
         var pathArray = window.location.pathname.split( '/' );
         this.props.searchOneSchool(pathArray[pathArray.length -1]);
