@@ -121,6 +121,20 @@ body,
 :-moz-placeholder { /* Firefox 18- */
   color: rgb(144, 164, 174);
 }
+/*map legend start*/
+
+.legend {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #E0E0E0;
+    float: right;
+}
+.legend div {
+    text-align: center;
+}
+
+/*map legend end*/
+
 /*Individual School Pages*/
 
 .schoolInfo {

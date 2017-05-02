@@ -15,9 +15,11 @@ class GMap extends Component {
     }
 
     render() {
-        return <div id="mapBox" className="GMap">
-            <div className='GMap-canvas' ref="mapCanvas"></div>
-        </div>
+        return (
+            <div id="mapBox" className="GMap">
+                <div className='GMap-canvas' ref="mapCanvas"></div>
+            </div>
+        )
     }
 
     initMap(){
@@ -117,16 +119,16 @@ class GMap extends Component {
 
     colorForMarker(sizeOfSchool) {
         switch (true) {
-            case (sizeOfSchool <= 10000):
+            case (sizeOfSchool < 10000):
                 return '/images/gradhat_red.png';
                 break;
-            case (sizeOfSchool <= 20000):
+            case (sizeOfSchool < 20000):
                 return '/images/gradhat_green.png';
                 break;
-            case (sizeOfSchool <= 30000):
+            case (sizeOfSchool < 30000):
                 return '/images/gradhat_blue.png';
                 break;
-            case (sizeOfSchool <= 40000):
+            case (sizeOfSchool < 40000):
                 return '/images/gradhat_purple.png';
                 break;
             case (sizeOfSchool > 40000):
