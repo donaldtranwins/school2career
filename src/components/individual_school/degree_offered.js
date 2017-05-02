@@ -175,7 +175,6 @@ class degrees extends Component {
         data = data[0];
         let list = [];
         let presentedList = null;
-        console.log('data', data);
         for (let key in degreeCodes) {
             if (degreeCodes[key] === "1") {
                 list.push(degreeTypes[key]);
