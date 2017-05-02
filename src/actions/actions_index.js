@@ -12,7 +12,9 @@ const BASE_URL = 'http://www.school2career.net/api/request.php'; //live
 
 // const ONESCHOOL_URL = 'http://ninojoseph.com/api/school/data.php?action=getDataOne';
 
+
 const ONESCHOOL_URL = 'http://www.school2career.net/api/request.php?schid=';
+
 const API_KEY = '';
 
 export function searchForSchools(value) {
