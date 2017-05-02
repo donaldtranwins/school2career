@@ -4,18 +4,17 @@
     });
     header::declare();
 
-    if (!empty($_SERVER['CONTENT_TYPE'])){
-        switch ($_SERVER['CONTENT_TYPE']){
-            case 'application/json':    //  Body is encoded in JSON
-                $clientRequest = new clientRequest(json_decode(file_get_contents('php://input'), true));
-                echo $clientRequest->processRequest();
-                break;
-            case 'application/x-www-form-urlencoded':   //  Body is url-encoded
-                echo "Please configure application/json";
-                break;
-            default:
-                break;
-        }
-    }
+
+    $clientRequest = isset($_GET['schid'])
+        ? new OneSchool()
+        : (
+        isset($_SERVER['CONTENT_TYPE']) && empty($_GET)
+            ? ($_SERVER['CONTENT_TYPE'] == 'application/json'
+                ? new FetchSchools(json_decode(file_get_contents('php://input'), true))
+                : new RequestError('Invalid Request! Please configure application/json!'))
+            : new RequestError('Invalid URL Parameters')
+        );
+
+    echo json_encode($clientRequest ->processRequest());
 
 ?>
