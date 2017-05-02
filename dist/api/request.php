@@ -4,11 +4,14 @@
     });
     header::declare();
 
+
     $clientRequest = isset($_GET['schid'])
         ? new OneSchool()
         : (
-        $_SERVER['CONTENT_TYPE'] == 'application/json' && empty($_GET)
-            ? new FetchSchools(json_decode(file_get_contents('php://input'), true))
+        isset($_SERVER['CONTENT_TYPE']) && empty($_GET)
+            ? ($_SERVER['CONTENT_TYPE'] == 'application/json'
+                ? new FetchSchools(json_decode(file_get_contents('php://input'), true))
+                : 'error')
             : new RequestError()
         );
 
