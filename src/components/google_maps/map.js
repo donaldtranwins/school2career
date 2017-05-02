@@ -29,16 +29,13 @@ class GMap extends Component {
         } else {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
-
             this.map = this.createMap(userInput.latLng);
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
             google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
         }
     }
     createSchoolMarkers(nextProps){
-        console.log("nextProps", nextProps);
         const data = nextProps.schools.all;
-        console.log('data', data);
         if(data){
             //get photo infomration, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
@@ -52,9 +49,9 @@ class GMap extends Component {
         this.initMap();
     }
     componentWillReceiveProps(nextProps){
-        debugger;
-        console.log('this.props', this.props, "next.props", nextProps);
-        if(nextProps.center.lat !== this.props.center.lat){
+        console.log(nextProps, "nextProps")
+        if(nextProps.center.lat !== this.props.center.lat ||
+            this.props.userInput.value.distanceSlider !== nextProps.userInput.value.distanceSlider){
             this.initMap();
             // this.clearMarkers();
             // this.createSchoolMarkers(nextProps);
@@ -67,7 +64,33 @@ class GMap extends Component {
         google.maps.event.clearListeners(map, 'zoom_changed')
     }
 
+    setZoom() {
+        let zoomLevel = null;
+        if(this.props.userInput.value.distanceSlider !== undefined) {
+            const distance = this.props.userInput.value.distanceSlider;
+            if (distance <= 50) {
+                zoomLevel = 8;
+            } else if (distance <= 100) {
+                zoomLevel = 10;
+            } else if (distance <= 150) {
+                zoomLevel = 11;
+            } else if (distance <= 200) {
+                zoomLevel = 12;
+            } else if (distance <= 250) {
+                zoomLevel = 14;
+            } else if (distance <= 300) {
+                zoomLevel = 16;
+            }
+        } else {
+            zoomLevel = 10;
+        }
+        this.setState({
+            zoom : zoomLevel
+        });
+
+    }
     createMap(data) {
+        this.setZoom();
         let mapOptions = {
             zoom: this.state.zoom,
             center: this.mapCenter(data)
@@ -102,22 +125,22 @@ class GMap extends Component {
     colorForMarker(sizeOfSchool) {
         switch (true) {
             case (sizeOfSchool <= 10000):
-                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                return '/images/gradhat_red.png';
                 break;
             case (sizeOfSchool <= 20000):
-                return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+                return '/images/gradhat_green.png';
                 break;
             case (sizeOfSchool <= 30000):
-                return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                return '/images/gradhat_blue.png';
                 break;
             case (sizeOfSchool <= 40000):
-                return 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
+                return '/images/gradhat_purple.png';
                 break;
             case (sizeOfSchool > 40000):
-                return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+                return '/images/gradhat_yellow.png';
                 break;
             default:
-                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                return '/images/gradhat_red.png';
                 break;
         }
 
@@ -190,7 +213,6 @@ class GMap extends Component {
 }
 
 function mapStateToProps(state){
-    console.log('mstp: map', state.schools)
     return{
         schools: state.schools,
         center: state.center.center,

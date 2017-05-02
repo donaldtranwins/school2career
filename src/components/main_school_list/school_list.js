@@ -48,7 +48,7 @@ class SchoolList extends Component {
                             <li className='schoolListAddressli'>{school.city}, </li>
                             <li className='schoolListAddressli'>{school.state}</li>
                             <li className='schoolListUrl'><a target="_blank" href={'http://' + school.url}>{school.url}</a></li>
-                            <li>Admission Rate: {admissionRate}</li>
+                            <li>Admission Rate: {admissionRate}%</li>
                         </ul>
                     </Paper>
                 )
