@@ -49,6 +49,8 @@ class School extends Component {
                 instType = "Private (for-profit)";
                 break;
         }
+        let tuitionIn = (parseFloat(data.tuition_in)).toLocaleString();
+        let tuitionOut = (parseFloat(data.tuition_out)).toLocaleString();
 
         return (
             <div>
@@ -58,8 +60,8 @@ class School extends Component {
                         <h2>{data.name} </h2>
                         <h4>{data.city}, {data.state}</h4>
                         <div className="row">
-                        <h5 className="webAddress col-md-3"><a target="_blank" href={'http://' + data.url}>{data.url}</a></h5>
-                        <h5 className="col-md-3">{instType} School</h5>
+                        <h5 className="webAddress col-md-5"><a target="_blank" href={'http://' + data.url}>{data.url}</a></h5>
+                        <h5 className="col-md-5">{instType} School</h5>
                         </div>
                     </div>
                     <Map id="mapShowing"/>
@@ -72,8 +74,8 @@ class School extends Component {
                             </div>
                             <br/>
                             <div className="row">
-                                <h4 className="col-md-6">Tuition (in state): ${data.tuition_in}</h4>
-                                <h4 className="col-md-6">Tuition (out of state): ${data.tuition_out}</h4>
+                                <h4 className="col-md-6">Tuition (in state): ${tuitionIn}</h4>
+                                <h4 className="col-md-6">Tuition (out of state): ${tuitionOut}</h4>
                             </div>
                         </Paper>
                     </div>
