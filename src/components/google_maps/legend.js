@@ -21,7 +21,7 @@ const Legend = () => {
                 <img src="/images/gradhat_purple.png" alt=""/>
             </div>
             <div>
-                more then 40,001: 
+                more then 40,001:
                 <img src="/images/gradhat_yellow.png" alt=""/>
             </div>
         </div>

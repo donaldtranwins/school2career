@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AppBar, Tabs, Tab, Value, ToolbarGroup, FlatButton} from 'material-ui';
 import { Link } from 'react-router';
 
+
 const styles = {
     stylesTab: {
         marginRight: '25px',
@@ -27,4 +28,3 @@ class NavBar extends Component {
 }
 
 export default NavBar;
-

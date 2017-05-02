@@ -6,10 +6,10 @@ import { Link } from 'react-router';
 
 const style = {
     height: '20%',
-    width: '80%',
+    width: '90%',
     display: 'flex',
     alignItems: 'center',
-    margin: '15px auto'
+    margin: '15px 20px'
 };
 const homeMainDiv = {
     height: '30%',
