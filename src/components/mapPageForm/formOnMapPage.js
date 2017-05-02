@@ -98,12 +98,12 @@ class mapPageForm extends Component {
     };
     render() {
         const { handleSubmit, reset } = this.props;
-        const sliderStyle = {
-            width: 230
-        };
         const radioStyle = {
             display: 'inline-block',
             width: '138px'
+        };
+        const sliderStyle = {
+            width: 200
         };
     return (
         <form className="extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
@@ -123,8 +123,8 @@ class mapPageForm extends Component {
             <div>{'Type of Degree: '}</div>
             <div>
                 <Field name="numOfYears" component={renderRadioGroup}>
-                    <RadioButton style={radioStyle} value="aaDegree" label="AA Degree"/>
-                    <RadioButton style={radioStyle} value="baDegree" label="BA Degree"/>
+                    <RadioButton style={radioStyle} value="2" label="AA Degree"/>
+                    <RadioButton style={radioStyle} value="4" label="BS Degree"/>
                 </Field>
             </div>
             <div>{'School Type: '}</div>
