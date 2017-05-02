@@ -25,7 +25,7 @@ class Photo extends Component {
 
     };
     componentDidMount(){
-        const data = this.props.schools;
+        const data = this.props.school.schools;
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};
@@ -139,7 +139,7 @@ class Photo extends Component {
 
 function mapStateToProps(state){
     return{
-        schools: state.schools.single
+        school: state.schools.single
     }
 }
 export default connect(mapStateToProps, {schoolURL})(Photo);
