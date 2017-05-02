@@ -1,20 +1,19 @@
 <?php
 
-class clientRequest{
+class FetchSchools{
     public $values;
     private $locationQuery;
     function __construct($passedValues){
         $this->values = $passedValues;
-        $this->locationQuery = "SELECT * FROM `metadata` m JOIN `query` q ON m.uid=q.uid WHERE (`lat` BETWEEN " .$this->values['mapBounds']['sw']['lat']. " AND " . $this->values['mapBounds']['ne']['lat'] . ") AND (`lng` BETWEEN " . $this->values['mapBounds']['sw']['lng'] . " AND ". $this->values['mapBounds']['ne']['lng'].")";    }
+        $this->locationQuery = "SELECT * FROM `metadata` m JOIN `query` q ON m.uid=q.uid WHERE (`lat` BETWEEN " .$this->values['mapBounds']['sw']['lat']. " AND " . $this->values['mapBounds']['ne']['lat'] . ") AND (`lng` BETWEEN " . $this->values['mapBounds']['sw']['lng'] . " AND ". $this->values['mapBounds']['ne']['lng'].")";
+    }
 
     public $output = [
         'success' => false,
         'errors' => []
     ];
 
-
     public function processRequest(){
-//        require_once 'realconnectDb.php';
         require_once 'connectDb.php';
         if(empty($this->values)) {
             die('invalid values');
@@ -40,20 +39,16 @@ class clientRequest{
         }
 
         usort($this->output['schools'], array($this, "cmp"));
-        return json_encode($this->output);
+        return $this->output;
     }
 
     public function getDistance($centerLatitude, $centerLongitude, $schoolLatitude, $schoolLongitude) {
-
         $earth_radius = 6371;
-
         $dLat = deg2rad($schoolLatitude - $centerLatitude);
         $dLon = deg2rad($schoolLongitude - $centerLongitude);
-
         $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($centerLatitude)) * cos(deg2rad($schoolLatitude)) * sin($dLon/2) * sin($dLon/2);
         $c = 2 * asin(sqrt($a));
         return $earth_radius * $c;
-
     }
 
     public function cmp($a, $b){

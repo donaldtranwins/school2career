@@ -9,7 +9,7 @@ import Slider from 'material-ui/Slider';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { geocodeByAddress } from 'react-places-autocomplete';
 
-import majors from './majors';
+import majors from '../landing_form/majors';
 import { searchForSchools, centerOfMap, userInput } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
 

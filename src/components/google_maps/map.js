@@ -49,7 +49,6 @@ class GMap extends Component {
         this.initMap();
     }
     componentWillReceiveProps(nextProps){
-        console.log(nextProps, "nextProps")
         if(nextProps.center.lat !== this.props.center.lat ||
             this.props.userInput.value.distanceSlider !== nextProps.userInput.value.distanceSlider){
             this.initMap();
