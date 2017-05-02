@@ -25,7 +25,8 @@ class School extends Component {
         //Admissions Rate Math
         let admissionRate = parseFloat(data.adm_rate);
         if (parseFloat(admissionRate) > 0) {
-            admissionRate = admissionRate * 100;
+            admissionRate = (admissionRate * 100).toFixed(2);
+            admissionRate += '%';
         } else {
             admissionRate = 'Admissions Rate Is Not Available';
         }
@@ -49,7 +50,6 @@ class School extends Component {
                 break;
         }
 
-
         return (
             <div>
                 <div className="container">
@@ -66,7 +66,7 @@ class School extends Component {
                     <div className="scores col-sm">
                         <Paper className="statsWrapper">
                             <div className="row">
-                                <h4 className="col-md-4">Admissions Rate: {admissionRate}%</h4>
+                                <h4 className="col-md-4">Admissions Rate: {admissionRate}</h4>
                                 <h4 className="col-md-4">SAT Average: {satAvg}</h4>
                                 <h4 className="col-md-4">Undergraduate Size: {data.size} students</h4>
                             </div>

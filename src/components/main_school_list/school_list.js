@@ -38,6 +38,7 @@ class SchoolList extends Component {
                 let admissionRate = parseFloat(school.adm_rate);
                 if (parseFloat(admissionRate) > 0) {
                     admissionRate = (admissionRate * 100).toFixed(2);
+                    admissionRate += '%';
                 } else {
                     admissionRate = 'Admissions Rate Is Not Available';
                 }
@@ -48,7 +49,7 @@ class SchoolList extends Component {
                             <li className='schoolListAddressli'>{school.city}, </li>
                             <li className='schoolListAddressli'>{school.state}</li>
                             <li className='schoolListUrl'><a target="_blank" href={'http://' + school.url}>{school.url}</a></li>
-                            <li>Admission Rate: {admissionRate}%</li>
+                            <li>Admission Rate: {admissionRate}</li>
                         </ul>
                     </Paper>
                 )
