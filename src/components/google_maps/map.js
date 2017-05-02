@@ -212,7 +212,9 @@ class GMap extends Component {
 }
 
 function mapStateToProps(state){
+    console.log(state.schools)
     return{
+
         schools: state.schools,
         center: state.center.center,
         userInput: state.userInput,
