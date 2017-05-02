@@ -52,7 +52,7 @@ ReactDOM.render(
             <Router history={browserHistory}>
                 <Route path="/" component={App}>
                     <IndexRoute component={paperForm}/>
-                    <Route path="home" component={MainPage}/>
+                    <Route path="school_search" component={MainPage}/>
                     <Route path="school/:id" component={School}/>
                     <Route path="about" component={About}/>
                     <Route path="*" component={NotFound}/>
