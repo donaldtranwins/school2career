@@ -60,7 +60,7 @@ class LandingForm extends Component {
         if (err) { console.warn('error', err) };
         values.latLng = latLng;
         this.getCenterCoords(values);
-        this.context.router.push('/home');
+        this.context.router.push('/school_search');
       });
     };
     render(){

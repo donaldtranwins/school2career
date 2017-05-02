@@ -49,7 +49,12 @@ class GMap extends Component {
         this.initMap();
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps.center.lat !== this.props.center.lat ||
+        debugger;
+        if(this.props.userInput.value === null) {
+            if(nextProps.center.lat !== this.props.center.lat) {
+                this.initMap();
+            }
+        } else if(nextProps.center.lat !== this.props.center.lat ||
             this.props.userInput.value.distanceSlider !== nextProps.userInput.value.distanceSlider){
             this.initMap();
             // this.clearMarkers();
