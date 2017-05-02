@@ -4,7 +4,7 @@ import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recha
 
 class mfChart extends Component {
     render() {
-        let data = this.props.schools;
+        let data = this.props.schools.schools;
         if(!data){
             return <p>Loading...</p>
         }
