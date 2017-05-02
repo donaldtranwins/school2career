@@ -26,7 +26,7 @@ const school = {
 };
 class SchoolList extends Component {
     componentWillMount(){
-        this.props.searchForSchools()
+        this.props.searchForSchools() // don't think we need this.
     }
     render(){
         let list;
@@ -44,7 +44,7 @@ class SchoolList extends Component {
                 return(
                     <Paper className="listOfSchools" style={style} key={index}>
                         <ul style={ul}>
-                            <li className='schoolListSchool'><Link to={`/school/${school.OPEID}`}>{school.name} </Link></li>
+                            <li className='schoolListSchool'><Link to={`/school/${school.uid}`}>{school.name} </Link></li>
                             <li className='schoolListAddressli'>{school.city}, </li>
                             <li className='schoolListAddressli'>{school.state}</li>
                             <li className='schoolListUrl'><a target="_blank" href={'http://' + school.url}>{school.url}</a></li>

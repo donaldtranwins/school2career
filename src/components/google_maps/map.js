@@ -36,9 +36,7 @@ class GMap extends Component {
         }
     }
     createSchoolMarkers(nextProps){
-        console.log("nextProps", nextProps);
         const data = nextProps.schools.all;
-        console.log('data', data);
         if(data){
             //get photo infomration, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
@@ -52,7 +50,6 @@ class GMap extends Component {
         this.initMap();
     }
     componentWillReceiveProps(nextProps){
-        console.log('this.props', this.props, "next.props", nextProps);
         if(nextProps.center.lat !== this.props.center.lat){
             this.initMap();
             // this.clearMarkers();

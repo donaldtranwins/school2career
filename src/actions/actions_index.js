@@ -9,7 +9,7 @@ const BASE_URL = 'http://dev.ninojoseph.com/api/request.php'; //live
 
 // const BASE_URL = 'http://ninojoseph.com/api/school/data.php?action=getData'; //dummy
 
-const ONESCHOOL_URL = 'http://ninojoseph.com/api/school/data.php?action=getDataOne';
+const ONESCHOOL_URL = 'http://dev.ninojoseph.com/api/request.php?schid=';
 const API_KEY = '';
 
 export function searchForSchools(value) {
@@ -22,8 +22,8 @@ export function searchForSchools(value) {
 }
 
 export function searchOneSchool(value) {
-    const newVal = JSON.stringify(value);
-    const request = axios.post(`${ONESCHOOL_URL}`, newVal);
+    const request = axios.post(`${ONESCHOOL_URL}`+value);
+    console.log('searchOneSchool: action ', request);
     return {
         type: ONE_SCHOOL,
         payload: request
