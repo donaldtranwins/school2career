@@ -11,8 +11,6 @@
         public function processRequest(){
             require_once 'connectDb.php';
 
-            echo ($_GET['schid']);
-
             $result = $dbConn->query($this->query . $_GET['schid']);
             if(empty($result)) {
                 $this->output['errors'][] = 'Query failed to reach database.';
