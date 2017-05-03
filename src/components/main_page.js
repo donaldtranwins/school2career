@@ -37,9 +37,11 @@ class drawerForm extends Component {
                 <div className='searchImgDiv'>
                     <img className="jumboImg" src="/images/Lewis-University.png" alt=""/>
                 </div>
-                <Map id="mapShowing"/>
-                <SchoolList id="schoolListShowing"/>
-                <Legend className="legend" />
+                <div className='mapContent'>
+                    <Map id="mapShowing"/>
+                    <SchoolList id="schoolListShowing"/>
+                    <Legend className="legend" />
+                </div>
             </div>
         );
     }

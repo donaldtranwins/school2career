@@ -1,14 +1,29 @@
 /*appbar*/
+body{
+    height: 100vh;
+}
 
 .navBarLink {
     color: black !important;
 }
 
 /*Main Page Form styles*/
+.mapContent{
+    margin-top: 1%;
+    width: 100%;
+    height: 70vh;
+    position: relative;
+}
 .listOfSchools {
-    width: 94%;
-    margin: 4% 2%;
 
+}
+.schoolList {
+    overflow: scroll;
+    height: 400px;
+}
+.schoolListScroll {
+    overflow: scroll;
+    height: 100%;
 }
 .checkbox {
     width: 125px;
@@ -22,10 +37,12 @@
 }
 .searchImgDiv {
     margin: 0 auto;
-    width: 80%;
+    width: 50%;
+    height: 20vh;
 }
 .jumboImg {
     width: 100%;
+    height: 100%;
 }
 .listContainer {
     width: 50%;
@@ -63,17 +80,19 @@
 }*/
 
 /*googlemaps*/
-html,
-body,
+/*html,
+body,*/
 .GMap {
     height: 100%;
     position: absolute;
-    width: 100%;
+    width: 50%;
+    right: 2%;
+    position: absolute;
 }
 .soloMap {
     height: 350px;
     width: 80%;
-    right: 0;
+    right: 2%;
     margin: 0 auto;
 }
 .solo-canvas {
@@ -81,13 +100,9 @@ body,
     height: 100%;
 }
 .GMap-canvas {
-    top: 2%;
     display: block;
-    width: 50%;
-    height: 80%;
-    margin: 0 1%;
-    float: right;
-    float: right;
+    width: 100%;
+    height: 100%;
 }
 .UpdatedText {
     color: red;
@@ -137,6 +152,8 @@ body,
     height: 200px;
     border: 1px solid #E0E0E0;
     float: right;
+    position: absolute;
+    top: 10px;
 }
 .legend div {
     text-align: center;
