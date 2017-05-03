@@ -16,11 +16,17 @@ const homeMainDiv = {
     width: '80%',
     margin: '20px'
 };
-const ul = {
+const mainUl = {
     listStyleType: 'none',
+    width: '100%',
+    position: 'relative',
     padding: '10px',
     margin: '10px'
 };
+const ul = {
+    listStyleType: 'none',
+    padding: 'initial'
+}
 const school = {
     color: 'red'
 };
@@ -28,6 +34,10 @@ class SchoolList extends Component {
     componentWillMount(){
         this.props.searchForSchools() // don't think we need this.
     }
+    // let satAvg = parseInt(sat_avg);
+    // if (satAvg === 0) {
+    //     satAvg = "Not Available";
+    // }
     render(){
         let list;
         const data = this.props.schools.all;
@@ -38,18 +48,27 @@ class SchoolList extends Component {
                 let admissionRate = parseFloat(school.adm_rate);
                 if (parseFloat(admissionRate) > 0) {
                     admissionRate = (admissionRate * 100).toFixed(2);
-                    admissionRate += '%';
+                    admissionRate = 'Admission Rate: ' + admissionRate + '%';
                 } else {
-                    admissionRate = 'Admissions Rate Is Not Available';
+                    admissionRate = '';
+                }
+                let satAvg = parseInt(school.sat_avg);
+                if (satAvg === 0){
+                    satAvg = '';
+                } else {
+                    satAvg = 'SAT Avg: ' + satAvg;
                 }
                 return(
                     <Paper className="listOfSchools" style={style} key={index}>
-                        <ul style={ul}>
+                        <ul style={mainUl}>
                             <li className='schoolListSchool'><Link to={`/school/${school.uid}`}>{school.name} </Link></li>
                             <li className='schoolListAddressli'>{school.city}, </li>
                             <li className='schoolListAddressli'>{school.state}</li>
                             <li className='schoolListUrl'><a target="_blank" href={'http://' + school.url}>{school.url}</a></li>
-                            <li>Admission Rate: {admissionRate}</li>
+                            <ul style={ul}>
+                                <li className='listViewStats'>{admissionRate}</li>
+                                <li className='listViewStats'>{satAvg}</li>
+                            </ul>
                         </ul>
                     </Paper>
                 )
