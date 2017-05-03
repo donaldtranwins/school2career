@@ -57,7 +57,7 @@ class SchoolList extends Component {
         };
         return(
             <div className='schoolListScroll'>
-                <div id="schoolList" className="listContainer hidden">
+                <div id="schoolList" className="listContainer">
                     {list}
                 </div>
             </div>

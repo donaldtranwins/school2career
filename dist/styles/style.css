@@ -17,10 +17,6 @@ body{
 .listOfSchools {
 
 }
-.schoolList {
-    overflow: scroll;
-    height: 400px;
-}
 .schoolListScroll {
     overflow: scroll;
     height: 100%;
@@ -47,6 +43,7 @@ body{
 .listContainer {
     width: 50%;
     margin-top: 2%;
+    margin-left: 2%;
 }
 .searchIcon {
     position: fixed;
@@ -151,9 +148,9 @@ body,*/
     width: 200px;
     height: 200px;
     border: 1px solid #E0E0E0;
-    float: right;
     position: absolute;
-    top: 10px;
+    top: 0px;
+    right: 10px;
 }
 .legend div {
     text-align: center;
