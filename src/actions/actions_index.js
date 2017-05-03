@@ -3,8 +3,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT, SCHOOL_IMAGE, MAP_BOUNDS_INPUT } from './actions_types';
 
-
-
 const BASE_URL = 'http://www.school2career.net/api/request.php'; //live
 
 // const BASE_URL = 'http://ninojoseph.com/api/school/data.php?action=getData'; //dummy
