@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import MapForm from './mapPageForm/formOnMapPage';
 import Drawer from 'material-ui/Drawer';
 
+import MapForm from './mapPageForm/formOnMapPage';
 import SchoolList from './main_school_list/school_list'
 import PaperExampleSimple from './main_school_list/main_paper'
 import Map from './google_maps/map';
@@ -24,7 +24,7 @@ class drawerForm extends Component {
             <div>
                 <div className="refineBox" onTouchTap={this.handleToggle}>
                     <div className="searchIcon refineText">
-                        <i className="material-icons searchIcon" >search</i> refine search
+                        <i className="material-icons searchIcon" >search</i>
                     </div>
                 </div>
                 <Drawer
@@ -34,11 +34,14 @@ class drawerForm extends Component {
                     onRequestChange={(open) => this.setState({open})}>
                     <MapForm clickClosed = {this.handleClose}/>
                 </Drawer>
-                <img className="jumboImg" src="/images/Lewis-University.png" alt=""/>
-                <MapButton />
-                <SchoolList id="schoolListShowing"/>
-                <Map id="mapShowing" className="hidden"/>
-                <Legend className="legend" />
+                <div className='searchImgDiv'>
+                    <div className="jumboImg" />
+                </div>
+                <div className='mapContent'>
+                    <Map id="mapShowing"/>
+                    <SchoolList id="schoolListShowing"/>
+                    <Legend className="legend" />
+                </div>
             </div>
         );
     }
