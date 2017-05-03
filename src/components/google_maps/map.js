@@ -164,7 +164,7 @@ class GMap extends Component {
 
         // let content = <div><div><h6><Link to={`/school/${data.OPEID}`}>{data.INSTNM}</Link></h6></div><div>{data.CITY}, {data.STABBR}</div><div><a target="_blank" href="http://{data.INSTURL}">data.INSTURL</a></div></div>;
 
-        let content = '<div><h6><a href=http://localhose:3000/school' + data.s + '>' + data.name + '</h6></div>'
+        let content = '<div><h6><a href=http://localhost:3000/school/' + data.uid + '>' + data.name + '</h6></div>'
             + '<div>' + data.city + ', ' + data.state + '</div>'
             + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         // let contentString = ReactDOMServer.renderToString(<div className='InfoWindow'>{content} </div>);
