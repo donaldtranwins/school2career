@@ -22,10 +22,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `school_query`
+-- Table structure for table `query_imported`
 --
 
-CREATE TABLE `school_query` (
+CREATE TABLE `query_imported` (
   `uid` int(8) UNSIGNED NOT NULL,
   `zip` varchar(5) NOT NULL,
   `lat` decimal(9,7) NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE `school_query` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `school_query`
+ALTER TABLE `query_imported`
   ADD UNIQUE(`uid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import MapForm from './mapPageForm/formOnMapPage';
 import Drawer from 'material-ui/Drawer';
 
+import MapForm from './mapPageForm/formOnMapPage';
 import SchoolList from './main_school_list/school_list'
 import PaperExampleSimple from './main_school_list/main_paper'
 import Map from './google_maps/map';
 import MapButton from './button_legend/legend';
-
+import Legend from './google_maps/legend';
 
 class drawerForm extends Component {
 
@@ -34,10 +34,12 @@ class drawerForm extends Component {
                     onRequestChange={(open) => this.setState({open})}>
                     <MapForm clickClosed = {this.handleClose}/>
                 </Drawer>
-                <img className="jumboImg" src="/images/Lewis-University.png" alt=""/>
-                <MapButton />
+                <div className='searchImgDiv'>
+                    <img className="jumboImg" src="/images/Lewis-University.png" alt=""/>
+                </div>
+                <Map id="mapShowing"/>
                 <SchoolList id="schoolListShowing"/>
-                <Map id="mapShowing" className="hidden"/>
+                <Legend className="legend" />
             </div>
         );
     }

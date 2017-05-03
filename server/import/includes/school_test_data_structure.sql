@@ -22,10 +22,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `school_data`
+-- Table structure for table `metadata_imported`
 --
 
-CREATE TABLE `school_data` (
+CREATE TABLE `metadata_imported` (
   `uid` int(8) UNSIGNED NOT NULL,
   `id_school` int(8) UNSIGNED NOT NULL,
   `id_system` int(5) UNSIGNED NOT NULL,
@@ -54,9 +54,9 @@ CREATE TABLE `school_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Indexes for table `school_data`
+-- Indexes for table `metadata_imported`
 --
-ALTER TABLE `school_data`
+ALTER TABLE `metadata_imported`
   ADD UNIQUE(`uid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

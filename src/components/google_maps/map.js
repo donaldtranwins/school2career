@@ -15,14 +15,15 @@ class GMap extends Component {
     }
 
     render() {
-        return <div id="mapBox" className="GMap">
-            <div className='GMap-canvas' ref="mapCanvas"></div>
-        </div>
+        return (
+            <div id="mapBox" className="GMap">
+                <div className='GMap-canvas' ref="mapCanvas"></div>
+            </div>
+        )
     }
 
     initMap(){
-        console.log('initMap');
-        const data = this.props.schools.all.data;
+        // const data = this.props.schools;
         const userInput = this.props.userInput.value;
         this.clearMarkers();
         if(!userInput){
@@ -30,43 +31,66 @@ class GMap extends Component {
         } else {
             // create the map, marker and infoWindow after the component has
             // been rendered because we need to manipulate the DOM for Google =(
-
             this.map = this.createMap(userInput.latLng);
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
-            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds(this.nextProps));
+            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
         }
     }
-    createSchoolMarkers(){
-        const data = this.props.schools.all.data;
+    createSchoolMarkers(nextProps){
+        const data = nextProps.schools.all;
         if(data){
-
-
             //get photo infomration, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
-
-            for (var i = 0; i < data.data.length; i++) {
-                this.marker = this.createMarker(data.data[i]);
-                this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
+            for (var i = 0; i < data.length; i++) {
+                this.marker = this.createMarker(data[i]);
+                this.infoWindow = this.createInfoWindow(this.marker, data[i]);
             }
         }
     }
     componentDidMount(){
         this.initMap();
     }
-    nextProps = null;
     componentWillReceiveProps(nextProps){
-        if(nextProps.center.lat !== this.props.center.lat){
+        debugger;
+        if(this.props.userInput.value === null) {
+            if(nextProps.center.lat !== this.props.center.lat) {
+                this.initMap();
+            }
+        } else if(nextProps.center.lat !== this.props.center.lat ||
+            this.props.userInput.value.distanceSlider !== nextProps.userInput.value.distanceSlider){
             this.initMap();
-            this.createSchoolMarkers();
+            // this.clearMarkers();
+            // this.createSchoolMarkers(nextProps);
         }
+        this.clearMarkers();   //TODO: drops markers quite often
+        this.createSchoolMarkers(nextProps);
     }
-    componentDidRec
     // clean up event listeners when component unmounts
     componentDidUnMount() {
         google.maps.event.clearListeners(map, 'zoom_changed')
     }
 
+    setZoom() {
+        let zoomLevel = null;
+        if(this.props.userInput.value.distanceSlider !== undefined) {
+            const distance = this.props.userInput.value.distanceSlider;
+            if (distance <= 100) {
+                zoomLevel = 10;
+            } else if (distance <= 200) {
+                zoomLevel = 12;
+            } else if (distance <= 300) {
+                zoomLevel = 14;
+            }
+        } else {
+            zoomLevel = 10;
+        }
+        this.setState({
+            zoom : zoomLevel
+        });
+
+    }
     createMap(data) {
+        this.setZoom();
         let mapOptions = {
             zoom: this.state.zoom,
             center: this.mapCenter(data)
@@ -76,18 +100,16 @@ class GMap extends Component {
 
     mapCenter(data) {
         return new google.maps.LatLng(
-            // this.props.initialCenter.lat,
-            // this.props.initialCenter.lng
             data.lat,
             data.lng
         )
     }
 
     createLatLng(pos){                      //added this function, would set the lat and lng, may
-                                             //not be needed. could potentially do this all in create markers
+                                         //not be needed. could potentially do this all in create markers
         return new google.maps.LatLng(
-            pos.LATITUDE,
-            pos.LONGITUDE
+            pos.lat,
+            pos.lng
         )
     }
 
@@ -102,30 +124,30 @@ class GMap extends Component {
 
     colorForMarker(sizeOfSchool) {
         switch (true) {
-            case (sizeOfSchool <= 10000):
-                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            case (sizeOfSchool < 10000):
+                return '/images/gradhat_red.png';
                 break;
-            case (sizeOfSchool <= 20000):
-                return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            case (sizeOfSchool < 20000):
+                return '/images/gradhat_green.png';
                 break;
-            case (sizeOfSchool <= 30000):
-                return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+            case (sizeOfSchool < 30000):
+                return '/images/gradhat_blue.png';
                 break;
-            case (sizeOfSchool <= 40000):
-                return 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
+            case (sizeOfSchool < 40000):
+                return '/images/gradhat_purple.png';
                 break;
             case (sizeOfSchool > 40000):
-                return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+                return '/images/gradhat_yellow.png';
                 break;
             default:
-                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                return '/images/gradhat_red.png';
                 break;
         }
 
     }
 
     createMarker(data) { //would add in (pos) as a parameter
-        const iconForSchool = this.colorForMarker(parseInt(data.UGDS));
+        const iconForSchool = this.colorForMarker(parseInt(data.size));
         const newMarker = new google.maps.Marker({
             position: this.createLatLng(data),  //this would have to change to likely take in positions and
             //then create markers for specific positions. this.createLatLng(pos);
@@ -144,9 +166,9 @@ class GMap extends Component {
 
         // let content = <div><div><h6><Link to={`/school/${data.OPEID}`}>{data.INSTNM}</Link></h6></div><div>{data.CITY}, {data.STABBR}</div><div><a target="_blank" href="http://{data.INSTURL}">data.INSTURL</a></div></div>;
 
-        let content = '<div><h6 >' + data.INSTNM + '</h6></div>'
-            + '<div>' + data.CITY + ', ' + data.STABBR + '</div>'
-            + '<div><a target="_blank" href=http://' + data.INSTURL + '>' + data.INSTURL + '</a></div>';
+        let content = '<div><h6 >' + data.name + '</h6></div>'
+            + '<div>' + data.city + ', ' + data.state + '</div>'
+            + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         // let contentString = ReactDOMServer.renderToString(<div className='InfoWindow'>{content} </div>);
         let infoWindow =  new google.maps.InfoWindow({
                 map: this.map,
@@ -175,12 +197,8 @@ class GMap extends Component {
                 lng: sw.lng()
             }
         };
-        if (this.props.boundsInput.mapBoundsInput === null){
-            const userInputMapBounds = this.props.userInput.value;  // TODO fix this
-            userInputMapBounds.mapBounds = mapBounds;
-            this.props.mapBoundsInput(userInputMapBounds);
-            this.props.searchForSchools(userInputMapBounds);
-        } else if (this.props.boundsInput.mapBoundsInput.mapBounds.ne.lat !== mapBounds.ne.lat) {
+        if (this.props.boundsInput.mapBoundsInput === null ||
+                this.props.boundsInput.mapBoundsInput.mapBounds.ne.lat !== mapBounds.ne.lat){
             const userInputMapBounds = this.props.userInput.value;  // TODO fix this
             userInputMapBounds.mapBounds = mapBounds;
             this.props.mapBoundsInput(userInputMapBounds);
@@ -195,7 +213,9 @@ class GMap extends Component {
 }
 
 function mapStateToProps(state){
+    console.log(state.schools)
     return{
+
         schools: state.schools,
         center: state.center.center,
         userInput: state.userInput,

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)file:///Users/fastexposure/Desktop/lfz/arrayMethodPlayground.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>Array Methods</title>
+        <script>
+        var fruits = ['apples', 'orange', 'banana', 'mango'];
+        var numbers = [1, 2, 3, 4, 5, 6];
+        var names = ['josh', 'joy', 'danny', 'corey'];
+
+
+        //array methods I can think of;
+
+        //.length it does not need to be exicuted like other array methods.
+            // This method counts the number of items in the array.
+            console.log('length finds the length of an array: ', fruits.length);
+        //.join().  the parameter passed in is what separates the join.
+            // This method takes all of the cells in the array and joins them together in a string and returns that value.
+            // It must be saved if to a var to save it's value.
+            console.log(fruits.join('~'));
+            var joinedNumbers = numbers.join('.');
+            console.log('join concatinates all the values of an array saperated by the passed in pram', joinedNumbers);
+        //.push(addedToArray)  the parameter passed in is what is added to the array.
+            // this method mutates and pushes an item to the end of an array.
+            names.push('john');
+            console.log('push addes a pram to the end of an array: ', names);
+        //.pop() doesn't need to take in parameters
+            // removes an item from the end of an array.
+            names.pop();
+            console.log('pop removes the last item from the end of an array: ', names);
+        //.unshift(addedToArray)  takes in as a perameter the value being added.
+            //adds a cell to the beggining of an array
+            names.unshift('john');
+            console.log('unshift addeds a given pram to the beggining of an array: ', names);
+        //.shift() doesn't need to take in parameters
+            // removes the first item from the array.
+            names.shift();
+            console.log('shift removes the first item in an array: ', names);
+        //.slice() takes a beggining and an ending index
+            // returns a copy of the items in a new array must be saved to a var to save it.
+            console.log('slice returns a copy between indexs: ', fruits.slice(1, 3));
+        //.splice() takes a beggining index and how many you want to remove from the array
+            // mutates the existing array.
+            fruits.splice(1, 1);
+            console.log('spliced starting at index 1 removed 1: ',fruits);
+        //.indexOf(valueSearch) parameter value being searched for
+            // returns the index of the value being passed in
+            // if none found returns -1
+            console.log(names.indexOf('joy'));
+        //.reverse() doesn't take in any parameters
+            // mutates the array and reverses the array.
+            numbers.reverse();
+            console.log('mutated numbers array: ', numbers)
+        //.sort() doesn't take in any parameters
+            // mutates the array in alphabetical order if numbers it will sort in numaric first character
+            numbers.push(100);
+            numbers.sort();
+            names.sort();
+            console.log(numbers);
+            console.log(names);
+        //Array.isArray() takes in the array to check.  checks the constructor Array.isArray(arrayToBeChecked);
+            // returns a true or false
+            console.log('isArray is this an array: ', Array.isArray(numbers));
+
+        </script>
+    </head>
+    <body>
+
+    
+
+</body></html>

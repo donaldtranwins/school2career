@@ -5,6 +5,11 @@
 }
 
 /*Main Page Form styles*/
+.listOfSchools {
+    width: 94%;
+    margin: 4% 2%;
+
+}
 .checkbox {
     width: 125px;
     display: inline-block;
@@ -13,16 +18,19 @@
 .extendedForm {
     width: 280px;
     margin-left: 10px;
+    padding-right: 15px;
 }
-
+.searchImgDiv {
+    margin: 0 auto;
+    width: 80%;
+}
 .jumboImg {
     width: 100%;
 }
 .listContainer {
-    width: 80%;
-    margin: 0 auto;
+    width: 50%;
+    margin-top: 2%;
 }
-
 .searchIcon {
     position: fixed;
     color: white;
@@ -48,11 +56,11 @@
     z-index: 10;
 }
 
-.hidden {
+/*.hidden {
     position: absolute;
     left: -20px;
     display: none;
-}
+}*/
 
 /*googlemaps*/
 html,
@@ -73,11 +81,13 @@ body,
     height: 100%;
 }
 .GMap-canvas {
-    top: 20px;
+    top: 2%;
     display: block;
-    width: 800px;
-    height: 800px;
-    margin: 0 auto;
+    width: 50%;
+    height: 80%;
+    margin: 0 1%;
+    float: right;
+    float: right;
 }
 .UpdatedText {
     color: red;
@@ -120,6 +130,20 @@ body,
 :-moz-placeholder { /* Firefox 18- */
   color: rgb(144, 164, 174);
 }
+/*map legend start*/
+
+.legend {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #E0E0E0;
+    float: right;
+}
+.legend div {
+    text-align: center;
+}
+
+/*map legend end*/
+
 /*Individual School Pages*/
 
 .schoolInfo {
