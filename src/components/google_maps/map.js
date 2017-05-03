@@ -16,7 +16,7 @@ class GMap extends Component {
 
     render() {
         return (
-            <div id="mapBox" className="GMap">
+            <div className="GMap">
                 <div className='GMap-canvas' ref="mapCanvas"></div>
             </div>
         )
@@ -51,7 +51,6 @@ class GMap extends Component {
         this.initMap();
     }
     componentWillReceiveProps(nextProps){
-        debugger;
         if(this.props.userInput.value === null) {
             if(nextProps.center.lat !== this.props.center.lat) {
                 this.initMap();

@@ -9,7 +9,7 @@ const style = {
     width: '90%',
     display: 'flex',
     alignItems: 'center',
-    margin: '15px 20px'
+    marginTop: '2%'
 };
 const homeMainDiv = {
     height: '30%',
@@ -56,8 +56,8 @@ class SchoolList extends Component {
             });
         };
         return(
-            <div>
-                <div id="schoolList" className="listContainer hidden">
+            <div className='schoolListScroll'>
+                <div id="schoolList" className="listContainer">
                     {list}
                 </div>
             </div>
