@@ -1,7 +1,7 @@
 <?php
 
 class FetchSchools{
-    public $values;
+    private $values;
     private $locationQuery;
     function __construct($passedValues){
         $this->values = $passedValues;
@@ -39,6 +39,7 @@ class FetchSchools{
         }
 
         usort($this->output['schools'], array($this, "cmp"));
+        array_splice($this->output['schools'],500);
         return $this->output;
     }
 

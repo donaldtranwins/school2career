@@ -9,7 +9,7 @@ export default function(state = defaultState, action){ // if undefined set to de
   switch(action.type){
 
       case FETCH_SCHOOLS:
-          console.log('all schools action payload: ', action.payload.data.schools);
+          console.log(action.payload.data);
         return { ...state, all: action.payload };
       case ONE_SCHOOL:
         return { ...state, single: action.payload.data.schools };
