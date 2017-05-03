@@ -32,43 +32,51 @@ body{
     padding-right: 15px;
 }
 .searchImgDiv {
+    position: relative;
     margin: 0 auto;
-    width: 50%;
+    width: 80%;
     height: 20vh;
+    overflow: hidden;
 }
 .jumboImg {
     width: 100%;
+    background-image: url(/images/stock-photo-teenagers.jpg);
+    background-position: center 18%;
+    background-size: cover;
     height: 100%;
+    background-repeat: no-repeat;
 }
 .listContainer {
     width: 50%;
     margin-top: 2%;
     margin-left: 2%;
 }
+/*searchButton*/
 .searchIcon {
     position: fixed;
-    color: white;
+    color: rgb(144, 164, 174);
     font-size: 50px;
     cursor: pointer;
-    margin-top: 33px;
-    margin-left: 15px;
-    z-index: 10;
+    /*border: 1px solid #E0E0E0;*/
+    background-color: white;
+    box-shadow: 2px 2px 2px gray;
+    /*margin-top: 5px;
+    margin-left: 5px;*/
 }
 
 .refineText {
-    font-size: 25px;
-    margin-top: 10px;
-    margin-left: 25px;
     z-index: 10;
 }
 .refineBox {
-    position: fixed;
-    left: -10px;
-    background-color: mediumblue;
-    width: 180px;
-    height: 100px;
+    position: absolute;
+    background-color: white;
+    /*border: 1px solid rgb(144, 164, 174);
+    width: 100px;
+    height: 100px;*/
     z-index: 10;
 }
+/*end searchButton*/
+
 
 /*.hidden {
     position: absolute;
