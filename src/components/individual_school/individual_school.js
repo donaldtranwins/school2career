@@ -6,12 +6,13 @@ import Paper from 'material-ui/Paper';
 import MfChart from './male_female_chart';
 import MajorChart from './majors_percentage';
 import DegreesOffered from './degree_offered';
-
+import ReturnToListbtn from './btn_return_list';
 
 class School extends Component {
 
     componentDidMount() {
         var pathArray = window.location.pathname.split( '/' );
+        console.log(pathArray[pathArray.length -1]);
         this.props.searchOneSchool(pathArray[pathArray.length -1]);
     }
 
@@ -55,6 +56,7 @@ class School extends Component {
         return (
             <div>
                 <div className="container">
+                    <ReturnToListbtn />
                     <img className="schoolImg col-sm-12 offset-lg-1 col-lg-10 " src={this.props.schoolImgURL} />
                     <div className="schoolInfo">
                         <h2>{data.name} </h2>
