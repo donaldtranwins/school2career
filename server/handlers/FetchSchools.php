@@ -2,10 +2,29 @@
 
 class FetchSchools{
     public $values;
-    private $locationQuery;
+    private $fullQuery;
     function __construct($passedValues){
         $this->values = $passedValues;
-        $this->locationQuery = "SELECT * FROM `metadata` m JOIN `query` q ON m.uid=q.uid WHERE (`lat` BETWEEN " .$this->values['mapBounds']['sw']['lat']. " AND " . $this->values['mapBounds']['ne']['lat'] . ") AND (`lng` BETWEEN " . $this->values['mapBounds']['sw']['lng'] . " AND ". $this->values['mapBounds']['ne']['lng'].")";
+        $this->queryStart =     "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out ";
+        $this->queryMiddle =    "FROM `schools` s ";
+        $this->queryEnd =       "WHERE (
+                                            `lat` BETWEEN " .
+                                                $this->values['mapBounds']['sw']['lat'].
+                                                " AND " .
+                                                $this->values['mapBounds']['ne']['lat'] . "
+                                            ) AND (
+                                                `lng` BETWEEN " .
+                                                $this->values['mapBounds']['sw']['lng'] .
+                                                " AND ".
+                                                $this->values['mapBounds']['ne']['lng']."
+                                            ) ";
+        if (isset($this->values['pickAMajor'])){
+            $this->queryStart .=    ", p.external, ps.p_pct AS percent, ps.deg_2, ps.deg_4 ";
+            $this->queryMiddle .=   "JOIN programs_to_schools ps ON s.uid=ps.uid 
+                                     JOIN programs p ON p.pid=ps.pid ";
+            $this->queryEnd .=      "AND p.external=\"{$this->values['pickAMajor']}\" ";
+        }
+        $this->fullQuery = $this->queryStart.$this->queryMiddle.$this->queryEnd;
     }
 
     public $output = [
@@ -19,7 +38,7 @@ class FetchSchools{
             die('invalid values');
         }
 
-        $result = $dbConn->query($this->locationQuery);
+        $result = $dbConn->query($this->fullQuery);
         if(empty($result)) {
             $this->output['errors'][] = 'Query failed to reach database.';
         } else {
@@ -32,13 +51,15 @@ class FetchSchools{
                 foreach ($this->output['schools'] as $row=>$school ){
                     $this->output['schools'][$row]['distance'] = $this->getDistance($this->values['latLng']['lat'],$this->values['latLng']['lng'],floatval($school['lat']),floatval($school['lng']));
                 }
+                usort($this->output['schools'], array($this, "cmp"));
             } else {
                 $this->output['success'] = true;
                 $this->output['errors'][] = 'Search returned zero results';
             }
         }
 
-        usort($this->output['schools'], array($this, "cmp"));
+//        $this->output['request'] = $this->values;
+//        $this->output['query'] = $this->fullQuery;
         return $this->output;
     }
 

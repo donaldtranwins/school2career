@@ -9,10 +9,22 @@ WHERE (
 AND
 
 -- Select all schools with Biology (1668)
-SELECT s.*, p.external, ps.p_pct AS percent, ps.deg_2, ps.deg_4 FROM schools s
+SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out,
+  p.external, ps.p_pct AS percent, ps.deg_2, ps.deg_4 FROM schools s
 JOIN programs_to_schools ps ON s.uid=ps.uid
 JOIN programs p ON p.pid=ps.pid
 WHERE p.external="Biology and Biomedical"
+
+-- All schools in range that have specified major (6)
+SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out, p.external, ps.p_pct AS percent, ps.deg_2, ps.deg_4
+FROM `schools` s
+JOIN programs_to_schools ps ON s.uid=ps.uid
+JOIN programs p ON p.pid=ps.pid
+WHERE (
+        `lat` BETWEEN 33.399046547994 AND 33.900899534253
+      ) AND (
+          `lng` BETWEEN -117.92599581465 AND -117.54834078535
+      ) AND p.external="Engineering"
 
 -- All schools in range, sorted by major p.pid (41349)
 SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out, p.pid, p.external, ps.p_pct, ps.deg_2, ps.deg_4
