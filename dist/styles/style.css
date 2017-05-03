@@ -77,8 +77,6 @@ body{
 }*/
 
 /*googlemaps*/
-/*html,
-body,*/
 .GMap {
     height: 100%;
     position: absolute;
@@ -200,4 +198,26 @@ body,*/
 }
 .mfChart, .circleChart {
     margin: 0 auto;
+}
+
+
+/*media breaks*/
+@media only screen and (max-width: 550px) {
+    body {
+        height: 200vh;
+    }
+    .listContainer {
+        width: 100%;
+    }
+    .GMap {
+        width: 100%;
+        margin: auto;
+    }
+    .schoolListScroll{
+        width: 100vw;
+        margin: auto;
+        overflow: initial;
+        position: absolute;
+        top: 100%;
+    }
 }
