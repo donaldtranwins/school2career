@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { searchForSchools, mapBoundsInput } from '../../actions/actions_index';
-import { Link } from 'react-router';
-import ReactDOMServer from 'react-dom/server';
 
 class GMap extends Component {
 
@@ -13,153 +11,148 @@ class GMap extends Component {
             markers: []
         };
     }
-
     render() {
-        return <div id="mapBox" className="GMap">
-            <div className='GMap-canvas' ref="mapCanvas"></div>
-        </div>
+        return (
+            <div className="GMap">
+                <div className='GMap-canvas' ref="mapCanvas"></div>
+            </div>
+        )
     }
-
     initMap(){
-        console.log('initMap');
-        const data = this.props.schools.all.data;
         const userInput = this.props.userInput.value;
-        this.clearMarkers();
         if(!userInput){
             return <p>Loading...</p>;
         } else {
             // create the map, marker and infoWindow after the component has
-            // been rendered because we need to manipulate the DOM for Google =(
-
+            // been rendered because we need to manipulate the DOM for Google
             this.map = this.createMap(userInput.latLng);
-            google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
-            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds(this.nextProps));
+            google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange());
+            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
         }
     }
-    createSchoolMarkers(){
-        const data = this.props.schools.all.data;
+    createSchoolMarkers(nextProps){
+        const data = nextProps.schools.all;
         if(data){
-
-
-            //get photo infomration, the textSearch() sends the data and when it gets returned we go to
-            //a function to resolve the information.
-
-            for (var i = 0; i < data.data.length; i++) {
-                this.marker = this.createMarker(data.data[i]);
-                this.infoWindow = this.createInfoWindow(this.marker, data.data[i]);
-            }
+            this.setState({
+                markers: []
+            }, () => {
+                for (var i = 0; i < data.length; i++) {
+                    this.marker = this.createMarker(data[i]);
+                }
+                this.createCluster();
+            });
         }
     }
     componentDidMount(){
         this.initMap();
     }
-    nextProps = null;
     componentWillReceiveProps(nextProps){
-        if(nextProps.center.lat !== this.props.center.lat){
+        if(this.props.userInput.value === null) {
+            if(nextProps.center.lat !== this.props.center.lat) {
+                this.initMap();
+            }
+        } else if(nextProps.center.lat !== this.props.center.lat ||
+            this.props.userInput.value.distanceSlider !== nextProps.userInput.value.distanceSlider){
             this.initMap();
-            this.createSchoolMarkers();
+            this.createSchoolMarkers(nextProps);
         }
+        this.createSchoolMarkers(nextProps);
     }
-    componentDidRec
     // clean up event listeners when component unmounts
     componentDidUnMount() {
         google.maps.event.clearListeners(map, 'zoom_changed')
     }
+    setZoom() {
+        let zoomLevel = null;
+        if(this.props.userInput.value.distanceSlider !== undefined) {
+            const distance = this.props.userInput.value.distanceSlider;
+            if (distance <= 100) {
+                zoomLevel = 10;
+            } else if (distance <= 200) {
+                zoomLevel = 12;
+            } else if (distance <= 300) {
+                zoomLevel = 14;
+            }
+        } else {
+            zoomLevel = 10;
+        }
+        this.setState({
+            zoom : zoomLevel
+        });
 
+    }
     createMap(data) {
+        this.setZoom();
         let mapOptions = {
             zoom: this.state.zoom,
-            center: this.mapCenter(data)
+            center: this.createLatLng(data)
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }
-
-    mapCenter(data) {
+    createLatLng(pos){
         return new google.maps.LatLng(
-            // this.props.initialCenter.lat,
-            // this.props.initialCenter.lng
-            data.lat,
-            data.lng
+            pos.lat,
+            pos.lng
         )
     }
-
-    createLatLng(pos){                      //added this function, would set the lat and lng, may
-                                             //not be needed. could potentially do this all in create markers
-        return new google.maps.LatLng(
-            pos.LATITUDE,
-            pos.LONGITUDE
-        )
-    }
-
-    clearMarkers() {
-        for (let m in this.state.markers) {
-            this.state.markers[m].setMap(null)
-        }
-        this.setState ({
-            markers : []
-        });
-    }
-
     colorForMarker(sizeOfSchool) {
         switch (true) {
-            case (sizeOfSchool <= 10000):
-                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            case (sizeOfSchool < 10000):
+                return '/images/gradhat_red.png';
                 break;
-            case (sizeOfSchool <= 20000):
-                return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            case (sizeOfSchool < 20000):
+                return '/images/gradhat_green.png';
                 break;
-            case (sizeOfSchool <= 30000):
-                return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+            case (sizeOfSchool < 30000):
+                return '/images/gradhat_blue.png';
                 break;
-            case (sizeOfSchool <= 40000):
-                return 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
+            case (sizeOfSchool < 40000):
+                return '/images/gradhat_purple.png';
                 break;
             case (sizeOfSchool > 40000):
-                return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+                return '/images/gradhat_yellow.png';
                 break;
             default:
-                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                return '/images/gradhat_red.png';
                 break;
         }
-
     }
-
+    createCluster() {
+        const markerCluster = new MarkerClusterer(this.map, this.state.markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+    }
     createMarker(data) { //would add in (pos) as a parameter
-        const iconForSchool = this.colorForMarker(parseInt(data.UGDS));
+        const iconForSchool = this.colorForMarker(parseInt(data.size));
         const newMarker = new google.maps.Marker({
-            position: this.createLatLng(data),  //this would have to change to likely take in positions and
-            //then create markers for specific positions. this.createLatLng(pos);
             map: this.map,
+            position: this.createLatLng(data),
             icon: iconForSchool
         });
-        let tempMarkers = this.state.markers;
-        tempMarkers.push(newMarker);
+        const { markers } = this.state;
+        markers.push(newMarker);
         this.setState({
-            markers : tempMarkers
+            markers : [ ...markers ]
         });
-        return newMarker;
-    }
-
-    createInfoWindow(marker, data) {  //added in both params
-
-        // let content = <div><div><h6><Link to={`/school/${data.OPEID}`}>{data.INSTNM}</Link></h6></div><div>{data.CITY}, {data.STABBR}</div><div><a target="_blank" href="http://{data.INSTURL}">data.INSTURL</a></div></div>;
-
-        let content = '<div><h6 >' + data.INSTNM + '</h6></div>'
-            + '<div>' + data.CITY + ', ' + data.STABBR + '</div>'
-            + '<div><a target="_blank" href=http://' + data.INSTURL + '>' + data.INSTURL + '</a></div>';
-        // let contentString = ReactDOMServer.renderToString(<div className='InfoWindow'>{content} </div>);
+        let content = '<div><h6><a href=http://localhost:3000/school/' + data.uid + '>' + data.name + '</h6></div>'
+            + '<div>' + data.city + ', ' + data.state + '</div>'
+            + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         let infoWindow =  new google.maps.InfoWindow({
-                map: this.map,
-                anchor: marker,
-                content: content
-            });
-        infoWindow.close();
-        this.marker.addListener('click', function() {
-            infoWindow.open(this.map, marker);
+            map: this.map,
+            anchor: newMarker,
+            content: content
+        });
+        newMarker.addListener('click', function() {
+            infoWindow.open(this.map, newMarker);
         });
         this.map.addListener('click', function () {
+            console.log('TEST');
             infoWindow.close();
         });
+        this.map.addListener('idle', function() {
+            console.log('HERE');
+            infoWindow.close();
+        });
+        infoWindow.close();
     }
     getMapBounds(nextProps) {
         const bounds = this.map.getBounds();
@@ -175,12 +168,8 @@ class GMap extends Component {
                 lng: sw.lng()
             }
         };
-        if (this.props.boundsInput.mapBoundsInput === null){
-            const userInputMapBounds = this.props.userInput.value;  // TODO fix this
-            userInputMapBounds.mapBounds = mapBounds;
-            this.props.mapBoundsInput(userInputMapBounds);
-            this.props.searchForSchools(userInputMapBounds);
-        } else if (this.props.boundsInput.mapBoundsInput.mapBounds.ne.lat !== mapBounds.ne.lat) {
+        if (this.props.boundsInput.mapBoundsInput === null ||
+                this.props.boundsInput.mapBoundsInput.mapBounds.ne.lat !== mapBounds.ne.lat){
             const userInputMapBounds = this.props.userInput.value;  // TODO fix this
             userInputMapBounds.mapBounds = mapBounds;
             this.props.mapBoundsInput(userInputMapBounds);
@@ -193,7 +182,6 @@ class GMap extends Component {
         })
     }
 }
-
 function mapStateToProps(state){
     return{
         schools: state.schools,

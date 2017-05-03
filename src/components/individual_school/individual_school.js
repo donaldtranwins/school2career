@@ -10,30 +10,33 @@ import DegreesOffered from './degree_offered';
 
 class School extends Component {
 
-    componentWillMount() {
-        this.props.searchOneSchool();
+    componentDidMount() {
+        var pathArray = window.location.pathname.split( '/' );
+        this.props.searchOneSchool(pathArray[pathArray.length -1]);
     }
 
     render() {
-        let data = this.props.schools;
+        let data = this.props.school;
         if(!data){
             return <p>Loading...</p>
         }
-        data = data[0];
+        data = data.schools[0];
+        console.log('school: ', data)
         //Admissions Rate Math
-        let admissionRate = parseFloat(data.ADM_RATE);
+        let admissionRate = parseFloat(data.adm_rate);
         if (parseFloat(admissionRate) > 0) {
-            admissionRate = admissionRate * 100;
+            admissionRate = (admissionRate * 100).toFixed(2);
+            admissionRate += '%';
         } else {
             admissionRate = 'Admissions Rate Is Not Available';
         }
         //SAT SCORE
-        let satAvg = parseInt(data.SAT_AVG);
+        let satAvg = parseInt(data.sat_avg);
         if (satAvg===0) {
             satAvg = "SAT Score Average Is Not Available";
         }
         //School Type
-        let instType = data.CONTROL;
+        let instType = data.ownership;
         instType = parseInt(instType);
         switch (instType) {
             case 1:
@@ -46,32 +49,33 @@ class School extends Component {
                 instType = "Private (for-profit)";
                 break;
         }
-
+        let tuitionIn = (parseFloat(data.tuition_in)).toLocaleString();
+        let tuitionOut = (parseFloat(data.tuition_out)).toLocaleString();
 
         return (
             <div>
                 <div className="container">
                     <img className="schoolImg col-sm-12 offset-lg-1 col-lg-10 " src={this.props.schoolImgURL} />
                     <div className="schoolInfo">
-                        <h2>{data.INSTNM} </h2>
-                        <h4>{data.CITY}, {data.STABBR}</h4>
+                        <h2>{data.name} </h2>
+                        <h4>{data.city}, {data.state}</h4>
                         <div className="row">
-                        <h5 className="webAddress col-md-3"><a target="_blank" href={'http://' + data.INSTURL}>{data.INSTURL}</a></h5>
-                        <h5 className="col-md-3">{instType} School</h5>
+                        <h5 className="webAddress col-md-5"><a target="_blank" href={'http://' + data.url}>{data.url}</a></h5>
+                        <h5 className="col-md-5">{instType} School</h5>
                         </div>
                     </div>
                     <Map id="mapShowing"/>
                     <div className="scores col-sm">
                         <Paper className="statsWrapper">
                             <div className="row">
-                                <h4 className="col-md-4">Admissions Rate: {admissionRate}%</h4>
+                                <h4 className="col-md-4">Admissions Rate: {admissionRate}</h4>
                                 <h4 className="col-md-4">SAT Average: {satAvg}</h4>
-                                <h4 className="col-md-4">Undergraduate Size: {data.UGDS} students</h4>
+                                <h4 className="col-md-4">Undergraduate Size: {data.size} students</h4>
                             </div>
                             <br/>
                             <div className="row">
-                                <h4 className="col-md-6">Tuition (in state): ${data.TUITIONFEE_IN}</h4>
-                                <h4 className="col-md-6">Tuition (out of state): ${data.TUITIONFEE_OUT}</h4>
+                                <h4 className="col-md-6">Tuition (in state): ${tuitionIn}</h4>
+                                <h4 className="col-md-6">Tuition (out of state): ${tuitionOut}</h4>
                             </div>
                         </Paper>
                     </div>
@@ -89,7 +93,7 @@ class School extends Component {
 
 function mapStateToProps(state) {
     return {
-        schools: state.schools.single,
+        school: state.schools.single,
         schoolImgURL: state.schoolImgURL.image
     };
 }

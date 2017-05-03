@@ -6,10 +6,10 @@ import { Link } from 'react-router';
 
 const style = {
     height: '20%',
-    width: '80%',
+    width: '90%',
     display: 'flex',
     alignItems: 'center',
-    margin: '15px auto'
+    marginTop: '2%'
 };
 const homeMainDiv = {
     height: '30%',
@@ -26,31 +26,38 @@ const school = {
 };
 class SchoolList extends Component {
     componentWillMount(){
-        this.props.searchForSchools()
+        this.props.searchForSchools() // don't think we need this.
     }
     render(){
         let list;
-        const data = this.props.schools.all.data;
+        const data = this.props.schools.all;
         if(!data){
             list = () => { return <p>Loading...</p>};
         } else {
-            list = data.data.map((school, index) => {
+            list = data.map((school, index) => {
+                let admissionRate = parseFloat(school.adm_rate);
+                if (parseFloat(admissionRate) > 0) {
+                    admissionRate = (admissionRate * 100).toFixed(2);
+                    admissionRate += '%';
+                } else {
+                    admissionRate = 'Admissions Rate Is Not Available';
+                }
                 return(
                     <Paper className="listOfSchools" style={style} key={index}>
                         <ul style={ul}>
-                            <li className='schoolListSchool'><Link to={`/school/${school.OPEID}`}>{school.INSTNM} </Link></li>
-                            <li className='schoolListAddressli'>{school.CITY}, </li>
-                            <li className='schoolListAddressli'>{school.STABBR}</li>
-                            <li className='schoolListUrl'><a target="_blank" href={'http://' + school.INSTURL}>{school.INSTURL}</a></li>
-                            <li>Admission Rate: {school.ADM_RATE}</li>
+                            <li className='schoolListSchool'><Link to={`/school/${school.uid}`}>{school.name} </Link></li>
+                            <li className='schoolListAddressli'>{school.city}, </li>
+                            <li className='schoolListAddressli'>{school.state}</li>
+                            <li className='schoolListUrl'><a target="_blank" href={'http://' + school.url}>{school.url}</a></li>
+                            <li>Admission Rate: {admissionRate}</li>
                         </ul>
                     </Paper>
                 )
             });
         };
         return(
-            <div>
-                <div id="schoolList" className="listContainer hidden">
+            <div className='schoolListScroll'>
+                <div id="schoolList" className="listContainer">
                     {list}
                 </div>
             </div>

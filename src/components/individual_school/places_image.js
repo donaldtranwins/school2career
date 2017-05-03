@@ -25,7 +25,7 @@ class Photo extends Component {
 
     };
     componentDidMount(){
-        const data = this.props.schools;
+        const data = this.props.school.schools;
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};
@@ -34,7 +34,7 @@ class Photo extends Component {
             // been rendered because we need to manipulate the DOM for Google =(
             this.map = this.createMap(data[0]);
             let request = {
-                query: `${data[0].INSTNM} admin`
+                query: `${data[0].name} admin`
             };
             //get photo infomration, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
@@ -68,16 +68,16 @@ class Photo extends Component {
         return new google.maps.LatLng(
             // this.props.initialCenter.lat,
             // this.props.initialCenter.lng
-            data.LATITUDE,
-            data.LONGITUDE
+            data.lat,
+            data.lng
         )
     }
 
     createLatLng(pos){                      //added this function, would set the lat and lng, may
         //not be needed. could potentially do this all in create markers
         return new google.maps.LatLng(
-            pos.LATITUDE,
-            pos.LONGITUDE
+            pos.lat,
+            pos.lng
         )
     }
 
@@ -115,7 +115,7 @@ class Photo extends Component {
     }
 
     createMarker(data) { //would add in (pos) as a parameter
-        const iconForSchool = this.colorForMarker(parseInt(data.UGDS));
+        const iconForSchool = this.colorForMarker(parseInt(data.size));
         const newMarker = new google.maps.Marker({
             position: this.createLatLng(data),  //this would have to change to likely take in positions and
             //then create markers for specific positions. this.createLatLng(pos);
@@ -139,7 +139,7 @@ class Photo extends Component {
 
 function mapStateToProps(state){
     return{
-        schools: state.schools.single
+        school: state.schools.single
     }
 }
 export default connect(mapStateToProps, {schoolURL})(Photo);
