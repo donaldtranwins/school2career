@@ -19,7 +19,6 @@ class GMap extends Component {
         )
     }
     initMap(){
-        // const data = this.props.schools;
         const userInput = this.props.userInput.value;
         if(!userInput){
             return <p>Loading...</p>;
@@ -125,6 +124,7 @@ class GMap extends Component {
     createMarker(data) { //would add in (pos) as a parameter
         const iconForSchool = this.colorForMarker(parseInt(data.size));
         const newMarker = new google.maps.Marker({
+            map: this.map,
             position: this.createLatLng(data),
             icon: iconForSchool
         });
@@ -137,11 +137,12 @@ class GMap extends Component {
             + '<div>' + data.city + ', ' + data.state + '</div>'
             + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         let infoWindow =  new google.maps.InfoWindow({
+            map: this.map,
             anchor: newMarker,
             content: content
         });
         newMarker.addListener('click', function() {
-            infoWindow.open(this.map, marker);
+            infoWindow.open(this.map, newMarker);
         });
         this.map.addListener('click', function () {
             console.log('TEST');
@@ -150,7 +151,8 @@ class GMap extends Component {
         this.map.addListener('idle', function() {
             console.log('HERE');
             infoWindow.close();
-        })
+        });
+        infoWindow.close();
     }
     getMapBounds(nextProps) {
         const bounds = this.map.getBounds();
