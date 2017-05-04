@@ -8,11 +8,11 @@ class GMap extends Component {
         super(props);
         this.state = {
             zoom: 10,
-            markers: []
+            markers: [],
+            markerCluster : null
         };
     }
     render() {
-        console.log("HERE HERE HERE");
         return (
             <div className="GMap">
                 <div className='GMap-canvas' ref="mapCanvas"></div>
@@ -36,11 +36,17 @@ class GMap extends Component {
     }
     createSchoolMarkers(nextProps){
         const data = nextProps.schools.all;
+        for (let i = 0; i < this.state.markers.length; i++) {
+            this.state.markers[i].setMap(null);
+        }
+        if (this.state.markerCluster !== null) {
+            this.state.markerCluster.clearMarkers()
+        }
         if(data){
             this.setState({
                 markers: []
             }, () => {
-                for (var i = 0; i < data.length; i++) {
+                for (let i = 0; i < data.length; i++) {
                     this.marker = this.createMarker(data[i]);
                 }
                 this.createCluster();
@@ -74,11 +80,11 @@ class GMap extends Component {
         if(this.props.userInput.value.distanceSlider !== undefined) {
             const distance = this.props.userInput.value.distanceSlider;
             if (distance <= 100) {
-                zoomLevel = 10;
+                zoomLevel = 15;
             } else if (distance <= 200) {
-                zoomLevel = 12;
+                zoomLevel = 10;
             } else if (distance <= 300) {
-                zoomLevel = 14;
+                zoomLevel = 4;
             }
         } else {
             zoomLevel = 10;
@@ -156,8 +162,11 @@ class GMap extends Component {
         }
     }
     createCluster() {
-        const markerCluster = new MarkerClusterer(this.map, this.state.markers,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        if(this.map) {
+            this.state.markerCluster = new MarkerClusterer(this.map, this.state.markers,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        }
+
     }
     createMarker(data) { //would add in (pos) as a parameter
         const iconForSchool = this.colorForMarker(parseInt(data.size));

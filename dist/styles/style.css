@@ -77,13 +77,6 @@ body{
 }
 /*end searchButton*/
 
-
-/*.hidden {
-    position: absolute;
-    left: -20px;
-    display: none;
-}*/
-
 /*googlemaps*/
 .GMap {
     height: 100%;
@@ -124,6 +117,9 @@ body{
 .UpdatedText {
     color: red;
 }
+.noSchools {
+    text-align: center;
+}
 .placesContainer{
     margin-top: 20px;
     width: 250.99px;
@@ -134,10 +130,6 @@ body{
     z-index: 10;
     width: 250px;
 }
-/*.form-control:focus {
-    color: #78909C;
-    border-color: transparent;
-}*/
 .autoCompleteForm, .autoCompleteForm:focus {
     font-family: roboto;
     max-resolution: 20px;

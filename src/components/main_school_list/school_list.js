@@ -38,7 +38,7 @@ class SchoolList extends Component {
         let list;
         const data = this.props.schools.all;
         if(!data){
-            list = () => { return <p>Loading...</p>};
+            list = <p className="noSchools">No schools match the current criteria.</p>;
         } else {
             list = data.map((school, index) => {
                 let admissionRate = parseFloat(school.adm_rate);
