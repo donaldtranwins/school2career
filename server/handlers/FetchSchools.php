@@ -61,7 +61,7 @@ class FetchSchools{
 //        $this->output['request'] = $this->values;
 //        $this->output['query'] = $this->fullQuery;
 
-        array_splice($this->output['schools'],500);
+        $this->output['schools'] = array_slice($this->output['schools'],0,500,true);
         return $this->output;
     }
 
