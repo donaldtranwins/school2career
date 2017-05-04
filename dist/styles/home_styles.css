@@ -18,3 +18,8 @@ a {
     text-decoration: none;
     color: inherit;
 }
+.listViewStats {
+    display: inline-block;
+    padding-right: 30px;
+}
+/* Portrait and Landscape */

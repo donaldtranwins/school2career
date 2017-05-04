@@ -27,7 +27,6 @@ if (mysqli_connect_errno()) {
 //    die('Could not create initial tables');
 //};
 
-
 if($ignore_header){
     fgetcsv($handle, "r");
     $ignore_header = false;

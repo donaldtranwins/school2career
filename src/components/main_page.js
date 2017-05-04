@@ -24,7 +24,7 @@ class drawerForm extends Component {
             <div>
                 <div className="refineBox" onTouchTap={this.handleToggle}>
                     <div className="searchIcon refineText">
-                        <i className="material-icons searchIcon" >search</i> refine search
+                        <i className="material-icons searchIcon" >search</i>
                     </div>
                 </div>
                 <Drawer
@@ -35,11 +35,13 @@ class drawerForm extends Component {
                     <MapForm clickClosed = {this.handleClose}/>
                 </Drawer>
                 <div className='searchImgDiv'>
-                    <img className="jumboImg" src="/images/Lewis-University.png" alt=""/>
+                    <div className="jumboImg" />
                 </div>
-                <Map id="mapShowing"/>
-                <SchoolList id="schoolListShowing"/>
-                <Legend className="legend" />
+                <div className='mapContent'>
+                    <Map id="mapShowing"/>
+                    <SchoolList id="schoolListShowing"/>
+                    <Legend className="legend" />
+                </div>
             </div>
         );
     }

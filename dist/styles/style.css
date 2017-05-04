@@ -1,14 +1,25 @@
 /*appbar*/
+body{
+    height: 100vh;
+}
 
 .navBarLink {
     color: black !important;
 }
 
 /*Main Page Form styles*/
+.mapContent{
+    margin-top: 1%;
+    width: 100%;
+    height: 70vh;
+    position: relative;
+}
 .listOfSchools {
-    width: 94%;
-    margin: 4% 2%;
 
+}
+.schoolListScroll {
+    overflow: scroll;
+    height: 100%;
 }
 .checkbox {
     width: 125px;
@@ -21,40 +32,51 @@
     padding-right: 15px;
 }
 .searchImgDiv {
+    position: relative;
     margin: 0 auto;
     width: 80%;
+    height: 20vh;
+    overflow: hidden;
 }
 .jumboImg {
     width: 100%;
+    background-image: url(/images/stock-photo-teenagers.jpg);
+    background-position: center 18%;
+    background-size: cover;
+    height: 100%;
+    background-repeat: no-repeat;
 }
 .listContainer {
     width: 50%;
     margin-top: 2%;
+    margin-left: 2%;
 }
+/*searchButton*/
 .searchIcon {
     position: fixed;
-    color: white;
+    color: rgb(144, 164, 174);
     font-size: 50px;
     cursor: pointer;
-    margin-top: 33px;
-    margin-left: 15px;
-    z-index: 10;
+    /*border: 1px solid #E0E0E0;*/
+    background-color: white;
+    box-shadow: 2px 2px 2px gray;
+    /*margin-top: 5px;
+    margin-left: 5px;*/
 }
 
 .refineText {
-    font-size: 25px;
-    margin-top: 10px;
-    margin-left: 25px;
     z-index: 10;
 }
 .refineBox {
-    position: fixed;
-    left: -10px;
-    background-color: mediumblue;
-    width: 180px;
-    height: 100px;
+    position: absolute;
+    background-color: white;
+    /*border: 1px solid rgb(144, 164, 174);
+    width: 100px;
+    height: 100px;*/
     z-index: 10;
 }
+/*end searchButton*/
+
 
 /*.hidden {
     position: absolute;
@@ -63,17 +85,17 @@
 }*/
 
 /*googlemaps*/
-html,
-body,
 .GMap {
     height: 100%;
     position: absolute;
-    width: 100%;
+    width: 50%;
+    right: 2%;
+    position: absolute;
 }
 .soloMap {
     height: 350px;
     width: 80%;
-    right: 0;
+    right: 2%;
     margin: 0 auto;
 }
 .solo-canvas {
@@ -81,13 +103,9 @@ body,
     height: 100%;
 }
 .GMap-canvas {
-    top: 2%;
     display: block;
-    width: 50%;
-    height: 80%;
-    margin: 0 1%;
-    float: right;
-    float: right;
+    width: 100%;
+    height: 100%;
 }
 .UpdatedText {
     color: red;
@@ -136,7 +154,9 @@ body,
     width: 200px;
     height: 200px;
     border: 1px solid #E0E0E0;
-    float: right;
+    position: absolute;
+    top: 0px;
+    right: 10px;
 }
 .legend div {
     text-align: center;
@@ -186,4 +206,26 @@ body,
 }
 .mfChart, .circleChart {
     margin: 0 auto;
+}
+
+
+/*media breaks*/
+@media only screen and (max-width: 550px) {
+    body {
+        height: 200vh;
+    }
+    .listContainer {
+        width: 100%;
+    }
+    .GMap {
+        width: 100%;
+        margin: auto;
+    }
+    .schoolListScroll{
+        width: 100vw;
+        margin: auto;
+        overflow: initial;
+        position: absolute;
+        top: 100%;
+    }
 }
