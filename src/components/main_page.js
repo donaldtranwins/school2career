@@ -6,7 +6,6 @@ import SchoolList from './main_school_list/school_list'
 import PaperExampleSimple from './main_school_list/main_paper'
 import Map from './google_maps/map';
 import MapButton from './button_legend/legend';
-import Legend from './google_maps/legend';
 
 class drawerForm extends Component {
 
@@ -40,7 +39,6 @@ class drawerForm extends Component {
                 <div className='mapContent'>
                     <Map id="mapShowing"/>
                     <SchoolList id="schoolListShowing"/>
-                    <Legend className="legend" />
                 </div>
             </div>
         );

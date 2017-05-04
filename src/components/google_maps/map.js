@@ -12,11 +12,14 @@ class GMap extends Component {
         };
     }
     render() {
+        console.log("HERE HERE HERE");
         return (
             <div className="GMap">
                 <div className='GMap-canvas' ref="mapCanvas"></div>
+                {/*<div id="legend"><h3>Legend</h3><h6>Number Of Students</h6></div>*/}
             </div>
         )
+
     }
     initMap(){
         const userInput = this.props.userInput.value;
@@ -29,6 +32,7 @@ class GMap extends Component {
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange());
             google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
         }
+        this.createLegend();
     }
     createSchoolMarkers(nextProps){
         const data = nextProps.schools.all;
@@ -82,7 +86,43 @@ class GMap extends Component {
         this.setState({
             zoom : zoomLevel
         });
-
+    }
+    createLegendElement() {
+        let outsideDiv = document.createElement('div');
+        outsideDiv.id = 'legend';
+        let smallHeader = document.createElement('h6');
+        smallHeader.innerText = '# Of Students';
+        outsideDiv.appendChild(smallHeader);
+        return outsideDiv;
+    }
+    createLegend() {
+        var icons = {
+            sm_school: {
+                name: ' < 10,000',
+                icon: '/images/sm_school.png'
+            },
+            md_school: {
+                name: ' < 25,000',
+                icon: '/images/md_school.png'
+            },
+            lg_school: {
+                name: ' > 25,000',
+                icon: '/images/lg_school.png'
+            }
+        };
+        const forLegend = document.getElementsByClassName('GMap');
+        const legendDiv = this.createLegendElement();
+        forLegend[0].appendChild(legendDiv);
+        const legend = document.getElementById('legend');
+        for (var key in icons) {
+            var type = icons[key];
+            var name = type.name;
+            var icon = type.icon;
+            var div = document.createElement('div');
+            div.innerHTML = '<img src="' + icon + '">' + name;
+            legend.appendChild(div);
+        }
+        this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
     }
     createMap(data) {
         this.setZoom();
@@ -98,25 +138,20 @@ class GMap extends Component {
             pos.lng
         )
     }
+
     colorForMarker(sizeOfSchool) {
         switch (true) {
             case (sizeOfSchool < 10000):
-                return '/images/gradhat_red.png';
+                return '/images/sm_school.png';
                 break;
-            case (sizeOfSchool < 20000):
-                return '/images/gradhat_green.png';
+            case (sizeOfSchool < 25000):
+                return '/images/md_school.png';
                 break;
-            case (sizeOfSchool < 30000):
-                return '/images/gradhat_blue.png';
-                break;
-            case (sizeOfSchool < 40000):
-                return '/images/gradhat_purple.png';
-                break;
-            case (sizeOfSchool > 40000):
-                return '/images/gradhat_yellow.png';
+            case (sizeOfSchool >= 25000):
+                return '/images/lg_school.png';
                 break;
             default:
-                return '/images/gradhat_red.png';
+                return '/images/sm_school.png';
                 break;
         }
     }
@@ -148,11 +183,9 @@ class GMap extends Component {
             infoWindow.open(this.map, newMarker);
         });
         this.map.addListener('click', function () {
-            console.log('TEST');
             infoWindow.close();
         });
         this.map.addListener('idle', function() {
-            console.log('HERE');
             infoWindow.close();
         });
         infoWindow.close();
