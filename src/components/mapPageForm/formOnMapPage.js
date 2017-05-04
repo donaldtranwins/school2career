@@ -137,7 +137,7 @@ class mapPageForm extends Component {
                 <Field name="Private" component={renderCheckbox} label="Private" value="Private"/>
             </div>
             <div>
-                <Field name="majors" component={renderSelectField} label="Majors">
+                <Field name="pickAMajor" component={renderSelectField} label="Majors">
                     {majors}
                 </Field>
             </div>

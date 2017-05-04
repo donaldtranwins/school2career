@@ -7,11 +7,12 @@ const style = {
   margin: 12,
 };
 
-const ReturnToListbtn = () => (
+const ReturnToListbtn = (props) => (
   <div>
     <RaisedButton
       icon={<ActionAndroid />}
       style={style}
+      onTouchTap={() => props.onClick()}
     />
   </div>
 );

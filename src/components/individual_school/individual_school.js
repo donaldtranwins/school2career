@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { searchOneSchool } from '../../actions/actions_index';
 import Map from './places_image';
@@ -9,18 +9,24 @@ import DegreesOffered from './degree_offered';
 import ReturnToListbtn from './btn_return_list';
 
 class School extends Component {
-
+    static contextTypes = {
+        router: PropTypes.object
+    };
+    handleClick() {
+        console.log('handleClick');
+        this.context.router.push('/school_search');
+    };
     componentDidMount() {
         var pathArray = window.location.pathname.split( '/' );
         console.log(pathArray[pathArray.length -1]);
         this.props.searchOneSchool(pathArray[pathArray.length -1]);
-    }
+    };
 
     render() {
         let data = this.props.school;
         if(!data){
             return <p>Loading...</p>
-        }
+        };
         data = data.schools[0];
         console.log('school: ', data)
         //Admissions Rate Math
@@ -30,12 +36,12 @@ class School extends Component {
             admissionRate += '%';
         } else {
             admissionRate = 'Admissions Rate Is Not Available';
-        }
+        };
         //SAT SCORE
         let satAvg = parseInt(data.sat_avg);
         if (satAvg===0) {
             satAvg = "SAT Score Average Is Not Available";
-        }
+        };
         //School Type
         let instType = data.ownership;
         instType = parseInt(instType);
@@ -56,7 +62,7 @@ class School extends Component {
         return (
             <div>
                 <div className="container">
-                    <ReturnToListbtn />
+                    <ReturnToListbtn onClick={() => this.handleClick()}/>
                     <img className="schoolImg col-sm-12 offset-lg-1 col-lg-10 " src={this.props.schoolImgURL} />
                     <div className="schoolInfo">
                         <h2>{data.name} </h2>
