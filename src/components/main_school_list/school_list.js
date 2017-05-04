@@ -32,12 +32,8 @@ const school = {
 };
 class SchoolList extends Component {
     componentWillMount(){
-        this.props.searchForSchools() // don't think we need this.
+        // this.props.searchForSchools() // don't think we need this.
     }
-    // let satAvg = parseInt(sat_avg);
-    // if (satAvg === 0) {
-    //     satAvg = "Not Available";
-    // }
     render(){
         let list;
         const data = this.props.schools.all;

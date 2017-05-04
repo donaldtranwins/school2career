@@ -49,6 +49,9 @@ class GMap extends Component {
     }
     componentDidMount(){
         this.initMap();
+        if(this.props.boundsInput.mapBoundsInput){
+            this.createSchoolMarkers(this.props);
+        }
     }
     componentWillReceiveProps(nextProps){
         if(this.props.userInput.value === null) {

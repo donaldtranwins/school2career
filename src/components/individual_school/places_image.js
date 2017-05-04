@@ -19,9 +19,13 @@ class Photo extends Component {
         </div>
     }
     callback = (place) => {
-            let holder = place[0].photos;
+
+
+        let holder = place[0].photos;
+        if(holder !== undefined){
             let imageURL = holder[0].getUrl({'maxWidth': 1200, 'maxHeight': 1200});
             this.props.schoolURL(imageURL);
+        };
     };
     componentDidMount(){
         const data = this.props.school.schools;
