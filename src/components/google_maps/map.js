@@ -16,7 +16,7 @@ class GMap extends Component {
         return (
             <div className="GMap">
                 <div className='GMap-canvas' ref="mapCanvas"></div>
-                <div id="legend"><h3>Legend</h3><h6>Number Of Students</h6></div>
+                {/*<div id="legend"><h3>Legend</h3><h6>Number Of Students</h6></div>*/}
             </div>
         )
 
@@ -87,31 +87,26 @@ class GMap extends Component {
     createLegendElement() {
         let outsideDiv = document.createElement('div');
         outsideDiv.id = 'legend';
-        let mainHeader = document.createElement('h3');
-        mainHeader.innerText = 'Legend';
         let smallHeader = document.createElement('h6');
-        smallHeader.innerText = 'Number Of Students';
-        mainHeader.appendChild(smallHeader);
-        outsideDiv.appendChild(mainHeader);
+        smallHeader.innerText = '# Of Students';
+        outsideDiv.appendChild(smallHeader);
         return outsideDiv;
     }
     createLegend() {
         var icons = {
             sm_school: {
-                name: 'Less Than 10,000',
+                name: ' < 10,000',
                 icon: '/images/sm_school.png'
             },
             md_school: {
-                name: 'Less Than 25,000',
+                name: ' < 25,000',
                 icon: '/images/md_school.png'
             },
             lg_school: {
-                name: 'More Than 25,000',
+                name: ' > 25,000',
                 icon: '/images/lg_school.png'
             }
         };
-        // <div id="legend"><h3>Legend</h3><h6>Number Of Students</h6></div>
-        // const legend = document.getElementById('legend');
         const forLegend = document.getElementsByClassName('GMap');
         const legendDiv = this.createLegendElement();
         forLegend[0].appendChild(legendDiv);
@@ -124,7 +119,7 @@ class GMap extends Component {
             div.innerHTML = '<img src="' + icon + '">' + name;
             legend.appendChild(div);
         }
-        this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+        this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
     }
     createMap(data) {
         this.setZoom();
