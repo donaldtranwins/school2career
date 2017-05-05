@@ -6,10 +6,10 @@
             'errors' => []
         ];
 
-        private $metadata = "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out
+        private $metadataQuery = "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out
                           FROM schools s
                           WHERE s.uid=";
-        private $degrees = "SELECT p.external AS name, ps.p_pct AS percent, ps.deg_2, ps.deg_4, p.description 
+        private $programsQuery = "SELECT p.external AS name, ps.p_pct AS percent, ps.deg_2 AS associates, ps.deg_4 AS bachelors, p.description 
                             FROM `programs_to_schools` ps
                             JOIN programs p ON ps.pid=p.pid
                             WHERE uid=";
@@ -17,23 +17,23 @@
         public function processRequest(){
             require_once 'connectDb.php';
 
-            $query1 = $dbConn->query($this->metadata . $_GET['schid']);
-            $query2 = $dbConn->query($this->degrees . $_GET['schid']);
+            $metadata = $dbConn->query($this->metadataQuery . $_GET['schid']);
+            $programs = $dbConn->query($this->programsQuery . $_GET['schid']);
 
-            if(empty($query1) || empty($query2)) {
+            if(empty($metadata) || empty($programs)) {
                 $this->output['errors'][] = 'Queries failed to reach database.';
             } else {
-                if(mysqli_num_rows($query1) > 0 && mysqli_num_rows($query2) > 0){
+                if(mysqli_num_rows($metadata) > 0 && mysqli_num_rows($programs) > 0){
                     $this->output['success'] = true;
-                    $row = mysqli_fetch_assoc($query1);
-                    $row['programs'] = [];
-                    while($item = mysqli_fetch_assoc($query2)){
-                        $row['programs'][] = $item;
+                    $school = mysqli_fetch_assoc($metadata);
+                    $school['programs'] = [];
+                    while($program = mysqli_fetch_assoc($programs)){
+                        $school['programs'][] = $program;
                     }
-                    if (empty($row['programs']))
-                        unset($row['programs']);
+                    if (empty($school['programs']))
+                        unset($school['programs']);
 
-                    $this->output['school'] = $row;
+                    $this->output['school'] = $school;
                 } else {
                     $this->output['errors'][] = 'No school found';
                 }
