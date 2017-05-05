@@ -12,7 +12,7 @@ class Photo extends Component {
         };
     }
     render() {
-        return <div id="mapBox" className="soloMap col-xs col-md-10"  >
+        return <div id="mapBox" className="soloMap col-xs-12"  >
             <div className='solo-canvas' ref="mapCanvas"></div>
         </div>
     }

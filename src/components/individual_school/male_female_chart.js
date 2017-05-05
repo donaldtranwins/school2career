@@ -18,9 +18,9 @@ class mfChart extends Component {
             ];
         return (
             <div className="mfChart">
-                <h3 className="titleMenWomanChart">Percentage of Men To Women </h3>
-                <BarChart width={500} height={300} data={chart}
-                          margin={{top: 5, right: 25, left: 0, bottom: 5}}>
+                <h4 className="titleMenWomanChart">Percentage of Men To Women </h4>
+                <BarChart width={400} height={250} data={chart}
+                          margin={{top: 0, right: 50, left: 50, bottom: 0}}>
                     <XAxis dataKey="name"/>
                     <YAxis/>
                     <CartesianGrid />
