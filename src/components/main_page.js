@@ -40,6 +40,7 @@ class drawerForm extends Component {
                     <Map id="mapShowing"/>
                     <SchoolList id="schoolListShowing"/>
                 </div>
+
             </div>
         );
     }
