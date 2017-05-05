@@ -4,14 +4,13 @@
     });
     header::declare();
 
-
     $clientRequest = isset($_GET['schid'])
         ? new OneSchool()
         : (
         isset($_SERVER['CONTENT_TYPE']) && empty($_GET)
             ? ($_SERVER['CONTENT_TYPE'] == 'application/json'
                 ? new FetchSchools(json_decode(file_get_contents('php://input'), true))
-                : new RequestError('Invalid Request! Please configure application/json!'))
+                : new RequestError('Please configure application json!'))
             : new RequestError('Invalid URL Parameters')
         );
 

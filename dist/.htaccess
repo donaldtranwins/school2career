@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteRule ^api/fetch_schools api/request.php [NC]
+RewriteRule ^api/one_school/id/(.*) api/request.php?schid=$1 [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.html [L]
