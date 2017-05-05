@@ -25,11 +25,15 @@ class GeoCode extends React.Component {
         type: 'search',
         placeholder: 'LOCATION',
         autoFocus: true,
-    }
+    };
+    const options = {
+        types: ['geocode'],
+        componentRestrictions: {country:'us'}
+    };
     return (
         <div className='placesContainer'>
             <div className='placesAuto'>
-                <PlacesAutocomplete inputProps={inputProps} classNames={cssClasses} />
+                <PlacesAutocomplete inputProps={inputProps} classNames={cssClasses} options={options}/>
             </div>
         </div>
     )
