@@ -5,6 +5,7 @@ const defaultState = {image : ""};
 export default function(state = defaultState, action){ // if undefined set to default_state
     switch(action.type){
         case SCHOOL_IMAGE:
+            console.log('School image reducer:', action.payload);
             return { ...state, image: action.payload };
         default:
             return state;

@@ -28,7 +28,7 @@ class School extends Component {
             return <p>Loading...</p>
         };
         data = data.schools[0];
-        console.log('school: ', data)
+        console.log('school: ', data);
         //Admissions Rate Math
         let admissionRate = parseFloat(data.adm_rate);
         if (parseFloat(admissionRate) > 0) {
@@ -36,12 +36,12 @@ class School extends Component {
             admissionRate += '%';
         } else {
             admissionRate = 'Admissions Rate Is Not Available';
-        };
+        }
         //SAT SCORE
         let satAvg = parseInt(data.sat_avg);
         if (satAvg===0) {
             satAvg = "SAT Score Average Is Not Available";
-        };
+        }
         //School Type
         let instType = data.ownership;
         instType = parseInt(instType);
@@ -58,7 +58,6 @@ class School extends Component {
         }
         let tuitionIn = (parseFloat(data.tuition_in)).toLocaleString();
         let tuitionOut = (parseFloat(data.tuition_out)).toLocaleString();
-
         return (
             <div>
                 <div className="container">
