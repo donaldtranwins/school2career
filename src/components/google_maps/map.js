@@ -16,7 +16,6 @@ class GMap extends Component {
         return (
             <div className="GMap">
                 <div className='GMap-canvas' ref="mapCanvas"></div>
-                {/*<div id="legend"><h3>Legend</h3><h6>Number Of Students</h6></div>*/}
             </div>
         )
 
@@ -134,7 +133,8 @@ class GMap extends Component {
         this.setZoom();
         let mapOptions = {
             zoom: this.state.zoom,
-            center: this.createLatLng(data)
+            center: this.createLatLng(data),
+            componentRestrictions: {country: "us"}
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }
