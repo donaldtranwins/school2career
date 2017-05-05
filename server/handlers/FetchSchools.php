@@ -19,7 +19,7 @@ class FetchSchools{
                                                 $this->values['mapBounds']['ne']['lng']."
                                             ) ";
         if (isset($this->values['pickAMajor'])){
-            $this->queryStart .=    ", p.external, ps.p_pct AS percent, ps.deg_2, ps.deg_4 ";
+            $this->queryStart .=    ", p.external, ps.p_pct, ps.deg_2, ps.deg_4 ";
             $this->queryMiddle .=   "JOIN programs_to_schools ps ON s.uid=ps.uid 
                                      JOIN programs p ON p.pid=ps.pid ";
             $this->queryEnd .=      "AND p.external=\"{$this->values['pickAMajor']}\" ";
