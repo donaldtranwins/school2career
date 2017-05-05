@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import Drawer from 'material-ui/Drawer';
-
 import MapForm from './mapPageForm/formOnMapPage';
 import SchoolList from './main_school_list/school_list'
-import PaperExampleSimple from './main_school_list/main_paper'
 import Map from './google_maps/map';
-import MapButton from './button_legend/legend';
 
 class drawerForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {open: false};
+        this.state = {open: true};
     }
 
     handleToggle = () => this.setState({open: !this.state.open});

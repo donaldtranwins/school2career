@@ -14,18 +14,21 @@ body{
     height: 70vh;
     position: relative;
 }
-.listOfSchools {
-
-}
 .schoolListScroll {
     overflow: scroll;
     height: 100%;
+}
+.locationArea {
+    margin-bottom: 15px;
 }
 .checkbox {
     width: 125px;
     display: inline-block;
 }
-
+.checkboxDeg {
+    width: 250px;
+    display: inline-block;
+}
 .extendedForm {
     width: 280px;
     margin-left: 10px;
