@@ -58,7 +58,6 @@ class School extends Component {
         }
         let tuitionIn = (parseFloat(data.tuition_in)).toLocaleString();
         let tuitionOut = (parseFloat(data.tuition_out)).toLocaleString();
-debugger;
         return (
             <div>
                 <div className="container">
