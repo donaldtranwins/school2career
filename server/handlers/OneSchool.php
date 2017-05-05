@@ -1,11 +1,6 @@
 <?php
     class OneSchool{
-
-        public $output = [
-            'success' => false,
-            'errors' => []
-        ];
-
+        public $output = ['status' => []];
         private $metadataQuery = "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out
                           FROM schools s
                           WHERE s.uid=";
@@ -15,32 +10,28 @@
                             WHERE uid=";
 
         public function processRequest(){
+            $checkResult = RequestError::validateClientRequest('OneSchool');
+            $_GET['schid'] = $checkResult === 0 ? 217014 : $checkResult;
             require_once 'connectDb.php';
 
             $metadata = $dbConn->query($this->metadataQuery . $_GET['schid']);
             $programs = $dbConn->query($this->programsQuery . $_GET['schid']);
 
             if(empty($metadata) || empty($programs)) {
-                $this->output['errors'][] = 'Queries failed to reach database.';
+                $this->output['status'][] = '422 - Unprocessable Entity, Bad Query';
             } else {
                 if(mysqli_num_rows($metadata) > 0 && mysqli_num_rows($programs) > 0){
-                    $this->output['success'] = true;
+                    $this->output['status'] = 200;
                     $school = mysqli_fetch_assoc($metadata);
                     $school['programs'] = [];
                     while($program = mysqli_fetch_assoc($programs)){
                         $school['programs'][] = $program;
                     }
-                    if (empty($school['programs']))
-                        unset($school['programs']);
-
                     $this->output['school'] = $school;
                 } else {
-                    $this->output['errors'][] = 'No school found';
+                    $this->output['status'][] = "404 Not Found - No school on ID : {$_GET['schid']}";
                 }
             }
-
-            if (empty($this->output['errors']))
-                unset($this->output['errors']);
             return $this->output;
         }
     }

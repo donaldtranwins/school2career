@@ -34,9 +34,7 @@ class FetchSchools{
 
     public function processRequest(){
         require_once 'connectDb.php';
-        if(empty($this->values)) {
-            die('invalid values');
-        }
+        RequestError::validateClientRequest('FetchSchools',$this->values);
 
         $result = $dbConn->query($this->fullQuery);
         if(empty($result)) {
@@ -52,6 +50,7 @@ class FetchSchools{
                     $this->output['schools'][$row]['distance'] = $this->getDistance($this->values['latLng']['lat'],$this->values['latLng']['lng'],floatval($school['lat']),floatval($school['lng']));
                 }
                 usort($this->output['schools'], array($this, "cmp"));
+                $this->output['schools'] = array_slice($this->output['schools'],0,500,true);
             } else {
                 $this->output['success'] = true;
                 $this->output['errors'][] = 'Search returned zero results';
@@ -61,7 +60,6 @@ class FetchSchools{
 //        $this->output['request'] = $this->values;
 //        $this->output['query'] = $this->fullQuery;
 
-        $this->output['schools'] = array_slice($this->output['schools'],0,500,true);
         return $this->output;
     }
 

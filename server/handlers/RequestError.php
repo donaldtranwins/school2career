@@ -4,17 +4,18 @@ class RequestError{
         $this->errorMessage = $passedValues;
     }
 
-    public static function validateClientRequest(){
-        return 'error';
+    public static function validateClientRequest($requestType,$inputToCheck = null){
+        if($requestType === 'OneSchool'){
+            return intval($_GET['schid']);
+        } elseif ($requestType === 'FetchSchools' && empty($inputToCheck)){
+            die('Error');
+        }
     }
 
-    public $output = [
-        'success' => false,
-        'errors' => []
-    ];
+    public $output = ['status' => []];
 
     public function processRequest(){
-        $this->output['errors']['message'][] = $this->errorMessage;
+        $this->output['status'][] = "405 Method Not Allowed -git a {$this->errorMessage}";
         return $this->output;
     }
 }
