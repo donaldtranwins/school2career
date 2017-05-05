@@ -4,7 +4,6 @@ import { schoolURL } from '../../actions/actions_index';
 
 
 class Photo extends Component {
-
     constructor(props){
         super(props);
         this.state = {
@@ -12,52 +11,70 @@ class Photo extends Component {
             markers: []
         };
     }
-
     render() {
         return <div id="mapBox" className="soloMap col-xs-12"  >
             <div className='solo-canvas' ref="mapCanvas"></div>
         </div>
     }
     callback = (place) => {
-
-
         let holder = place[0].photos;
         if(holder !== undefined){
             let imageURL = holder[0].getUrl({'maxWidth': 1200, 'maxHeight': 1200});
             this.props.schoolURL(imageURL);
-        };
+        } else {
+            let imageURL = '/images/students.png';
+            this.props.schoolURL(imageURL);
+        }
     };
+    componentWillReceiveProps(nextProps) {
+        console.log('NEW PROPS:', nextProps.school.schools);
+        this.clearMarkers();
+        const data = nextProps.school.schools;
+        if (!data) {
+            return () => {
+                return <p>Loading...</p>
+            };
+        } else {
+            this.map = this.createMap(data[0]);
+            let request = {
+                query: `${data[0].name} admin`
+            };
+            //get photo information, the textSearch() sends the data and when it gets returned we go to
+            //a function to resolve the information.
+            let search = new google.maps.places.PlacesService(this.map);
+            search.textSearch(request, this.callback);
+            this.marker = this.createMarker(data[0]);
+            // have to define google maps event listeners here too
+            // because we can't add listeners on the map until its created
+        }
+    }
     componentDidMount(){
         const data = this.props.school.schools;
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};
         } else {
-            // create the map, marker and infoWindow after the component has
-            // been rendered because we need to manipulate the DOM for Google =(
             this.map = this.createMap(data[0]);
             let request = {
                 query: `${data[0].name} admin`
             };
-            //get photo infomration, the textSearch() sends the data and when it gets returned we go to
+            //get photo information, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
-            var search = new google.maps.places.PlacesService(this.map);
+            let search = new google.maps.places.PlacesService(this.map);
             search.textSearch(request, this.callback);
             this.marker = this.createMarker(data[0]);
             // have to define google maps event listeners here too
             // because we can't add listeners on the map until its created
-            google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange())
         }
     }
     // clean up event listeners when component unmounts
     componentDidUnMount() {
         google.maps.event.clearListeners(map, 'zoom_changed')
     }
-
     createMap(data) {
         let mapOptions = {
             zoom: this.state.zoom,
-            center: this.mapCenter(data),
+            center: this.createLatLng(data),
             draggable: false,
             zoomControl: false,
             scrollwheel: false,
@@ -66,16 +83,6 @@ class Photo extends Component {
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }
-
-    mapCenter(data) {
-        return new google.maps.LatLng(
-            // this.props.initialCenter.lat,
-            // this.props.initialCenter.lng
-            data.lat,
-            data.lng
-        )
-    }
-
     createLatLng(pos){                      //added this function, would set the lat and lng, may
         //not be needed. could potentially do this all in create markers
         return new google.maps.LatLng(
@@ -83,7 +90,6 @@ class Photo extends Component {
             pos.lng
         )
     }
-
     clearMarkers() {
         for (let m in this.state.markers) {
             this.state.markers[m].setMap(null)
@@ -92,31 +98,22 @@ class Photo extends Component {
             markers : []
         });
     }
-
     colorForMarker(sizeOfSchool) {
         switch (true) {
-            case (sizeOfSchool <= 10000):
-                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            case (sizeOfSchool < 10000):
+                return '/images/sm_school.png';
                 break;
-            case (sizeOfSchool <= 20000):
-                return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            case (sizeOfSchool < 25000):
+                return '/images/md_school.png';
                 break;
-            case (sizeOfSchool <= 30000):
-                return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-                break;
-            case (sizeOfSchool <= 40000):
-                return 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
-                break;
-            case (sizeOfSchool > 40000):
-                return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+            case (sizeOfSchool >= 25000):
+                return '/images/lg_school.png';
                 break;
             default:
-                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                return '/images/sm_school.png';
                 break;
         }
-
     }
-
     createMarker(data) { //would add in (pos) as a parameter
         const iconForSchool = this.colorForMarker(parseInt(data.size));
         const newMarker = new google.maps.Marker({
@@ -131,12 +128,6 @@ class Photo extends Component {
             markers : tempMarkers
         });
         return newMarker;
-    }
-
-    handleZoomChange() {
-        this.setState({
-            zoom: this.map.getZoom()
-        })
     }
 }
 
