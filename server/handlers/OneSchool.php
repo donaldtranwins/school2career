@@ -6,25 +6,41 @@
             'errors' => []
         ];
 
-        private $query = "SELECT * FROM `metadata` m JOIN `query` q ON m.uid=q.uid WHERE m.uid = ";
+        private $metadata = "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out
+                          FROM schools s
+                          WHERE s.uid=";
+        private $degrees = "SELECT p.external AS name, ps.p_pct AS percent, ps.deg_2, ps.deg_4, p.description 
+                            FROM `programs_to_schools` ps
+                            JOIN programs p ON ps.pid=p.pid
+                            WHERE uid=";
 
         public function processRequest(){
             require_once 'connectDb.php';
 
-            $result = $dbConn->query($this->query . $_GET['schid']);
-            if(empty($result)) {
-                $this->output['errors'][] = 'Query failed to reach database.';
+            $query1 = $dbConn->query($this->metadata . $_GET['schid']);
+            $query2 = $dbConn->query($this->degrees . $_GET['schid']);
+
+            if(empty($query1) || empty($query2)) {
+                $this->output['errors'][] = 'Queries failed to reach database.';
             } else {
-                if(mysqli_num_rows($result) > 0){
+                if(mysqli_num_rows($query1) > 0 && mysqli_num_rows($query2) > 0){
                     $this->output['success'] = true;
-                    $this->output['schools']=[];
-                    while($row = mysqli_fetch_assoc($result)){
-                        $this->output['schools'][] = $row;
+                    $row = mysqli_fetch_assoc($query1);
+                    $row['programs'] = [];
+                    while($item = mysqli_fetch_assoc($query2)){
+                        $row['programs'][] = $item;
                     }
+                    if (empty($row['programs']))
+                        unset($row['programs']);
+
+                    $this->output['school'] = $row;
                 } else {
-                    $this->output['errors'][] = 'No school on that id';
+                    $this->output['errors'][] = 'No school found';
                 }
             }
+
+            if (empty($this->output['errors']))
+                unset($this->output['errors']);
             return $this->output;
         }
     }
