@@ -10,9 +10,9 @@ const style = {
 const ReturnToListbtn = (props) => (
   <div>
     <RaisedButton
-      icon={<ActionAndroid />}
-      style={style}
-      onTouchTap={() => props.onClick()}
+        label="Back to list"
+        style={style}
+        onTouchTap={() => props.onClick()}
     />
   </div>
 );

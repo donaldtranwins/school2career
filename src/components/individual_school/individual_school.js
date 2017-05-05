@@ -58,47 +58,48 @@ class School extends Component {
         }
         let tuitionIn = (parseFloat(data.tuition_in)).toLocaleString();
         let tuitionOut = (parseFloat(data.tuition_out)).toLocaleString();
-
         return (
             <div>
+                <div className='imageDiv'>
+                    <img className="schoolImg col-sm-12 " src={this.props.schoolImgURL} />
+                    <div className="schoolName">
+                        <h2 className='universityText'>{data.name} </h2>
+                        <h4 className='universityText'>{data.city}, {data.state}</h4>
+                        <h5 className="webAddress universityText col-md-5"><a target="_blank" href={'http://' + data.url}>{data.url}</a></h5>
+                    </div>
+                </div>
+                <ReturnToListbtn onClick={() => this.handleClick()}/>
                 <div className="container">
-                    <ReturnToListbtn onClick={() => this.handleClick()}/>
-                    <img className="schoolImg col-sm-12 offset-lg-1 col-lg-10 " src={this.props.schoolImgURL} />
-                    <div className="schoolInfo">
-                        <h2>{data.name} </h2>
-                        <h4>{data.city}, {data.state}</h4>
+                    <Paper className="statsWrapper">
                         <div className="row">
-                        <h5 className="webAddress col-md-5"><a target="_blank" href={'http://' + data.url}>{data.url}</a></h5>
-                        <h5 className="col-md-5">{instType} School</h5>
+                            <h4 className="col-md-4 singleStats">Admissions Rate: {admissionRate}</h4>
+                            <h4 className="col-md-4 singleStats">SAT Ave: {satAvg}</h4>
+                            <h4 className="col-md-4 singleStats">Undergrad Size: {data.size} students</h4>
                         </div>
-                    </div>
-                    <Map id="mapShowing"/>
-                    <div className="scores col-sm">
-                        <Paper className="statsWrapper">
-                            <div className="row">
-                                <h4 className="col-md-4">Admissions Rate: {admissionRate}</h4>
-                                <h4 className="col-md-4">SAT Average: {satAvg}</h4>
-                                <h4 className="col-md-4">Undergraduate Size: {data.size} students</h4>
-                            </div>
-                            <br/>
-                            <div className="row">
-                                <h4 className="col-md-6">Tuition (in state): ${tuitionIn}</h4>
-                                <h4 className="col-md-6">Tuition (out of state): ${tuitionOut}</h4>
-                            </div>
-                        </Paper>
-                    </div>
-                    <div className="row">
+                        <br/>
+                        <div className="row">
+                            <h4 className="col-md-4 singleStats">{instType} School</h4>
+                            <h4 className="col-md-4 singleStats">Tuition (in state): ${tuitionIn}</h4>
+                            <h4 className="col-md-4 singleStats">Tuition (out of state): ${tuitionOut}</h4>
+                        </div>
+                    </Paper>
+                    <Paper className="mapPaper">
+                        <Map id="mapShowing"/>
+                    </Paper>
+                    <Paper className="statsWrapper">
                         <MfChart />
+                    </Paper>
+                    <Paper>
                         <MajorChart />
-                    </div>
-                    <DegreesOffered />
+                    </Paper>
+                    <Paper className="statsWrapper">
+                        <DegreesOffered />
+                    </Paper>
                 </div>
             </div>
         );
     }
-
 }
-
 function mapStateToProps(state) {
     return {
         school: state.schools.single,
