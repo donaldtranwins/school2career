@@ -6,9 +6,7 @@ import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import Slider from 'material-ui/Slider';
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { geocodeByAddress } from 'react-places-autocomplete';
-
 import majors from '../landing_form/majors';
 import { searchForSchools, centerOfMap, userInput } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
@@ -30,19 +28,11 @@ const renderTextField = ({ input: { onChange, name }, label, meta: { touched, er
         />
     )
 };
-
-const renderRadioGroup = ({ input, ...rest }) => (
-    <RadioButtonGroup {...input} {...rest}
-                      valueSelected={input.value}
-                      onChange={(event, value) => input.onChange(value)}/>
-);
-
 const renderCheckbox = ({ input, label }) => (
     <Checkbox label={label}
               checked={input.value ? true : false}
               onCheck={input.onChange}/>
 );
-
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
     <SelectField
         floatingLabelText={label}
@@ -52,7 +42,6 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
         children={children}
         {...custom}/>
 );
-
 class mapPageForm extends Component {
 
     constructor(props) {
@@ -83,58 +72,49 @@ class mapPageForm extends Component {
         const center = {
             lat: values.latLng.lat,
             lng: values.latLng.lng
-        }
+        };
         this.props.userInput(values);
         this.props.centerOfMap(center);
-    }
+    };
     formSubmitted = (values) => {
         geocodeByAddress(values.location, (err, latLng) => {
-            if(err) { console.warn('error: ', err)};
+            if(err) { console.warn('error: ', err)}
             values.latLng = latLng;
             this.getCenterCoords(values);
-        })
+        });
         this.props.searchForSchools(values);
         this.props.clickClosed();
     };
     render() {
-        const { handleSubmit, reset } = this.props;
-        const radioStyle = {
-            display: 'inline-block',
-            width: '138px'
-        };
+        const { handleSubmit } = this.props;
         const sliderStyle = {
             width: 200,
             height: 4,
             backgroundColor: 'red'
         };
+        const locationName = this.props.userInput.location;
+        const majorName = this.props.userInput.pickAMajor;
     return (
-        <form className="extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
-            <div>
+        <form className="locationName" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
+            <div className="locationArea">
                 <Field name="location" component={renderTextField} label="City"/>
             </div>
-            <div>
-                <Field name="distanceSlider"
-                       component={this.renderSlider}
-                       defaultValue={40}
-                       min={1}
-                       max={300}
-                       step={1}
-                       style = {sliderStyle}
-                />
-            </div>
             <div>{'Type of Degree: '}</div>
-            <div>
-                <Field name="numOfYears" component={renderRadioGroup}>
-                    <RadioButton style={radioStyle} value="2" label="AA Degree"/>
-                    <RadioButton style={radioStyle} value="4" label="BS Degree"/>
-                </Field>
+            <div className="checkboxDeg">
+                <Field name="aa" component={renderCheckbox} defaultChecked={false} label="Associates Degree" value="2"/>
+            </div>
+            <div className="checkboxDeg">
+                <Field name="bs" component={renderCheckbox} label="Bachelors Degree" value="4"/>
+            </div>
+            <div className="checkboxDeg">
+                <Field name="voc" component={renderCheckbox} label="Vocational" value="voc"/>
             </div>
             <div>{'School Type: '}</div>
             <div className="checkbox">
-                <Field name="Public" component={renderCheckbox} label="Public" value="Public"/>
+                <Field name="public" component={renderCheckbox} label="Public" value="Public"/>
             </div>
             <div className="checkbox">
-                <Field name="Private" component={renderCheckbox} label="Private" value="Private"/>
+                <Field name="private" component={renderCheckbox} label="Private" value="Private"/>
             </div>
             <div>
                 <Field name="pickAMajor" component={renderSelectField} label="Majors">
@@ -153,7 +133,6 @@ class mapPageForm extends Component {
             </div>
             <div>
                 <RaisedButton label="Submit" style={style} type="submit" ></RaisedButton>
-                <RaisedButton label="Clear" style={style} type="button" onClick={reset}></RaisedButton>
             </div>
         </form>
     )};
@@ -161,6 +140,13 @@ class mapPageForm extends Component {
 
 mapPageForm = reduxForm({
     form: 'mapPageForm',  // a unique identifier for this form
-})(mapPageForm)
+    initialValues: {aa: true, bs: true, voc: true, public: true, private: true}
+})(mapPageForm);
 
-export default connect(null, { searchForSchools, centerOfMap, userInput })(mapPageForm);
+function mapStateToProps(state) {
+    return {
+        userInput : state.userInput.value
+    };
+}
+
+export default connect(mapStateToProps, { searchForSchools, centerOfMap, userInput })(mapPageForm );
