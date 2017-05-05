@@ -194,8 +194,10 @@ body{
 .degree {
     color: white;
 }
-.mfChart, .circleChart {
+.mfChart{
     margin: 0 auto;
+    height: 250px;
+    width: 400px;
 }
 .schoolImg{
     width: 100%;
@@ -233,6 +235,14 @@ body{
     text-align: center;
     color: rgb(144, 164, 174);
     font-weight: 400;
+}
+.majorsChart {
+    margin: 0 auto;
+}
+.majorsChartDiv {
+    margin: 0 auto;
+    height: 800px;
+    width: 100%;
 }
 /*media breaks*/
 @media only screen and (max-width: 550px) {

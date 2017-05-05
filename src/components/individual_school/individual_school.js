@@ -90,11 +90,10 @@ class School extends Component {
                     <Paper className="statsWrapper">
                         <MfChart />
                     </Paper>
-                    {/* <Paper>
-                        <MajorChart />
-                    </Paper> */}
-                    <Paper>
-                        <MajorsChart />
+                    <Paper >
+                        <div className='majorsChartDiv'>
+                            <MajorsChart className="majorsChart" />
+                        </div>
                     </Paper>
                     <Paper className="statsWrapper">
                         <DegreesOffered />
