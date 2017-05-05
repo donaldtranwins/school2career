@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { searchOneSchool } from '../../actions/actions_index';
 import Map from './places_image';
 import Paper from 'material-ui/Paper';
+
+import MajorsChart from './majors_percent';
 import MfChart from './male_female_chart';
-import MajorChart from './majors_percentage';
 import DegreesOffered from './degree_offered';
 import ReturnToListbtn from './btn_return_list';
 
@@ -89,8 +90,11 @@ class School extends Component {
                     <Paper className="statsWrapper">
                         <MfChart />
                     </Paper>
-                    <Paper>
+                    {/* <Paper>
                         <MajorChart />
+                    </Paper> */}
+                    <Paper>
+                        <MajorsChart />
                     </Paper>
                     <Paper className="statsWrapper">
                         <DegreesOffered />
