@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `schools_with_programs`
+-- Table structure for table `programs_to_schools`
 --
 
-CREATE TABLE `schools_with_programs` (
+CREATE TABLE `programs_to_schools` (
   `uid` int(8) UNSIGNED NOT NULL,
   `pid` int(2) UNSIGNED NOT NULL,
   `p_pct` float UNSIGNED NOT NULL DEFAULT '0',
@@ -39,11 +39,13 @@ CREATE TABLE `schools_with_programs` (
 --
 
 --
--- Indexes for table `schools_with_programs`
+-- Indexes for table `programs_to_schools`
 --
-ALTER TABLE `schools_with_programs`
+ALTER TABLE `programs_to_schools`
   ADD KEY `pid` (`pid`),
-  ADD KEY `uid` (`uid`);
+  ADD KEY `uid` (`uid`),
+  ADD KEY `deg_2` (`deg_2`),
+  ADD KEY `deg_4` (`deg_4`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
