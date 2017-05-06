@@ -14,7 +14,6 @@ import GeoCode from '../geocoding/geocoding';
 const style = {
     margin: 12
 };
-
 const renderTextField = ({ input: { onChange, name }, label, meta: { touched, error }, ...custom }) => {
     return (
         <GeoCode hintText={label}
@@ -85,7 +84,11 @@ class mapPageForm extends Component {
         this.props.searchForSchools(values);
         this.props.clickClosed();
     };
+    handleKeyPress = (event) => {
+      if(event.key == 'Enter'){
 
+      }
+    }
     render() {
         const { handleSubmit } = this.props;
         const sliderStyle = {
@@ -93,7 +96,7 @@ class mapPageForm extends Component {
             height: 4
         };
     return (
-        <form className="locationName extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
+        <form onKeyDown={this.handleKeyPress} className="locationName extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
             <div className="locationArea">
                 <Field name="location" component={renderTextField} label="LOCATION"/>
             </div>
@@ -115,7 +118,7 @@ class mapPageForm extends Component {
                 <Field name="private" component={renderCheckbox} label="Private" value="Private"/>
             </div>
             <div>
-                <Field name="pickAMajor" component={renderSelectField} label="Majors">
+                <Field onKeyDown={this.handleKeyPress} name="pickAMajor" component={renderSelectField} label="Majors">
                     {majors}
                 </Field>
             </div>

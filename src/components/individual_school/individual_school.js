@@ -56,6 +56,11 @@ class School extends Component {
         }
         let tuitionIn = (parseFloat(data.tuition_in)).toLocaleString();
         let tuitionOut = (parseFloat(data.tuition_out)).toLocaleString();
+        let url = data.url.slice(4);
+        const findForwardSlash = url.lastIndexOf('/');
+        if(findForwardSlash === url.length -1){
+            url = url.substring(0, url.length - 1)
+        }
         return (
             <div>
                 <div className='imageDiv'>
@@ -63,7 +68,7 @@ class School extends Component {
                     <div className="schoolName">
                         <h2 className='universityText'>{data.name} </h2>
                         <h4 className='universityText'>{data.city}, {data.state}</h4>
-                        <h5 className="webAddress universityText col-md-5"><a target="_blank" href={'http://' + data.url}>{data.url}</a></h5>
+                        <h5 className="webAddress universityText col-md-5"><a target="_blank" href={'http://' + data.url}>{url}</a></h5>
                     </div>
                 </div>
                 <ReturnToListbtn onClick={() => this.handleClick()}/>
