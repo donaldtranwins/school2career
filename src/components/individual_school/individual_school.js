@@ -88,7 +88,9 @@ class School extends Component {
                         <Map id="mapShowing"/>
                     </Paper>
                     <Paper className="statsWrapper">
-                        <MfChart />
+                        <div className='mfChartDiv'>
+                            <MfChart />
+                        </div>
                     </Paper>
                     <Paper >
                         <div className='majorsChartDiv'>

@@ -201,7 +201,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 class MajorChart extends Component{
     	render () {
       	return (
-            <ResponsiveContainer width="80%" height="80%">
+            <ResponsiveContainer width="100%" height="100%">
               <BarChart
                   data={majors}
                   layout="vertical"

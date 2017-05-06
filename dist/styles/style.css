@@ -195,6 +195,10 @@ body{
     color: white;
 }
 .mfChart{
+    height: 250px;
+    width: 400px;
+}
+.mfChartDiv{
     margin: 0 auto;
     height: 250px;
     width: 400px;
