@@ -57,7 +57,6 @@ class SchoolList extends Component {
                 if(findForwardSlash === url.length -1){
                     url = url.substring(0, url.length - 1)
                 }
-                console.log(url);
                 return(
                     <Paper className="listOfSchools" style={style} key={index}>
                         <ul style={mainUl}>
