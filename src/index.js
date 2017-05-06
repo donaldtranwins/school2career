@@ -15,6 +15,8 @@ import LandingFormPaper from './components/landing_form/landing_form_paper';
 import NotFound from './components/notfoundpage/not_found'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {blueGrey300, green300} from 'material-ui/styles/colors';
+
+
 const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 injectTapEventPlugin();
 

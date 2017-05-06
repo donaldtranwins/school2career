@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 class mfChart extends Component {
     render() {
@@ -19,16 +19,18 @@ class mfChart extends Component {
         return (
             <div className="mfChart">
                 <h4 className="titleMenWomanChart">Percentage of Men To Women </h4>
-                <BarChart width={400} height={250} data={chart}
-                          margin={{top: 0, right: 50, left: 50, bottom: 0}}>
-                    <XAxis dataKey="name"/>
-                    <YAxis/>
-                    <CartesianGrid />
-                    <Tooltip/>
-                    <Legend />
-                    <Bar dataKey="m" fill="#00008B"/>
-                    <Bar dataKey="f" fill="#FF7AD6"/>
-                </BarChart>
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={chart}
+                              margin={{top: 0, right: 50, left: 50, bottom: 0}}>
+                        <XAxis dataKey="name"/>
+                        <YAxis/>
+                        <CartesianGrid />
+                        <Tooltip/>
+                        <Legend />
+                        <Bar dataKey="m" fill="#00008B"/>
+                        <Bar dataKey="f" fill="#FF7AD6"/>
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
         );
     }

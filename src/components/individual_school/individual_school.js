@@ -88,13 +88,14 @@ class School extends Component {
                         <Map id="mapShowing"/>
                     </Paper>
                     <Paper className="statsWrapper">
-                        <MfChart />
+                        <div className='mfChartDiv'>
+                            <MfChart />
+                        </div>
                     </Paper>
-                    {/* <Paper>
-                        <MajorChart />
-                    </Paper> */}
-                    <Paper>
-                        <MajorsChart />
+                    <Paper >
+                        <div className='majorsChartDiv'>
+                            <MajorsChart className="majorsChart" />
+                        </div>
                     </Paper>
                     <Paper className="statsWrapper">
                         <DegreesOffered />
