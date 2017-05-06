@@ -31,9 +31,6 @@ const school = {
     color: 'red'
 };
 class SchoolList extends Component {
-    componentWillMount(){
-        // this.props.searchForSchools() // don't think we need this.
-    }
     render(){
         let list;
         const data = this.props.schools.all;
@@ -54,16 +51,24 @@ class SchoolList extends Component {
                 } else {
                     satAvg = 'SAT Avg: ' + satAvg;
                 }
+                const distance = school.distance.toFixed(2)
+                let url = school.url.slice(4);
+                const findForwardSlash = url.lastIndexOf('/');
+                if(findForwardSlash === url.length -1){
+                    url = url.substring(0, url.length - 1)
+                }
+                console.log(url);
                 return(
                     <Paper className="listOfSchools" style={style} key={index}>
                         <ul style={mainUl}>
                             <li className='schoolListSchool'><Link to={`/school/${school.uid}`}>{school.name} </Link></li>
                             <li className='schoolListAddressli'>{school.city}, </li>
                             <li className='schoolListAddressli'>{school.state}</li>
-                            <li className='schoolListUrl'><a target="_blank" href={'http://' + school.url}>{school.url}</a></li>
+                            <li className='schoolListUrl'><a target="_blank" href={'http://' + school.url}>{url}</a></li>
                             <ul style={ul}>
-                                <li className='listViewStats'>{admissionRate}</li>
-                                <li className='listViewStats'>{satAvg}</li>
+                                <li className='col-md-4 col-sx-12 listViewStats'>{admissionRate}</li>
+                                <li className='col-md-4 col-sx-12 satList listViewStats'>{satAvg}</li>
+                                <li className='col-md-4 col-sx-12 distanceList listViewStats'>Distance: {distance} miles</li>
                             </ul>
                         </ul>
                     </Paper>

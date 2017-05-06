@@ -20,6 +20,7 @@ a {
 }
 .listViewStats {
     display: inline-block;
-    padding-right: 30px;
+    padding: inherit;
+
 }
 /* Portrait and Landscape */

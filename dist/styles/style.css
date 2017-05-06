@@ -57,7 +57,7 @@ body{
 .searchIcon {
     position: fixed;
     color: rgb(144, 164, 174);
-    font-size: 50px;
+    font-size: 40px;
     cursor: pointer;
     /*border: 1px solid #E0E0E0;*/
     background-color: white;
@@ -247,6 +247,12 @@ body{
     height: 800px;
     width: 100%;
 }
+.distanceList {
+    text-align: right;
+}
+.satList {
+    text-align: center;
+}
 /*media breaks*/
 @media only screen and (max-width: 550px) {
     body {
@@ -265,5 +271,11 @@ body{
         overflow: initial;
         position: absolute;
         top: 100%;
+    }
+    .distanceList {
+        text-align: inherit;
+    }
+    .satList {
+        text-align: inherit;
     }
 }
