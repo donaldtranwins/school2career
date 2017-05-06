@@ -85,7 +85,8 @@ INSERT INTO `programs` (`pid`, `program`, `external`, `description`) VALUES
 -- Indexes for table `programs`
 --
 ALTER TABLE `programs`
-  ADD UNIQUE KEY `pid` (`pid`);
+  ADD UNIQUE KEY `pid` (`pid`),
+  ADD KEY `external` (`external`);
 
 --
 -- AUTO_INCREMENT for dumped tables
