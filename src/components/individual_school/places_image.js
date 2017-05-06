@@ -27,42 +27,41 @@ class Photo extends Component {
         }
     };
     componentWillReceiveProps(nextProps) {
-        console.log('NEW PROPS:', nextProps.school.schools);
         this.clearMarkers();
-        const data = nextProps.school.schools;
+        const data = nextProps.school.school;
         if (!data) {
             return () => {
                 return <p>Loading...</p>
             };
         } else {
-            this.map = this.createMap(data[0]);
+            this.map = this.createMap(data);
             let request = {
-                query: `${data[0].name} admin`
+                query: `${data.name} admin`
             };
             //get photo information, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
             let search = new google.maps.places.PlacesService(this.map);
             search.textSearch(request, this.callback);
-            this.marker = this.createMarker(data[0]);
+            this.marker = this.createMarker(data);
             // have to define google maps event listeners here too
             // because we can't add listeners on the map until its created
         }
     }
     componentDidMount(){
-        const data = this.props.school.schools;
+        const data = this.props.school.school;
         this.clearMarkers();
         if(!data){
             return () => { return <p>Loading...</p>};
         } else {
-            this.map = this.createMap(data[0]);
+            this.map = this.createMap(data);
             let request = {
-                query: `${data[0].name} admin`
+                query: `${data.name} admin`
             };
             //get photo information, the textSearch() sends the data and when it gets returned we go to
             //a function to resolve the information.
             let search = new google.maps.places.PlacesService(this.map);
             search.textSearch(request, this.callback);
-            this.marker = this.createMarker(data[0]);
+            this.marker = this.createMarker(data);
             // have to define google maps event listeners here too
             // because we can't add listeners on the map until its created
         }

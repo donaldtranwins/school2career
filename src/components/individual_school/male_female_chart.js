@@ -4,11 +4,11 @@ import {ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip
 
 class mfChart extends Component {
     render() {
-        let data = this.props.schools.schools;
+        let data = this.props.schools.school;
         if(!data){
             return <p>Loading...</p>
         }
-        data = data[0];
+        data = data;
         let male = data.demog_men * 100;
         male = Math.round(parseFloat(male));
         let female = data.demog_women * 100;
@@ -21,7 +21,7 @@ class mfChart extends Component {
                 <h4 className="titleMenWomanChart">Percentage of Men To Women </h4>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={chart}
-                              margin={{top: 0, right: 50, left: 50, bottom: 0}}>
+                              margin={{top: 0, right: 0, left: 0, bottom: 0}}>
                         <XAxis dataKey="name"/>
                         <YAxis/>
                         <CartesianGrid />

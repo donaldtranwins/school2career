@@ -14,22 +14,19 @@ class School extends Component {
         router: PropTypes.object
     };
     handleClick() {
-        console.log('handleClick');
         this.context.router.push('/school_search');
     };
     componentDidMount() {
         var pathArray = window.location.pathname.split( '/' );
-        console.log(pathArray[pathArray.length -1]);
         this.props.searchOneSchool(pathArray[pathArray.length -1]);
     };
 
     render() {
-        let data = this.props.school;
+        let data = this.props.school.single;
         if(!data){
             return <p>Loading...</p>
         };
-        data = data.schools[0];
-        console.log('school: ', data);
+        data = data.school;
         //Admissions Rate Math
         let admissionRate = parseFloat(data.adm_rate);
         if (parseFloat(admissionRate) > 0) {
@@ -88,14 +85,10 @@ class School extends Component {
                         <Map id="mapShowing"/>
                     </Paper>
                     <Paper className="statsWrapper">
-                        <div className='mfChartDiv'>
-                            <MfChart />
-                        </div>
+                        <MfChart />
                     </Paper>
                     <Paper >
-                        <div className='majorsChartDiv'>
-                            <MajorsChart className="majorsChart" />
-                        </div>
+                        <MajorsChart className="majorsChart" />
                     </Paper>
                     <Paper className="statsWrapper">
                         <DegreesOffered />
@@ -107,7 +100,7 @@ class School extends Component {
 }
 function mapStateToProps(state) {
     return {
-        school: state.schools.single,
+        school: state.schools,
         schoolImgURL: state.schoolImgURL.image
     };
 }
