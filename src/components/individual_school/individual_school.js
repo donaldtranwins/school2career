@@ -6,8 +6,8 @@ import Paper from 'material-ui/Paper';
 
 import MajorsChart from './majors_percent';
 import MfChart from './male_female_chart';
-import DegreesOffered from './degree_offered';
 import ReturnToListbtn from './btn_return_list';
+import DegreeList from './degrees';
 
 class School extends Component {
     static contextTypes = {
@@ -33,12 +33,12 @@ class School extends Component {
             admissionRate = (admissionRate * 100).toFixed(2);
             admissionRate += '%';
         } else {
-            admissionRate = 'Admissions Rate Is Not Available';
+            admissionRate = 'Not Provided';
         }
         //SAT SCORE
         let satAvg = parseInt(data.sat_avg);
         if (satAvg===0) {
-            satAvg = "SAT Score Average Is Not Available";
+            satAvg = "Not Provided";
         }
         //School Type
         let instType = data.ownership;
@@ -91,7 +91,7 @@ class School extends Component {
                         <MajorsChart className="majorsChart" />
                     </Paper>
                     <Paper className="statsWrapper">
-                        <DegreesOffered />
+                        <DegreeList/>
                     </Paper>
                 </div>
             </div>
