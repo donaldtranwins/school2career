@@ -101,10 +101,10 @@ class Photo extends Component {
     colorForMarker(sizeOfSchool) {
         switch (true) {
             case (sizeOfSchool < 10000):
-                return '/images/sm_school.png';
+                return '/images/md_school.png';
                 break;
             case (sizeOfSchool < 25000):
-                return '/images/md_school.png';
+                return '/images/sm_school.png';
                 break;
             case (sizeOfSchool >= 25000):
                 return '/images/lg_school.png';

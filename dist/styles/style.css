@@ -31,8 +31,7 @@ body{
 }
 .extendedForm {
     width: 280px;
-    margin-left: 10px;
-    padding-right: 15px;
+    padding: 15px;
 }
 .searchImgDiv {
     position: relative;
@@ -43,7 +42,7 @@ body{
 }
 .jumboImg {
     width: 100%;
-    background-image: url(/images/stock-photo-teenagers.jpg);
+    background-image: url(/images/group_students.png);
     background-position: center 18%;
     background-size: cover;
     height: 100%;
