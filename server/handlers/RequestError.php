@@ -15,7 +15,7 @@ class RequestError{
     public $output = ['status' => []];
 
     public function processRequest(){
-        $this->output['status'][] = "405 Method Not Allowed -git a {$this->errorMessage}";
+        $this->output['status'][] = "405 Method Not Allowed {$this->errorMessage}";
         return $this->output;
     }
 }
