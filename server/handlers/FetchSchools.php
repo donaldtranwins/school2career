@@ -5,26 +5,61 @@ class FetchSchools{
     private $fullQuery;
     function __construct($passedValues){
         $this->values = $passedValues;
-        $this->queryStart =     "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out ";
-        $this->queryMiddle =    "FROM `schools` s ";
-        $this->queryEnd =       "WHERE (
-                                            `lat` BETWEEN " .
-                                                $this->values['mapBounds']['sw']['lat'].
-                                                " AND " .
-                                                $this->values['mapBounds']['ne']['lat'] . "
-                                            ) AND (
-                                                `lng` BETWEEN " .
-                                                $this->values['mapBounds']['sw']['lng'] .
-                                                " AND ".
-                                                $this->values['mapBounds']['ne']['lng']."
-                                            ) ";
+        $queryStart =     "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out ";
+        $queryMiddle =    "FROM `schools` s ";
+        $queryEnd = isset($this->values['mapBounds'])
+                        ? "WHERE (
+                                  `lat` BETWEEN " .
+                                      $this->values['mapBounds']['sw']['lat'].
+                                      " AND " .
+                                      $this->values['mapBounds']['ne']['lat'] . "
+                          ) AND (
+                                  `lng` BETWEEN " .
+                                      $this->values['mapBounds']['sw']['lng'] .
+                                      " AND ".
+                                      $this->values['mapBounds']['ne']['lng']."
+                          ) "
+                        : "WHERE " ;
+
+        $tables = [];
+        $lookup = [
+            "programs" => "JOIN programs p ON ps.pid=p.pid ",
+            "pts" => "JOIN programs_to_schools ps ON s.uid=ps.uid "
+        ];
         if (isset($this->values['pickAMajor'])){
-            $this->queryStart .=    ", p.external, ps.p_pct, ps.deg_2, ps.deg_4 ";
-            $this->queryMiddle .=   "JOIN programs_to_schools ps ON s.uid=ps.uid 
-                                     JOIN programs p ON p.pid=ps.pid ";
-            $this->queryEnd .=      "AND p.external=\"{$this->values['pickAMajor']}\" ";
+            array_push($tables, "pts", 'programs');
+            $queryStart .=    ", p.external ";
+            $queryEnd .=      "AND p.external=\"{$this->values['pickAMajor']}\" ";
+            if ($this->values['aa'] === false){
+                $queryStart .=    ", ps.p_pct, ps.deg_2 ";
+                $queryEnd .=      "AND ps.deg_2>0 ";
+            }
+            if ($this->values['bs'] === false){
+                $queryStart .=    ", ps.p_pct, ps.deg_4 ";
+                $queryEnd .=      "AND ps.deg_4>0 ";
+            }
+            if ($this->values['voc'] === false){
+                array_push($tables, "pts", 'programs');
+                $queryStart .=    ", ps.p_pct, ps.deg_2, ps.deg_4 ";
+                $queryEnd .=      "AND s.vocational=0 ";
+            }
         }
-        $this->fullQuery = $this->queryStart.$this->queryMiddle.$this->queryEnd;
+        if (isset($this->values['tuitionSlider'])){
+            $queryStart .=    ", s.tuition_in, s.tuition_out ";
+            $queryEnd .=      "AND s.tuition_out<{$this->values['tuitionSlider']} ";
+        }
+        if ($this->values['Private'] && !$this->values['Public']){
+            $queryEnd .=          "AND s.ownership<=>1 ";
+        } else if ($this->values['Public'] && !$this->values['Private']){
+            $queryEnd .=          "AND s.ownership=1 ";
+        }
+
+        $uniqueTables = array_keys(array_flip($tables));
+        while($reference = array_shift($uniqueTables)){
+            $queryMiddle .= $lookup[$reference];
+        }
+
+        $this->fullQuery = $queryStart.$queryMiddle.$queryEnd;
     }
 
     public $output = [
