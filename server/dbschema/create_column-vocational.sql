@@ -2,7 +2,7 @@
 -- Adds a new Vocational Column to the `schools` table using a populated `programs_to_schools` table
 
 ALTER TABLE schools
-ADD `vocational` TINYINT(1) NOT NULL DEFAULT '1'
+ADD `vocational` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1'
 AFTER `tuition_out`;
 
 UPDATE schools s
