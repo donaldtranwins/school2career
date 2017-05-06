@@ -183,6 +183,7 @@ body{
 
 .statsWrapper {
     padding: 15px;
+    margin: 15px 0;
 }
 .titleMenWomanChart, .degreeList {
     text-align: center;
@@ -198,8 +199,8 @@ body{
 }
 .mfChart{
     margin: 0 auto;
-    height: 250px;
-    width: 60%;
+    height: 300px;
+    width: 80%;
 }
 .schoolImg{
     width: 100%;

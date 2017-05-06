@@ -18,7 +18,6 @@ class mfChart extends Component {
             ];
         return (
             <div className="mfChart">
-                <h4 className="titleMenWomanChart">Percentage of Men To Women </h4>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={chart}
                               margin={{top: 0, right: 0, left: 0, bottom: 0}}>

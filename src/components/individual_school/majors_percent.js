@@ -11,7 +11,6 @@ class MajorChart extends Component{
                 returnObj['Graduation %'] = Math.round(parseFloat(obj.percent) * 100);
                 return returnObj
             })
-            console.log('major: ', this.props.school.single.school.programs)
       	return (
             <div className='majorsChartDiv'>
                 <ResponsiveContainer width="100%" height="100%">
