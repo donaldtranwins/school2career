@@ -33,6 +33,26 @@ class FetchSchools{
             $this->filters[] = 'pickAMajor';
 //            $queryStart .=    ", p.external, ps.p_pct ";
             $queryEnd .=      "AND p.external=\"{$this->values['pickAMajor']}\" ";
+        }
+        if (isset($this->values['tuitionSlider'])){ //This block will never fire on Landing Page
+            $this->filters[] = 'tuitionSlider';
+//            $queryStart .=    ", s.tuition_in, s.tuition_out ";
+            $queryEnd .=      "AND s.tuition_out<{$this->values['tuitionSlider']} ";
+
+            if ($this->values['private'] && !$this->values['public']){
+                $this->filters[] = 'public';
+//            $queryStart .=        ", s.ownership ";
+                $queryEnd .=          "AND s.ownership<>1 ";
+            } else if ($this->values['public'] && !$this->values['private']){
+                $this->filters[] = 'private';
+//            $queryStart .=        ", s.ownership ";
+                $queryEnd .=          "AND s.ownership=1 ";
+            }
+            if ($this->values['voc'] === false){
+                $this->filters[] = 'voc';
+//            $queryStart .=    ", s.vocational ";
+                $queryEnd .=      "AND s.vocational=0 ";
+            }
             if ($this->values['aa'] === false){
 //                array_push($tables, "pts", 'programs');
                 $this->filters[] = 'aa';
@@ -45,25 +65,6 @@ class FetchSchools{
 //                $queryStart .=    ", ps.deg_4 ";
                 $queryEnd .=      "AND ps.deg_4=0 ";
             }
-        }
-        if ($this->values['voc'] === false){
-            $this->filters[] = 'voc';
-//            $queryStart .=    ", s.vocational ";
-            $queryEnd .=      "AND s.vocational=0 ";
-        }
-        if (isset($this->values['tuitionSlider'])){
-            $this->filters[] = 'tuitionSlider';
-//            $queryStart .=    ", s.tuition_in, s.tuition_out ";
-            $queryEnd .=      "AND s.tuition_out<{$this->values['tuitionSlider']} ";
-        }
-        if ($this->values['private'] && !$this->values['public']){
-            $this->filters[] = 'public';
-//            $queryStart .=        ", s.ownership ";
-            $queryEnd .=          "AND s.ownership<>1 ";
-        } else if ($this->values['public'] && !$this->values['private']){
-            $this->filters[] = 'private';
-//            $queryStart .=        ", s.ownership ";
-            $queryEnd .=          "AND s.ownership=1 ";
         }
 
         $uniqueTables = array_keys(array_flip($tables));
@@ -104,8 +105,8 @@ class FetchSchools{
             }
         }
 //        $this->output['total results'] = count($this->output['schools']);
-//        $this->output['request'] = $this->values;
-//        $this->output['query'] = $this->fullQuery;
+        $this->output['request'] = $this->values;
+        $this->output['query'] = $this->fullQuery;
 //        $this->output['filters'] = $this->filters;
         return $this->output;
     }
