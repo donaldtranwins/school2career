@@ -15,17 +15,30 @@ const style = {
     margin: 12
 };
 
+const validate = values => {
+    console.log('values', values);
+    const errors = {};
+    if (!values.location) {
+        errors.location = 'Required';
+    }
+    return errors
+};
+
 const renderTextField = ({ input: { onChange, name }, label, meta: { touched, error }, ...custom }) => {
     return (
-        <GeoCode hintText={label}
-            floatingLabelText={label}
-            errorText={touched && error}
-            onChange={ val => {
-                onChange(val);
-            }}
-            name={name}
-            {...custom}
-        />
+        <div>
+            <GeoCode hintText={label}
+                     floatingLabelText={label}
+                     onChange={ val => {
+                         onChange(val);
+                     }}
+                     name={name}
+                     {...custom}
+            />
+            <div>
+                {touched && (error && <span className="required">{error}</span>)}
+            </div>
+        </div>
     )
 };
 const renderCheckbox = ({ input, label }) => (
@@ -137,7 +150,8 @@ class mapPageForm extends Component {
 };
 
 mapPageForm = reduxForm({
-    form: 'mapPageForm',  // a unique identifier for this form
+    form: 'mapPageForm',  // a unique identifier for this form]
+    validate,
     initialValues: {aa: true, bs: true, voc: true, public: true, private: true}
 })(mapPageForm);
 

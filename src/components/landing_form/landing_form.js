@@ -17,17 +17,30 @@ const selectStyle = {
     textAlign: 'none'
 };
 
+const validate = values => {
+    console.log('values', values);
+    const errors = {};
+    if (!values.location) {
+        errors.location = 'Required';
+    }
+    return errors
+};
+
 const renderTextField = ({ input: { onChange, name }, label, meta: { touched, error }, ...custom }) => {
     return (
-        <GeoCode hintText={label}
-            floatingLabelText={label}
-            errorText={touched && error}
-            onChange={ val => {
-                onChange(val);
-            }}
-            name={name}
-            {...custom}
-        />
+        <div>
+            <GeoCode hintText={label}
+                floatingLabelText={label}
+                onChange={ val => {
+                    onChange(val);
+                }}
+                name={name}
+                {...custom}
+            />
+            <div>
+            {touched && (error && <span className="required">{error}</span>)}
+            </div>
+        </div>
     )
 };
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
@@ -67,7 +80,9 @@ class LandingForm extends Component {
         return (
           <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
             <div>
-              <Field name="location" component={renderTextField} label="LOCATION"/>
+              <Field name="location" component={renderTextField} label="LOCATION">
+                {  <span >errorText</span> }
+                </Field>
             </div>
             <div>
                 <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
@@ -75,8 +90,8 @@ class LandingForm extends Component {
                 </Field>
             </div>
             <div>
-              <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting}></RaisedButton>
-              <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}></RaisedButton>
+              <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting }/>
+              <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}/>
             </div>
           </form>
         )
@@ -84,6 +99,7 @@ class LandingForm extends Component {
 }
 LandingForm = reduxForm({
   form: 'LandingForm',
+    validate
 })(LandingForm);
 
 export default connect(null, { searchForSchools, centerOfMap, userInput })(LandingForm);

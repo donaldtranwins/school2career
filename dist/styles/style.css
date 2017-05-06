@@ -7,6 +7,12 @@ body{
     color: black !important;
 }
 
+/*landing page form*/
+
+.required {
+    color: #800020;
+}
+
 /*Main Page Form styles*/
 .mapContent{
     margin-top: 1%;
