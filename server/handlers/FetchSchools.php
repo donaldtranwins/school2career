@@ -9,17 +9,19 @@ class FetchSchools{
         $queryMiddle =    "FROM `schools` s ";
         $queryEnd = isset($this->values['mapBounds'])
                         ? "WHERE (
-                                  `lat` BETWEEN " .
-                                      $this->values['mapBounds']['sw']['lat'].
-                                      " AND " .
-                                      $this->values['mapBounds']['ne']['lat'] . "
+                                  `lat` BETWEEN 
+                                      {$this->values['mapBounds']['sw']['lat']} 
+                                      AND 
+                                      {$this->values['mapBounds']['ne']['lat']}
                           ) AND (
-                                  `lng` BETWEEN " .
-                                      $this->values['mapBounds']['sw']['lng'] .
-                                      " AND ".
-                                      $this->values['mapBounds']['ne']['lng']."
+                                  `lng` BETWEEN 
+                                      {$this->values['mapBounds']['sw']['lng']} 
+                                      AND 
+                                      {$this->values['mapBounds']['ne']['lng']}
                           ) "
                         : "WHERE " ;
+
+        $this->filters = [];
 
         $tables = [];
         $lookup = [
@@ -28,29 +30,39 @@ class FetchSchools{
         ];
         if (isset($this->values['pickAMajor'])){
             array_push($tables, "pts", 'programs');
-            $queryStart .=    ", p.external ";
+            $this->filters[] = 'pickAMajor';
+//            $queryStart .=    ", p.external, ps.p_pct ";
             $queryEnd .=      "AND p.external=\"{$this->values['pickAMajor']}\" ";
             if ($this->values['aa'] === false){
-                $queryStart .=    ", ps.p_pct, ps.deg_2 ";
-                $queryEnd .=      "AND ps.deg_2>0 ";
+//                array_push($tables, "pts", 'programs');
+                $this->filters[] = 'aa';
+//                $queryStart .=    ", ps.deg_2 ";
+                $queryEnd .=      "AND ps.deg_2=0 ";
             }
             if ($this->values['bs'] === false){
-                $queryStart .=    ", ps.p_pct, ps.deg_4 ";
-                $queryEnd .=      "AND ps.deg_4>0 ";
+//                array_push($tables, "pts", 'programs');
+                $this->filters[] = 'bs';
+//                $queryStart .=    ", ps.deg_4 ";
+                $queryEnd .=      "AND ps.deg_4=0 ";
             }
-            if ($this->values['voc'] === false){
-                array_push($tables, "pts", 'programs');
-                $queryStart .=    ", ps.p_pct, ps.deg_2, ps.deg_4 ";
-                $queryEnd .=      "AND s.vocational=0 ";
-            }
+        }
+        if ($this->values['voc'] === false){
+            $this->filters[] = 'voc';
+//            $queryStart .=    ", s.vocational ";
+            $queryEnd .=      "AND s.vocational=0 ";
         }
         if (isset($this->values['tuitionSlider'])){
-            $queryStart .=    ", s.tuition_in, s.tuition_out ";
+            $this->filters[] = 'tuitionSlider';
+//            $queryStart .=    ", s.tuition_in, s.tuition_out ";
             $queryEnd .=      "AND s.tuition_out<{$this->values['tuitionSlider']} ";
         }
-        if ($this->values['Private'] && !$this->values['Public']){
-            $queryEnd .=          "AND s.ownership<=>1 ";
-        } else if ($this->values['Public'] && !$this->values['Private']){
+        if ($this->values['private'] && !$this->values['public']){
+            $this->filters[] = 'public';
+//            $queryStart .=        ", s.ownership ";
+            $queryEnd .=          "AND s.ownership<>1 ";
+        } else if ($this->values['public'] && !$this->values['private']){
+            $this->filters[] = 'private';
+//            $queryStart .=        ", s.ownership ";
             $queryEnd .=          "AND s.ownership=1 ";
         }
 
@@ -91,10 +103,10 @@ class FetchSchools{
                 $this->output['errors'][] = 'Search returned zero results';
             }
         }
-
+//        $this->output['total results'] = count($this->output['schools']);
 //        $this->output['request'] = $this->values;
 //        $this->output['query'] = $this->fullQuery;
-
+//        $this->output['filters'] = $this->filters;
         return $this->output;
     }
 
