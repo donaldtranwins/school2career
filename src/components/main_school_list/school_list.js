@@ -85,6 +85,7 @@ class SchoolList extends Component {
     }
 }
 function mapStateToProps(state){
+    console.log('school list: ', state.schools)
     return{
         schools: state.schools
     }
