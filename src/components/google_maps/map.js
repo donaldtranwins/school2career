@@ -104,11 +104,11 @@ class GMap extends Component {
         var icons = {
             sm_school: {
                 name: ' < 10,000',
-                icon: '/images/sm_school.png'
+                icon: '/images/md_school.png'
             },
             md_school: {
                 name: ' < 25,000',
-                icon: '/images/md_school.png'
+                icon: '/images/sm_school.png'
             },
             lg_school: {
                 name: ' > 25,000',
@@ -148,10 +148,10 @@ class GMap extends Component {
     colorForMarker(sizeOfSchool) {
         switch (true) {
             case (sizeOfSchool < 10000):
-                return '/images/sm_school.png';
+                return '/images/md_school.png';
                 break;
             case (sizeOfSchool < 25000):
-                return '/images/md_school.png';
+                return '/images/sm_school.png';
                 break;
             case (sizeOfSchool >= 25000):
                 return '/images/lg_school.png';

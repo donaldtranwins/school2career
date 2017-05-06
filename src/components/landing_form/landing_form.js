@@ -5,7 +5,6 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
-
 import majors from './majors';
 import { searchForSchools, centerOfMap, userInput } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
@@ -64,7 +63,7 @@ class LandingForm extends Component {
       });
     };
     render(){
-        const { handleSubmit, pristine, reset, submitting } = this.props
+        const { handleSubmit, pristine, reset, submitting } = this.props;
         return (
           <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
             <div>

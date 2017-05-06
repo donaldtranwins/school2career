@@ -85,19 +85,17 @@ class mapPageForm extends Component {
         this.props.searchForSchools(values);
         this.props.clickClosed();
     };
+
     render() {
         const { handleSubmit } = this.props;
         const sliderStyle = {
             width: 200,
-            height: 4,
-            backgroundColor: 'red'
+            height: 4
         };
-        const locationName = this.props.userInput.location;
-        const majorName = this.props.userInput.pickAMajor;
     return (
-        <form className="locationName" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
+        <form className="locationName extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
             <div className="locationArea">
-                <Field name="location" component={renderTextField} label="City"/>
+                <Field name="location" component={renderTextField} label="LOCATION"/>
             </div>
             <div>{'Type of Degree: '}</div>
             <div className="checkboxDeg">
@@ -143,10 +141,17 @@ mapPageForm = reduxForm({
     initialValues: {aa: true, bs: true, voc: true, public: true, private: true}
 })(mapPageForm);
 
-function mapStateToProps(state) {
-    return {
-        userInput : state.userInput.value
-    };
-}
+// function mapStateToProps(state) {
+//         let thisLocation = state.userInput.value.location;
+//         let major = state.userInput.value.pickAMajor;
+//
+//     return {
+//         initialValues: {
+//             location: thisLocation,
+//             aa: true, bs: true, voc: true, public: true, private: true,
+//             pickAMajor: major
+//         }
+//     };
+// }
 
-export default connect(mapStateToProps, { searchForSchools, centerOfMap, userInput })(mapPageForm );
+export default connect(null, { searchForSchools, centerOfMap, userInput })(mapPageForm );
