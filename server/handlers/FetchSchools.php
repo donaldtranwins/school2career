@@ -8,7 +8,7 @@ class FetchSchools{
         $queryStart =     "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out ";
         $queryMiddle =    "FROM `schools` s ";
         $queryEnd = isset($this->values['mapBounds'])
-                        ? "WHERE (
+            ? "WHERE (
                                   `lat` BETWEEN 
                                       {$this->values['mapBounds']['sw']['lat']} 
                                       AND 
@@ -19,7 +19,7 @@ class FetchSchools{
                                       AND 
                                       {$this->values['mapBounds']['ne']['lng']}
                           ) "
-                        : "WHERE " ;
+            : "WHERE " ;
 
         $this->filters = [];
 
@@ -34,7 +34,7 @@ class FetchSchools{
 //            $queryStart .=    ", p.external, ps.p_pct ";
             $queryEnd .=      "AND p.external=\"{$this->values['pickAMajor']}\" ";
         }
-        if (isset($this->values['tuitionSlider'])){ //This block will never fire on Landing Page
+        if (isset($this->values['tuitionSlider'])){ //This block never fires on Landing Page since there is no slider
             $this->filters[] = 'tuitionSlider';
 //            $queryStart .=    ", s.tuition_in, s.tuition_out ";
             $queryEnd .=      "AND s.tuition_out<{$this->values['tuitionSlider']} ";
@@ -54,13 +54,13 @@ class FetchSchools{
                 $queryEnd .=      "AND s.vocational=0 ";
             }
             if ($this->values['aa'] === false){
-//                array_push($tables, "pts", 'programs');
+                array_push($tables, "pts", 'programs');
                 $this->filters[] = 'aa';
 //                $queryStart .=    ", ps.deg_2 ";
                 $queryEnd .=      "AND ps.deg_2=0 ";
             }
             if ($this->values['bs'] === false){
-//                array_push($tables, "pts", 'programs');
+                array_push($tables, "pts", 'programs');
                 $this->filters[] = 'bs';
 //                $queryStart .=    ", ps.deg_4 ";
                 $queryEnd .=      "AND ps.deg_4=0 ";
@@ -86,7 +86,7 @@ class FetchSchools{
 
         $result = $dbConn->query($this->fullQuery);
         if(empty($result)) {
-            $this->output['errors'][] = 'Query failed to reach database.';
+            $this->output['errors'][] = "Error #".mysqli_errno($dbConn).": ".mysqli_error($dbConn);
         } else {
             if(mysqli_num_rows($result) > 0){
                 $this->output['success'] = true;
@@ -105,8 +105,8 @@ class FetchSchools{
             }
         }
 //        $this->output['total results'] = count($this->output['schools']);
-        $this->output['request'] = $this->values;
-        $this->output['query'] = $this->fullQuery;
+//        $this->output['request'] = $this->values;
+//        $this->output['query'] = $this->fullQuery;
 //        $this->output['filters'] = $this->filters;
         return $this->output;
     }
