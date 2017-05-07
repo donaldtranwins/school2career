@@ -1,6 +1,6 @@
 <?php
     spl_autoload_register(function ($class_name) {
-        require_once '../../server/handlers/'.$class_name . '.php';
+        require_once '../handlers/'.$class_name . '.php';
     });
     header::declare();
 
