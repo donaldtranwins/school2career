@@ -1,4 +1,5 @@
 RewriteEngine on
+DirectoryIndex request.php
 RewriteRule ^fetch_schools request.php [NC]
 RewriteRule ^one_school/id/(.*) request.php?schid=$1 [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
