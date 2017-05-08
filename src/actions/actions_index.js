@@ -16,6 +16,8 @@ const ONESCHOOL_URL = 'http://dev.school2career.net/one_school/id/';
 const API_KEY = '';
 
 export function searchForSchools(value) {
+    console.log('value', value);
+    value.newInfo=true;
     const newVal = JSON.stringify(value);
     const request = axios.post(`${BASE_URL}`, newVal);
     console.log("newVal", newVal, 'value', value);
