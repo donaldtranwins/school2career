@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { searchForSchools } from '../../actions/actions_index'
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
+import Loader from '../loader/loading';
 
 const style = {
     height: '20%',
@@ -35,7 +36,7 @@ class SchoolList extends Component {
         let list;
         const data = this.props.schools.all;
         if(!data){
-            list = <p className="noSchools">No schools match the current criteria.</p>;
+            list=    <Loader />
         } else {
             list = data.map((school, index) => {
                 let admissionRate = parseFloat(school.adm_rate);
