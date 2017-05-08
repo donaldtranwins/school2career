@@ -54,8 +54,14 @@ class School extends Component {
                 instType = "Private (for-profit)";
                 break;
         }
-        let tuitionIn = (parseFloat(data.tuition_in)).toLocaleString();
-        let tuitionOut = (parseFloat(data.tuition_out)).toLocaleString();
+        let tuitionIn = '$' + (parseFloat(data.tuition_in)).toLocaleString();
+        let tuitionOut = '$' + (parseFloat(data.tuition_out)).toLocaleString();
+        if(tuitionIn === '$0'){
+            tuitionIn = 'Not Provided';
+        }
+        if(tuitionOut === '$0'){
+            tuitionOut = 'Not Provided';
+        }
         let url = data.url.slice(4);
         const findForwardSlash = url.lastIndexOf('/');
         if(findForwardSlash === url.length -1){
@@ -82,8 +88,8 @@ class School extends Component {
                         <br/>
                         <div className="row">
                             <h4 className="col-md-4 singleStats">{instType} School</h4>
-                            <h4 className="col-md-4 singleStats">Tuition (in state): ${tuitionIn}</h4>
-                            <h4 className="col-md-4 singleStats">Tuition (out of state): ${tuitionOut}</h4>
+                            <h4 className="col-md-4 singleStats">Tuition (in state): {tuitionIn}</h4>
+                            <h4 className="col-md-4 singleStats">Tuition (out of state): {tuitionOut}</h4>
                         </div>
                     </Paper>
                     <Paper className="mapPaper">
