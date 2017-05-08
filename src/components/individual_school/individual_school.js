@@ -70,11 +70,13 @@ class School extends Component {
         return (
             <div>
                 <div className='imageDiv'>
-                    <img className="schoolImg col-sm-12 " src={this.props.schoolImgURL} />
-                    <div className="schoolName">
-                        <h2 className='universityText'>{data.name} </h2>
-                        <h4 className='universityText'>{data.city}, {data.state}</h4>
-                        <h5 className="webAddress universityText col-md-5"><a target="_blank" href={'http://' + data.url}>{url}</a></h5>
+                    <div className="schoolImgHolder">
+                        <img className="schoolImg col-sm-12 " src={this.props.schoolImgURL} />
+                        <div className="schoolName">
+                            <h2 className='universityText'>{data.name} </h2>
+                            <h4 className='universityText'>{data.city}, {data.state}</h4>
+                            <h5 className="webAddress universityText col-md-5"><a target="_blank" href={'http://' + data.url}>{url}</a></h5>
+                        </div>
                     </div>
                 </div>
                 <ReturnToListbtn onClick={() => this.handleClick()}/>
