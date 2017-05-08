@@ -191,9 +191,13 @@ body{
     padding: 15px;
     margin: 15px 0;
 }
-.titleMenWomanChart, .degreeList {
+.titleMenWomanChart, .degreeList, .majorPercent {
     text-align: center;
-    margin-top: 15px;
+    padding-top: 10px;
+}
+.titleMenWomanChart {
+    margin-bottom: 0;
+    padding-top: 0;
 }
 .degreePaper {
     padding: 15px;

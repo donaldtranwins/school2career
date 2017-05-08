@@ -32,7 +32,8 @@ class MajorChart extends Component{
             }
       	return (
             <div style={divStyle}>
-                <ResponsiveContainer width="100%" height="100%">
+                <h3 className="majorPercent">Graduation Percentage By Major</h3>
+                <ResponsiveContainer width="100%" height="90%">
                   <BarChart
                       data={majors}
                       layout="vertical"
@@ -43,7 +44,7 @@ class MajorChart extends Component{
                       <CartesianGrid strokeDasharray="3 3"/>
                       <Tooltip/>
                       <Legend />
-                      <Bar dataKey="Graduation %" fill="#8884d8" />
+                      <Bar dataKey="Graduation %" fill="#26A69A" />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
