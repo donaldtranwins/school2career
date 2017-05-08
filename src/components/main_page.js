@@ -18,7 +18,7 @@ class drawerForm extends Component {
 
     render() {
         return (
-            <div>
+            <div className='mainPage'>
                 <div className="refineBox" onTouchTap={this.handleToggle}>
                     <div className="searchIcon refineText">
                         <i className="material-icons searchIcon" >search</i>

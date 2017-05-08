@@ -14,6 +14,9 @@ body{
 }
 
 /*Main Page Form styles*/
+.mainPage{
+    height: 92vh;
+}
 .mapContent{
     margin-top: 1%;
     width: 100%;
@@ -265,7 +268,7 @@ body{
 }
 /*media breaks*/
 @media only screen and (max-width: 550px) {
-    body {
+    .mainPage {
         height: 200vh;
     }
     .listContainer {
