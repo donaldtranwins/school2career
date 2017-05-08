@@ -27,7 +27,7 @@ const mainUl = {
 const ul = {
     listStyleType: 'none',
     padding: 'initial'
-}
+};
 const school = {
     color: 'red'
 };
@@ -36,7 +36,7 @@ class SchoolList extends Component {
         let list;
         const data = this.props.schools.all;
         if(!data){
-            list=    <Loader />
+            list=<Loader />;
         } else {
             list = data.map((school, index) => {
                 let admissionRate = parseFloat(school.adm_rate);
