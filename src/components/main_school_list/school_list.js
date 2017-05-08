@@ -27,16 +27,24 @@ const mainUl = {
 const ul = {
     listStyleType: 'none',
     padding: 'initial'
-}
+};
 const school = {
     color: 'red'
 };
 class SchoolList extends Component {
+
+    anyData = null;
+
     render(){
         let list;
         const data = this.props.schools.all;
-        if(!data){
-            list=    <Loader />
+        console.log('data here', data);
+        if(!data && this.anyData) {
+            list = "No Schools Match The Current Criteria";
+            this.anyData = false;
+        } else if (!data) {
+            list = <Loader />;
+            this.anyData = true;
         } else {
             list = data.map((school, index) => {
                 let admissionRate = parseFloat(school.adm_rate);
