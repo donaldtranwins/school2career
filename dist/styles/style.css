@@ -291,4 +291,17 @@ body{
     .satList {
         text-align: inherit;
     }
+
+    .schoolImgHolder {
+        width: 100%;
+        height: 100%;
+        position: relative
+    }
+    .schoolImg {
+        height: 100%;
+        width: 130%;
+        position: relative;
+        left: -15%;
+
+    }
 }

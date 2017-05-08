@@ -180,7 +180,7 @@ class GMap extends Component {
         this.setState({
             markers : [ ...markers ]
         });
-        let content = '<div><h6><a href=http://localhost:3000/school/' + data.uid + '>' + data.name + '</h6></div>'
+        let content = '<div><h6><a href=http://localhost:3000/school/' + data.uid + '>' + data.name + '</a></h6></div>'
             + '<div>' + data.city + ', ' + data.state + '</div>'
             + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         let infoWindow =  new google.maps.InfoWindow({
