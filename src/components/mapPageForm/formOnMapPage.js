@@ -16,7 +16,6 @@ const style = {
 };
 
 const validate = values => {
-    console.log('values', values);
     const errors = {};
     if (!values.location) {
         errors.location = 'Required';

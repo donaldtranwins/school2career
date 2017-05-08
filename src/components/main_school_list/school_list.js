@@ -38,7 +38,6 @@ class SchoolList extends Component {
     render(){
         let list;
         const data = this.props.schools.all;
-        console.log('data here', data);
         if(!data && this.anyData) {
             list = "No Schools Match The Current Criteria";
             this.anyData = false;
@@ -93,7 +92,6 @@ class SchoolList extends Component {
     }
 }
 function mapStateToProps(state){
-    console.log('school list: ', state.schools);
     return{
         schools: state.schools
     }
