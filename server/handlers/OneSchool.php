@@ -20,13 +20,15 @@
             if(empty($metadata) || empty($programs)) {
                 $this->output['status'][] = '422 - Unprocessable Entity, Bad Query';
             } else {
-                if(mysqli_num_rows($metadata) > 0 && mysqli_num_rows($programs) > 0){
+                if(mysqli_num_rows($metadata)){
                     $this->output['status'] = 200;
                     $school = mysqli_fetch_assoc($metadata);
                     $school['programs'] = [];
                     while($program = mysqli_fetch_assoc($programs)){
                         $school['programs'][] = $program;
                     }
+                    if (empty($school['programs']))
+                        unset($school['programs']);
                     $this->output['school'] = $school;
                 } else {
                     $this->output['status'][] = "404 Not Found - No school on ID : {$_GET['schid']}";
