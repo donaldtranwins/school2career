@@ -1,7 +1,7 @@
 import axios from 'axios';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT, SCHOOL_IMAGE, MAP_BOUNDS_INPUT } from './actions_types';
+import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT, SCHOOL_IMAGE, MAP_BOUNDS_INPUT, SHOW_LOADER } from './actions_types';
 
 const BASE_URL = 'http://dev.school2career.net/fetch_schools'; //live
 
@@ -12,11 +12,9 @@ const ONESCHOOL_URL = 'http://dev.school2career.net/one_school/id/';
 const API_KEY = '';
 
 export function searchForSchools(value) {
-    console.log('value', value);
     value.newInfo=true;
     const newVal = JSON.stringify(value);
-    const request = axios.post(`${BASE_URL}`, newVal);
-    console.log("newVal", newVal, 'value', value);
+    const request = axios.post(`${BASE_URL}`, newVal)
     return {
         type: FETCH_SCHOOLS,
         payload: request
@@ -30,6 +28,13 @@ export function searchOneSchool(value) {
     return {
         type: ONE_SCHOOL,
         payload: request
+    }
+}
+
+export function showLoader(value) {
+    return {
+        type: SHOW_LOADER,
+        payload: value
     }
 }
 

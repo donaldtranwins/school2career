@@ -32,7 +32,7 @@ export default [
     <MenuItem key='Parks/Recreation' value={'Parks/Recreation'} primaryText="Parks & Recreation"/>,
     <MenuItem key='Performing Arts' value={'Performing Arts'} primaryText="Performing Arts"/>,
     <MenuItem key='Personal & Culinary' value={'Personal & Culinary'} primaryText="Personal & Culinary"/>,
-    <MenuItem key='Philosophy & Religion' value={'Philosophy & Religion'} primaryText="Philosophy & Religion"/>,
+    <MenuItem key='Philosophy/Religion' value={'Philosophy/Religion'} primaryText="Philosophy & Religion"/>,
     <MenuItem key='Physical Sciences' value={'Physical Sciences'} primaryText="Physical Sciences"/>,
     <MenuItem key='Precision Production' value={'Precision Production'} primaryText="Precision Production"/>,
     <MenuItem key='Public Administration' value={'Public Administration'} primaryText="Public Administration"/>,

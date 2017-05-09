@@ -6,7 +6,7 @@ import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import majors from './majors';
-import { searchForSchools, centerOfMap, userInput } from '../../actions/actions_index';
+import { searchForSchools, centerOfMap, userInput, showLoader } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
 
 const btnStyle = {
@@ -67,6 +67,7 @@ class LandingForm extends Component {
         this.props.userInput(values);
     };
     formSubmitted = (values) => {
+        this.props.showLoader(true);
         geocodeByAddress(values.location,  (err, latLng) => {
         if (err) { console.warn('error', err) };
         values.latLng = latLng;
@@ -101,4 +102,4 @@ LandingForm = reduxForm({
     validate
 })(LandingForm);
 
-export default connect(null, { searchForSchools, centerOfMap, userInput })(LandingForm);
+export default connect(null, { searchForSchools, centerOfMap, userInput, showLoader })(LandingForm);

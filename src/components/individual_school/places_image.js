@@ -73,9 +73,9 @@ class Photo extends Component {
         let mapOptions = {
             zoom: this.state.zoom,
             center: this.createLatLng(data),
-            draggable: true,
+            draggable: false,
             zoomControl: true,
-            scrollwheel: true,
+            scrollwheel: false,
             disableDoubleClickZoom: true,
             streetview: true
         };
