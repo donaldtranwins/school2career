@@ -84,7 +84,7 @@ class School extends Component {
                     <Paper className="statsWrapper">
                         <div className="row">
                             <h4 className="col-md-4 singleStats">Admissions Rate: {admissionRate}</h4>
-                            <h4 className="col-md-4 singleStats">SAT Ave: {satAvg}</h4>
+                            <h4 className="col-md-4 singleStats">SAT Avg: {satAvg}</h4>
                             <h4 className="col-md-4 singleStats">Undergrad Size: {data.size} students</h4>
                         </div>
                         <br/>
