@@ -10,7 +10,7 @@ class MajorChart extends Component{
                 returnObj['name'] = obj.name;
                 returnObj['Graduation %'] = Math.ceil(parseFloat(obj.percent) * 100);
                 return returnObj
-            })
+            });
             let majorHeight = '800px';
             if (majors.length === 1){
                 majorHeight = '120px';
@@ -29,7 +29,7 @@ class MajorChart extends Component{
                 margin: '0 auto',
                 height: majorHeight,
                 width: '100%'
-            }
+            };
       	return (
             <div style={divStyle}>
                 <h4 className="majorPercent">Graduation Percentage By Major</h4>

@@ -40,7 +40,7 @@ class SchoolList extends Component {
         const data = this.props.schools.all;
         if(!data && this.anyData) {
             list = "No Schools Match The Current Criteria";
-            this.anyData = false;
+            // this.anyData = false;
         } else if (!data) {
             list = <Loader />;
             this.anyData = true;
