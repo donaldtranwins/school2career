@@ -32,7 +32,7 @@ class MajorChart extends Component{
             }
       	return (
             <div style={divStyle}>
-                <h3 className="majorPercent">Graduation Percentage By Major</h3>
+                <h4 className="majorPercent">Graduation Percentage By Major</h4>
                 <ResponsiveContainer width="100%" height="90%">
                   <BarChart
                       data={majors}
