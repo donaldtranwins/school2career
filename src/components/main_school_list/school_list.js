@@ -35,12 +35,19 @@ class SchoolList extends Component {
 
     anyData = null;
 
+    componentWillReceiveProps() {
+        debugger;
+        if(this.props.schools.all ) {
+            this.anyData = true;
+        }
+    }
+
     render(){
         let list;
         const data = this.props.schools.all;
         if(!data && this.anyData) {
             list = "No Schools Match The Current Criteria";
-            // this.anyData = false;
+            this.anyData = false;
         } else if (!data) {
             list = <Loader />;
             this.anyData = true;
