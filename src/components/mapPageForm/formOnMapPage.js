@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import Slider from 'material-ui/Slider';
 import { geocodeByAddress } from 'react-places-autocomplete';
 import majors from '../landing_form/majors';
-import { searchForSchools, centerOfMap, userInput } from '../../actions/actions_index';
+import { searchForSchools, centerOfMap, userInput, showLoader } from '../../actions/actions_index';
 import GeoCode from '../geocoding/geocoding';
 
 const style = {
@@ -96,7 +96,7 @@ class mapPageForm extends Component {
         });
         let bounds =  this.props.mapB.mapBoundsInput.mapBounds;
         let latLng = this.props.mapB
-
+        this.props.showLoader(true);
         console.log('formSubmitted', latLng)
         if(values.location === this.props.input.value.location && this.props.mapB.mapBoundsInput.mapBounds.ne !== undefined){
             values.mapBounds = bounds;
@@ -112,7 +112,7 @@ class mapPageForm extends Component {
       if(event.key == 'Enter'){
 
       }
-    }
+    };
     render() {
         const { handleSubmit } = this.props;
         const sliderStyle = {
@@ -170,7 +170,6 @@ mapPageForm = reduxForm({
 })(mapPageForm);
 
 function mapStateToProps(state){
-    console.log('state', state)
     return {
         input: state.userInput,
         mapB: state.mapBoundsInput
@@ -190,4 +189,4 @@ function mapStateToProps(state){
 //     };
 // }
 
-export default connect(mapStateToProps, { searchForSchools, centerOfMap, userInput })(mapPageForm );
+export default connect(mapStateToProps, { searchForSchools, centerOfMap, userInput, showLoader })(mapPageForm );

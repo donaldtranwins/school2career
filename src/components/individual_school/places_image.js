@@ -76,7 +76,7 @@ class Photo extends Component {
             zoom: this.state.zoom,
             center: this.createLatLng(data),
             draggable: false,
-            zoomControl: false,
+            zoomControl: true,
             scrollwheel: false,
             disableDoubleClickZoom: true,
             streetview: true,

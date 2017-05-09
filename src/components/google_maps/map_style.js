@@ -256,7 +256,7 @@ const StylesForMap = [
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "color": "#a7bdb0"
+                "color": "#256D7B"
             }
         ]
     },
@@ -265,7 +265,7 @@ const StylesForMap = [
         "elementType": "labels.text.fill",
         "stylers": [
             {
-                "color": "#92998d"
+                "color": "#256D7B"
             }
         ]
     }
