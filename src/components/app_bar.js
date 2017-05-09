@@ -5,14 +5,14 @@ import { Link } from 'react-router';
 
 const styles = {
     stylesTab: {
-        marginRight: '25px',
-        color: 'white'
+        color: 'white',
+        padding: '0 15px',
+        fontWeight: 400
     },
     title: {
         cursor: 'pointer',
     }
 };
-
 
 class NavBar extends Component {
 

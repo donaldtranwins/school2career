@@ -36,7 +36,6 @@ class SchoolList extends Component {
     anyData = null;
 
     componentWillReceiveProps() {
-        debugger;
         if(this.props.schools.all ) {
             this.anyData = true;
         }

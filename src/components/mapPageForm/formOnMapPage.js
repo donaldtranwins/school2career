@@ -102,7 +102,7 @@ class mapPageForm extends Component {
             values.mapBounds = bounds;
             values.latLng = this.props.input.value.latLng;
             this.props.searchForSchools(values);
-
+            this.props.clickClosed();
         } else {
             this.props.searchForSchools(values);
             this.props.clickClosed();

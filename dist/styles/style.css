@@ -4,7 +4,7 @@ body{
 }
 
 .navBarLink {
-    color: black !important;
+    /*color: black !important;*/
 }
 
 /*landing page form*/
@@ -117,19 +117,31 @@ body{
     height: 100%;
 }
 #legend {
-    font-family: Arial, sans-serif;
-    background: #E0E0E0;
+    text-align: center;
+    border-radius: 3px;
+    font-family: Roboto, sans-serif;
+    background: white;
     padding: 10px;
     margin: 10px;
-    border: 1px solid #000;
+    border: 1px solid #90A4AE;
     z-index: 25;
+}
+#legend div {
+    font-family: Roboto;
+    color: #90A4AE;
 }
 #legend h3 {
     margin-top: 0;
 }
+#legend h6 {
+    font-size: 14px
+    font-family: Roboto;
+    color: #90A4AE;
+}
 #legend img {
     vertical-align: middle;
 }
+
 .UpdatedText {
     color: red;
 }
