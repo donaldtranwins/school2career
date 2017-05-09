@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import Drawer from 'material-ui/Drawer';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import MapForm from './mapPageForm/formOnMapPage';
 import SchoolList from './main_school_list/school_list'
 import Map from './google_maps/map';
+
+
 
 class drawerForm extends Component {
 
@@ -17,10 +20,12 @@ class drawerForm extends Component {
     handleClose = () => this.setState({open: false});
 
     render() {
-
+        const style = {
+            marginLeft: '4.5%',
+        };
         return (
             <div className='mainPage'>
-                <div className="refineBox" onTouchTap={this.handleToggle}>
+                <div className="refineBox smallSearch" onTouchTap={this.handleToggle}>
                     <div className="searchIcon refineText">
                         <i className="material-icons searchIcon" >search</i>
                     </div>
@@ -37,6 +42,7 @@ class drawerForm extends Component {
                 </div>
                 <div className='mapContent'>
                     <Map id="mapShowing"/>
+                    <RaisedButton onTouchTap={this.handleToggle} className='refineSearch' label="Refine Search" style={style} />
                     <SchoolList id="schoolListShowing"/>
                 </div>
 

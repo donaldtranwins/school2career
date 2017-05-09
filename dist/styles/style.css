@@ -87,9 +87,6 @@ body{
 .refineBox {
     position: absolute;
     background-color: white;
-    /*border: 1px solid rgb(144, 164, 174);
-    width: 100px;
-    height: 100px;*/
     z-index: 10;
 }
 /*end searchButton*/

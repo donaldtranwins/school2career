@@ -14,13 +14,29 @@
     display: inline-block;
     float:right;
 }
-a {
+a, a:hover {
     text-decoration: none;
     color: inherit;
 }
 .listViewStats {
     display: inline-block;
     padding: inherit;
-
+}
+.smallSearch {
+    display: none;
+}
+.refineSearch {
+    margin: 10 auto;
+    width: 40%;
+}
+@media only screen and (max-width: 550px) {
+    .smallSearch {
+        display: inherit;
+    }
+}
+@media only screen and (max-width: 550px) {
+    .refineSearch {
+        display: none !important
+    }
 }
 /* Portrait and Landscape */
