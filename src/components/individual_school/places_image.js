@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { schoolURL } from '../../actions/actions_index';
-import stylesForMap from '../google_maps/map_style';
-
 
 class Photo extends Component {
     constructor(props){
@@ -79,8 +77,7 @@ class Photo extends Component {
             zoomControl: false,
             scrollwheel: false,
             disableDoubleClickZoom: true,
-            streetview: true,
-            styles: stylesForMap
+            streetview: true
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }
