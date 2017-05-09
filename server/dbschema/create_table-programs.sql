@@ -86,6 +86,7 @@ INSERT INTO `programs` (`pid`, `program`, `external`, `description`) VALUES
 --
 ALTER TABLE `programs`
   ADD UNIQUE KEY `pid` (`pid`),
+  ADD PRIMARY KEY `pid` (`pid`),
   ADD KEY `external` (`external`);
 
 --

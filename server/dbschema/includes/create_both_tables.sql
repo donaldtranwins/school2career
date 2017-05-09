@@ -57,7 +57,8 @@ CREATE TABLE `metadata_imported` (
 -- Indexes for table `metadata_imported`
 --
 ALTER TABLE `metadata_imported`
-  ADD UNIQUE(`uid`);
+  ADD UNIQUE KEY `uid` (`uid`),
+  ADD PRIMARY KEY `uid` (`uid`);
 
 
 --
@@ -187,7 +188,8 @@ CREATE TABLE `query_imported` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `query_imported`
-  ADD UNIQUE(`uid`);
+  ADD UNIQUE KEY `uid` (`uid`),
+  ADD PRIMARY KEY `uid` (`uid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
