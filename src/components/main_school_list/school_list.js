@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { searchForSchools } from '../../actions/actions_index'
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
+import Loader from '../loader/loading';
 
 const style = {
     height: '20%',
@@ -26,16 +27,23 @@ const mainUl = {
 const ul = {
     listStyleType: 'none',
     padding: 'initial'
-}
+};
 const school = {
     color: 'red'
 };
 class SchoolList extends Component {
+
+    anyData = null;
+
     render(){
         let list;
         const data = this.props.schools.all;
-        if(!data){
-            list = <p className="noSchools">No schools match the current criteria.</p>;
+        if(!data && this.anyData) {
+            list = "No Schools Match The Current Criteria";
+            // this.anyData = false;
+        } else if (!data) {
+            list = <Loader />;
+            this.anyData = true;
         } else {
             list = data.map((school, index) => {
                 let admissionRate = parseFloat(school.adm_rate);
@@ -84,7 +92,6 @@ class SchoolList extends Component {
     }
 }
 function mapStateToProps(state){
-    console.log('school list: ', state.schools);
     return{
         schools: state.schools
     }

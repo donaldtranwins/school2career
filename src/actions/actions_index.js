@@ -3,13 +3,17 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT, SCHOOL_IMAGE, MAP_BOUNDS_INPUT } from './actions_types';
 
-const BASE_URL = 'http://dev.school2career.net/api/fetch_schools'; //live
+const BASE_URL = 'http://dev.school2career.net/fetch_schools'; //live
 
-const ONESCHOOL_URL = 'http://dev.school2career.net/api/one_school/id/';
+
+const ONESCHOOL_URL = 'http://dev.school2career.net/one_school/id/';
+
 
 const API_KEY = '';
 
 export function searchForSchools(value) {
+    console.log('value', value);
+    value.newInfo=true;
     const newVal = JSON.stringify(value);
     const request = axios.post(`${BASE_URL}`, newVal);
     console.log("newVal", newVal, 'value', value);

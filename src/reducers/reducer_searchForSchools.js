@@ -6,14 +6,12 @@ const defaultState = {
 };
 
 export default function(state = defaultState, action){ // if undefined set to default_state
-    console.log('action', action)
     switch(action.type){
       case FETCH_SCHOOLS:
           console.log("debug",action.payload.data.debug);
           console.log("status",action.payload.data.status);
         return { ...state, all: action.payload.data.schools };
       case ONE_SCHOOL:
-        console.log('reducer: ', action.payload.data)
         return { ...state, single: action.payload.data };
     default:
       return state;

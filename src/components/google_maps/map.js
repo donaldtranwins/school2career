@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { searchForSchools, mapBoundsInput } from '../../actions/actions_index';
+import stylesForMap from './map_style';
 
 class GMap extends Component {
 
@@ -134,7 +135,8 @@ class GMap extends Component {
         let mapOptions = {
             zoom: this.state.zoom,
             center: this.createLatLng(data),
-            componentRestrictions: {country: "us"}
+            componentRestrictions: {country: "us"},
+            styles: stylesForMap
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }
@@ -180,7 +182,7 @@ class GMap extends Component {
         this.setState({
             markers : [ ...markers ]
         });
-        let content = '<div><h6><a href=http://localhost:3000/school/' + data.uid + '>' + data.name + '</h6></div>'
+        let content = '<div><h6><a href=http://localhost:3000/school/' + data.uid + '>' + data.name + '</a></h6></div>'
             + '<div>' + data.city + ', ' + data.state + '</div>'
             + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         let infoWindow =  new google.maps.InfoWindow({

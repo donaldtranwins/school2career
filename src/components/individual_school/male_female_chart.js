@@ -1,39 +1,71 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {ResponsiveContainer, PieChart, Pie, Sector, Cell, Legend} from 'recharts';
 
-class mfChart extends Component {
-    render() {
-        let data = this.props.schools.school;
-        if(!data){
-            return <p>Loading...</p>
-        }
-        data = data;
-        let male = data.demog_men * 100;
+
+const COLORS = ['#BA68C8', '#0088FE'];
+
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+const x  = cx + radius * Math.cos(-midAngle * RADIAN);
+const y = cy  + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
+       {/* {`${(percent * 100).toFixed(0)}%`} */}
+    </text>
+  );
+};
+
+class MF extends Component{
+    render () {
+        const school = this.props.schools.school
+        let male = school.demog_men * 100;
         male = Math.round(parseFloat(male));
-        let female = data.demog_women * 100;
+        let female = school.demog_women * 100;
         female = Math.round(parseFloat(female));
-        let chart = [
-            {name: 'ratio of male to female', m: male, f: female}
-            ];
+        const data = [
+            {name: 'female', value: female },
+            {name: 'male', value: male }
+        ];
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+   const x  = cx + radius * Math.cos(-midAngle * RADIAN);
+   const y = cy  + radius * Math.sin(-midAngle * RADIAN);
+
+   return (
+       <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
+       {`${(percent * 100).toFixed(0)}%`}
+       </text>
+   );
+};
         return (
-            <div className="mfChart">
-                <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={chart}
-                              margin={{top: 0, right: 0, left: 0, bottom: 0}}>
-                        <XAxis dataKey="name"/>
-                        <YAxis/>
-                        <CartesianGrid />
-                        <Tooltip/>
-                        <Legend />
-                        <Bar dataKey="m" fill="#00008B"/>
-                        <Bar dataKey="f" fill="#FF7AD6"/>
-                    </BarChart>
-                </ResponsiveContainer>
-            </div>
+           <div className="mfChart">
+               <h3 className="titleMenWomanChart">Male to Female Ratio</h3>
+               <ResponsiveContainer width="100%" height="95%">
+                   <PieChart onMouseEnter={this.onPieEnter}>
+                   <Pie
+                       legendType={ 'circle'}
+                       data={data}
+                       labelLine={false}
+                       label={renderCustomizedLabel}
+                       outerRadius={120}
+                       fill="#8884d8"
+                   >
+                       {
+                           data.map((entry, index) => <Cell key={entry} fill={COLORS[index % COLORS.length]}/>)
+                       }
+                   </Pie>
+                   <Legend />
+
+                   </PieChart>
+               </ResponsiveContainer>
+           </div>
         );
     }
 }
+
 
 function mapStateToProps(state) {
     return {
@@ -41,4 +73,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(mfChart);
+export default connect(mapStateToProps)(MF);

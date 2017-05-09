@@ -8,12 +8,32 @@ class MajorChart extends Component{
             const majors = this.props.school.single.school.programs.map(function(obj){
                 let returnObj = {};
                 returnObj['name'] = obj.name;
-                returnObj['Graduation %'] = Math.round(parseFloat(obj.percent) * 100);
+                returnObj['Graduation %'] = Math.ceil(parseFloat(obj.percent) * 100);
                 return returnObj
-            })
+            });
+            let majorHeight = '800px';
+            if (majors.length === 1){
+                majorHeight = '120px';
+            } else if (majors.length <= 5){
+                majorHeight = '300px';
+            } else if (majors.length <= 10){
+                majorHeight = '500px';
+            } else if (majors.length <= 20){
+                majorHeight = '800px';
+            } else if (majors.length <= 30){
+                majorHeight = '1200px';
+            } else if (majors.length <= 38){
+                majorHeight = '1500px';
+            }
+            const divStyle = {
+                margin: '0 auto',
+                height: majorHeight,
+                width: '100%'
+            };
       	return (
-            <div className='majorsChartDiv'>
-                <ResponsiveContainer width="100%" height="100%">
+            <div style={divStyle}>
+                <h3 className="majorPercent">Graduation Percentage By Major</h3>
+                <ResponsiveContainer width="100%" height="90%">
                   <BarChart
                       data={majors}
                       layout="vertical"
@@ -24,7 +44,7 @@ class MajorChart extends Component{
                       <CartesianGrid strokeDasharray="3 3"/>
                       <Tooltip/>
                       <Legend />
-                      <Bar dataKey="Graduation %" fill="#8884d8" />
+                      <Bar dataKey="Graduation %" fill="#26A69A" />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
