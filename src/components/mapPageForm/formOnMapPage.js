@@ -88,23 +88,26 @@ class mapPageForm extends Component {
         this.props.userInput(values);
         this.props.centerOfMap(center);
     };
-    formSubmitted = (values) => {
+    formSubmitted(values) {
         geocodeByAddress(values.location, (err, latLng) => {
             if(err) { console.warn('error: ', err)}
             values.latLng = latLng;
             this.getCenterCoords(values);
         });
         let bounds =  this.props.mapB.mapBoundsInput.mapBounds;
-        let latLng = this.props.mapB
+        let latLng = this.props.mapB;
         this.props.showLoader(true);
-        console.log('formSubmitted', latLng)
+        console.log('formSubmitted', latLng);
         if(values.location === this.props.input.value.location && this.props.mapB.mapBoundsInput.mapBounds.ne !== undefined){
             values.mapBounds = bounds;
             values.latLng = this.props.input.value.latLng;
+            console.log('Form calling get schools IF');
+            this.props.clickClosed();
             this.props.searchForSchools(values);
 
         } else {
-            this.props.searchForSchools(values);
+            console.log('Form calling get schools ELSE');
+            // this.props.searchForSchools(values);
             this.props.clickClosed();
         }
     };
@@ -157,7 +160,7 @@ class mapPageForm extends Component {
                 />
             </div>
             <div>
-                <RaisedButton label="Submit" style={style} type="submit" ></RaisedButton>
+                <RaisedButton label="Submit" style={style} type="submit" />
             </div>
         </form>
     )};

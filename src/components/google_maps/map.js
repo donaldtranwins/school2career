@@ -226,7 +226,8 @@ class GMap extends Component {
             const userInputMapBounds = this.props.userInput.value;  // TODO fix this
             userInputMapBounds.mapBounds = mapBounds;
             this.props.mapBoundsInput(userInputMapBounds);
-            console.log('map boundsInput', this.props.boundsInput)
+            console.log('map boundsInput', this.props.boundsInput);
+            console.log('Map calling get schools');
             this.props.searchForSchools(userInputMapBounds);
         }
     }

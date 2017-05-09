@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { searchForSchools, showLoader } from '../../actions/actions_index'
+import { showLoader } from '../../actions/actions_index'
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
 import Loader from '../loader/loading';
@@ -44,6 +44,7 @@ class SchoolList extends Component {
                 </div>
             )
         } else {
+            console.log("Inside Here");
             let list = '';
             let noSchool = null;
             console.log('this.props school list', this.props.schools);
@@ -54,7 +55,7 @@ class SchoolList extends Component {
                 noSchool = this.props.schools.noSchool
             }
             if(noSchool == 1) {
-                list = "No Schools Match The Current Criteria";
+                list = <div>No Schools Match The Current Criteria</div>;
             } else {
                 list = data.map((school, index) => {
                     let admissionRate = parseFloat(school.adm_rate);
@@ -109,4 +110,4 @@ function mapStateToProps(state){
         schools: state.schools
     }
 }
-export default connect(mapStateToProps, {searchForSchools, showLoader})(SchoolList);
+export default connect(mapStateToProps, {showLoader})(SchoolList);
