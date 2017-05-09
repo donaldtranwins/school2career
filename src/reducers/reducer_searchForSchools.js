@@ -9,6 +9,8 @@ export default function(state = defaultState, action){ // if undefined set to de
     console.log('action', action)
     switch(action.type){
       case FETCH_SCHOOLS:
+          console.log("debug",action.payload.data.debug);
+          console.log("status",action.payload.data.status);
         return { ...state, all: action.payload.data.schools };
       case ONE_SCHOOL:
         console.log('reducer: ', action.payload.data)

@@ -7,7 +7,7 @@ class FetchSchools{
         $this->values = $passedValues;
         $queryStart =     "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out ";
         $queryMiddle =    "FROM `schools` s ";
-        $queryEnd = isset($this->values['mapBounds'])
+        $queryEnd = isset($this->values['mapBounds']) && isset($this->values['latLng'])
             ? "WHERE (
                                   `lat` BETWEEN 
                                       {$this->values['mapBounds']['sw']['lat']} 
@@ -18,54 +18,48 @@ class FetchSchools{
                                       {$this->values['mapBounds']['sw']['lng']} 
                                       AND 
                                       {$this->values['mapBounds']['ne']['lng']}
-                          ) "
-            : "WHERE " ;
+                          ) AND "
+            : "WHERE     " ;
 
         $this->filters = [];
 
         $tables = [];
         $lookup = [
-            "programs" => "JOIN programs p ON ps.pid=p.pid ",
-            "pts" => "JOIN programs_to_schools ps ON s.uid=ps.uid "
+            "programs" => "JOIN programs p ON pts.pid=p.pid ",
+            "pts" => "JOIN programs_to_schools pts ON s.uid=pts.uid "
         ];
         if (isset($this->values['pickAMajor'])){
             array_push($tables, "pts", 'programs');
-            $this->filters[] = 'pickAMajor';
-//            $queryStart .=    ", p.external, ps.p_pct ";
-            $queryEnd .=      "AND p.external=\"{$this->values['pickAMajor']}\" ";
+            $this->filters[] = ' Major';
+            $queryEnd .=      "p.external=\"{$this->values['pickAMajor']}\" AND ";
         }
         if (isset($this->values['tuitionSlider'])){ //This block never fires on Landing Page since there is no slider
-            $this->filters[] = 'tuitionSlider';
-//            $queryStart .=    ", s.tuition_in, s.tuition_out ";
-            $queryEnd .=      "AND s.tuition_out<{$this->values['tuitionSlider']} ";
+            $this->filters[] = ' Tuition';
+            $queryEnd .=      "s.tuition_out<{$this->values['tuitionSlider']} AND ";
 
             if ($this->values['private'] && !$this->values['public']){
-                $this->filters[] = 'public';
-//            $queryStart .=        ", s.ownership ";
-                $queryEnd .=          "AND s.ownership<>1 ";
+                $this->filters[] = ' Public';
+                $queryEnd .=          "s.ownership<>1 AND ";
             } else if ($this->values['public'] && !$this->values['private']){
-                $this->filters[] = 'private';
-//            $queryStart .=        ", s.ownership ";
-                $queryEnd .=          "AND s.ownership=1 ";
+                $this->filters[] = ' Private';
+                $queryEnd .=          "s.ownership=1 AND ";
             }
             if ($this->values['voc'] === false){
-                $this->filters[] = 'voc';
-//            $queryStart .=    ", s.vocational ";
-                $queryEnd .=      "AND s.vocational=0 ";
+                $this->filters[] = ' Vocational';
+                $queryEnd .=      "s.vocational=0 AND ";
             }
             if ($this->values['aa'] === false){
                 array_push($tables, "pts", 'programs');
-                $this->filters[] = 'aa';
-//                $queryStart .=    ", ps.deg_2 ";
-                $queryEnd .=      "AND ps.deg_2=0 ";
+                $this->filters[] = ' Associates';
+                $queryEnd .=      "pts.deg_2=0 AND ";
             }
             if ($this->values['bs'] === false){
                 array_push($tables, "pts", 'programs');
-                $this->filters[] = 'bs';
-//                $queryStart .=    ", ps.deg_4 ";
-                $queryEnd .=      "AND ps.deg_4=0 ";
+                $this->filters[] = ' Bachelors';
+                $queryEnd .=      " pts.deg_4=0 AND ";
             }
         }
+        $queryEnd = substr($queryEnd,0,-4);
 
         $uniqueTables = array_keys(array_flip($tables));
         while($reference = array_shift($uniqueTables)){
@@ -75,10 +69,7 @@ class FetchSchools{
         $this->fullQuery = $queryStart.$queryMiddle.$queryEnd;
     }
 
-    public $output = [
-        'success' => false,
-        'errors' => []
-    ];
+    public $output = ['status' => []];
 
     public function processRequest(){
         require_once 'connectDb.php';
@@ -86,28 +77,35 @@ class FetchSchools{
 
         $result = $dbConn->query($this->fullQuery);
         if(empty($result)) {
-            $this->output['errors'][] = "Error #".mysqli_errno($dbConn).": ".mysqli_error($dbConn);
+            $this->output['status'][] = '422 - Unprocessable Entity, Bad Query';
+            $this->output['debug'] = $this->output['status'];
         } else {
             if(mysqli_num_rows($result) > 0){
-                $this->output['success'] = true;
+                $this->output['status'] = 200;
                 $this->output['schools']=[];
                 while($row = mysqli_fetch_assoc($result)){
                     $this->output['schools'][] = $row;
                 }
-                foreach ($this->output['schools'] as $row=>$school ){
-                    $this->output['schools'][$row]['distance'] = $this->getDistance($this->values['latLng']['lat'],$this->values['latLng']['lng'],floatval($school['lat']),floatval($school['lng']));
-                }
-                usort($this->output['schools'], array($this, "cmp"));
+//                if (isset($this->output['latLng'])){
+                    foreach ($this->output['schools'] as $row=>$school ){
+                        $this->output['schools'][$row]['distance'] = $this->getDistance($this->values['latLng']['lat'],$this->values['latLng']['lng'],floatval($school['lat']),floatval($school['lng']));
+                    }
+                    usort($this->output['schools'], array($this, "cmp"));
+//                }
                 $this->output['schools'] = array_slice($this->output['schools'],0,500,true);
+
+                $this->output['debug']['total results'] = count($this->output['schools']);
             } else {
-                $this->output['success'] = true;
-                $this->output['errors'][] = 'Search returned zero results';
+                $code = "200 - Search returned zero results on the following filters:";
+                while ($filter = array_shift($this->filters)){
+                    $code .= $filter;
+                }
+                $this->output['status'][] = $code;
             }
         }
-//        $this->output['total results'] = count($this->output['schools']);
-//        $this->output['request'] = $this->values;
-//        $this->output['query'] = $this->fullQuery;
-//        $this->output['filters'] = $this->filters;
+        $this->output['debug']['request'] = $this->values;
+        $this->output['debug']['query'] = $this->fullQuery;
+        $this->output['debug']['filters'] = $this->filters;
         return $this->output;
     }
 
