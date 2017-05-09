@@ -330,6 +330,12 @@ class GMap extends Component {
         }
     }
     componentWillReceiveProps(nextProps){
+        // debugger;
+        // if(nextProps.userInput.value.mapBounds === undefined){
+        //     let userInputMapBounds = nextProps.userInput.value;  // TODO fix this
+        //     userInputMapBounds.mapBounds = this.props.userInput.value.mapBounds;
+        //     this.props.mapBoundsInput(userInputMapBounds);
+        // }
         if(this.props.userInput.value === null) {
             if(nextProps.center.lat !== this.props.center.lat) {
                 this.initMap();
@@ -490,6 +496,7 @@ class GMap extends Component {
             const userInputMapBounds = this.props.userInput.value;  // TODO fix this
             userInputMapBounds.mapBounds = mapBounds;
             this.props.mapBoundsInput(userInputMapBounds);
+            console.log('map boundsInput', this.props.boundsInput)
             this.props.searchForSchools(userInputMapBounds);
         }
     }

@@ -26,7 +26,7 @@ class DegreeList extends Component{
 
         return (
             <div>
-                <h3 className="degreeList">Degrees Offered</h3>
+                <h4 className="degreeList">Degrees Offered</h4>
                 <Paper className="degreePaper" style={styles}>
                     {degrees}
                 </Paper>

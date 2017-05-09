@@ -42,15 +42,16 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 };
         return (
            <div className="mfChart">
-               <h3 className="titleMenWomanChart">Male to Female Ratio</h3>
-               <ResponsiveContainer width="100%" height="95%">
+               <h4 className="titleMenWomanChart">Male to Female Ratio</h4>
+               <ResponsiveContainer width="100%" height="90%">
                    <PieChart onMouseEnter={this.onPieEnter}>
                    <Pie
+                       cy={'46%'}
                        legendType={ 'circle'}
                        data={data}
                        labelLine={false}
                        label={renderCustomizedLabel}
-                       outerRadius={120}
+                       outerRadius={110}
                        fill="#8884d8"
                    >
                        {

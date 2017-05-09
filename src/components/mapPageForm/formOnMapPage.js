@@ -94,8 +94,19 @@ class mapPageForm extends Component {
             values.latLng = latLng;
             this.getCenterCoords(values);
         });
-        this.props.searchForSchools(values);
-        this.props.clickClosed();
+        let bounds =  this.props.mapB.mapBoundsInput.mapBounds;
+        let latLng = this.props.mapB
+
+        console.log('formSubmitted', latLng)
+        if(values.location === this.props.input.value.location && this.props.mapB.mapBoundsInput.mapBounds.ne !== undefined){
+            values.mapBounds = bounds;
+            values.latLng = this.props.input.value.latLng;
+            this.props.searchForSchools(values);
+
+        } else {
+            this.props.searchForSchools(values);
+            this.props.clickClosed();
+        }
     };
     handleKeyPress = (event) => {
       if(event.key == 'Enter'){
@@ -158,6 +169,14 @@ mapPageForm = reduxForm({
     initialValues: {aa: true, bs: true, voc: true, public: true, private: true}
 })(mapPageForm);
 
+function mapStateToProps(state){
+    console.log('state', state)
+    return {
+        input: state.userInput,
+        mapB: state.mapBoundsInput
+    }
+}
+
 // function mapStateToProps(state) {
 //         let thisLocation = state.userInput.value.location;
 //         let major = state.userInput.value.pickAMajor;
@@ -171,4 +190,4 @@ mapPageForm = reduxForm({
 //     };
 // }
 
-export default connect(null, { searchForSchools, centerOfMap, userInput })(mapPageForm );
+export default connect(mapStateToProps, { searchForSchools, centerOfMap, userInput })(mapPageForm );
