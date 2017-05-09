@@ -60,6 +60,8 @@ class mapPageForm extends Component {
         super(props);
     }
     renderSlider({input: {onChange, value, name}, defaultValue, min, max}){
+        let numb = value;
+        numb = numb.toLocaleString();
         if(!value){
             defaultValue = defaultValue || min;
             onChange(defaultValue);
@@ -73,9 +75,9 @@ class mapPageForm extends Component {
             )
         } else {
             return (
-                <div>Tuition: ${value}
+                <div>Tuition: ${numb}
                     <Slider name={name} onChange={(props, val) => onChange(val, props)} defaultValue={defaultValue}
-                            min={min} max={max}/>
+                            min={min} max={max} step={1000} />
                 </div>
             )
         }
@@ -104,7 +106,7 @@ class mapPageForm extends Component {
             console.log('Form calling get schools IF');
             this.props.clickClosed();
             this.props.searchForSchools(values);
-
+            this.props.clickClosed();
         } else {
             console.log('Form calling get schools ELSE');
             // this.props.searchForSchools(values);
@@ -153,7 +155,7 @@ class mapPageForm extends Component {
                 <Field name="tuitionSlider"
                        component={this.renderSlider}
                        defaultValue={50000}
-                       min={1}
+                       min={1000}
                        max={80000}
                        step={1000}
                        style = {sliderStyle}

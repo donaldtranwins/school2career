@@ -5,14 +5,14 @@ import { Link } from 'react-router';
 
 const styles = {
     stylesTab: {
-        marginRight: '25px',
-        color: 'white'
+        color: 'white',
+        padding: '0 15px',
+        fontWeight: 400
     },
     title: {
         cursor: 'pointer',
     }
 };
-
 
 class NavBar extends Component {
 
@@ -30,7 +30,8 @@ class NavBar extends Component {
                 title={<span onClick={() => this.handleTouchTap()} style={styles.title}>School2Career</span>}
                 showMenuIconButton={false}>
                 <Tabs>
-                    <Tab style={styles.stylesTab} className="navBarLink" label="&nbsp;Home&nbsp;" containerElement={<Link to="/school_search"/>}/>
+                    <Tab style={styles.stylesTab} className="navBarLink" label="&nbsp;Home&nbsp;" containerElement={<Link to="/"/>}/>
+                    <Tab style={styles.stylesTab} className="navBarLink" label="&nbsp;Search&nbsp;" containerElement={<Link to="/school_search"/>}/>
                     <Tab style={styles.stylesTab} className="navBarLink" label="&nbsp;About&nbsp;" containerElement={<Link to="/about"/>}/>
                 </Tabs>
             </AppBar>

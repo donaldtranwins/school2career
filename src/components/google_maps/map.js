@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { searchForSchools, mapBoundsInput } from '../../actions/actions_index';
-import stylesForMap from './map_style';
 
 class GMap extends Component {
 
@@ -103,18 +102,18 @@ class GMap extends Component {
         let outsideDiv = document.createElement('div');
         outsideDiv.id = 'legend';
         let smallHeader = document.createElement('h6');
-        smallHeader.innerText = '# Of Students';
+        smallHeader.innerText = '# Students';
         outsideDiv.appendChild(smallHeader);
         return outsideDiv;
     }
     createLegend() {
         var icons = {
             sm_school: {
-                name: ' < 10,000',
+                name: '   < 10,000',
                 icon: '/images/md_school.png'
             },
             md_school: {
-                name: ' < 25,000',
+                name: '   < 25,000',
                 icon: '/images/sm_school.png'
             },
             lg_school: {
@@ -142,7 +141,6 @@ class GMap extends Component {
             zoom: this.state.zoom,
             center: this.createLatLng(data),
             componentRestrictions: {country: "us"},
-            styles: stylesForMap
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }

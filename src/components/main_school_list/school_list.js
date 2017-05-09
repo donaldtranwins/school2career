@@ -35,7 +35,6 @@ class SchoolList extends Component {
 
     render(){
         if (this.props.schools.showLoader) {
-            console.log("HERE")
             return (
                 <div className='schoolListScroll'>
                     <div id="schoolList" className="listContainer">
@@ -44,7 +43,6 @@ class SchoolList extends Component {
                 </div>
             )
         } else {
-            console.log("Inside Here");
             let list = '';
             let noSchool = null;
             console.log('this.props school list', this.props.schools);
