@@ -102,18 +102,18 @@ class GMap extends Component {
         let outsideDiv = document.createElement('div');
         outsideDiv.id = 'legend';
         let smallHeader = document.createElement('h6');
-        smallHeader.innerText = '# Of Students';
+        smallHeader.innerText = '# Students';
         outsideDiv.appendChild(smallHeader);
         return outsideDiv;
     }
     createLegend() {
         var icons = {
             sm_school: {
-                name: ' < 10,000',
+                name: '   < 10,000',
                 icon: '/images/md_school.png'
             },
             md_school: {
-                name: ' < 25,000',
+                name: '   < 25,000',
                 icon: '/images/sm_school.png'
             },
             lg_school: {

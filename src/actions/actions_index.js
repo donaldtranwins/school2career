@@ -17,7 +17,6 @@ export function searchForSchools(value) {
     const newVal = JSON.stringify(value);
     const request = axios.post(`${BASE_URL}`, newVal);
     console.log("newVal", newVal, 'value', value);
-    debugger;
     return {
         type: FETCH_SCHOOLS,
         payload: request

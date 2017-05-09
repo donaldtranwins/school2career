@@ -6,6 +6,7 @@ const defaultState = {
 };
 
 export default function(state = defaultState, action){ // if undefined set to default_state
+    console.log('searchForSchools action: ', action)
     switch(action.type){
       case FETCH_SCHOOLS:
           console.log("debug",action.payload.data.debug);
