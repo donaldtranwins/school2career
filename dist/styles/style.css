@@ -1,6 +1,6 @@
 /*appbar*/
 body{
-    height: 100vh;
+    /*height: 100vh;*/
 }
 
 .navBarLink {
@@ -25,7 +25,11 @@ body{
 }
 .schoolListScroll {
     overflow: scroll;
-    height: 94%;
+    /*height: 94%;*/
+    position: absolute;
+    width: 100%;
+    top: 50px;
+    height: 90%;
 }
 .locationArea {
     margin-bottom: 15px;
@@ -259,14 +263,14 @@ body{
     }
     .listContainer {
         width: 100%;
+        margin-left: 5%;
     }
     .GMap {
-        width: 100%;
-        margin: auto;
+        width: 95%;
     }
     .schoolListScroll{
         width: 100vw;
-        margin: auto;
+        margin: 0 auto;
         overflow: initial;
         position: absolute;
         top: 100%;
@@ -288,6 +292,5 @@ body{
         width: 130%;
         position: relative;
         left: -15%;
-
     }
 }
