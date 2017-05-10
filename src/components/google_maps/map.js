@@ -168,10 +168,16 @@ class GMap extends Component {
                 break;
         }
     }
+
+
     createCluster() {
+        let clusterOptions = {
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+            maxZoom: 15,
+            minimumClusterSize: 3
+        };
         if(this.map) {
-            this.state.markerCluster = new MarkerClusterer(this.map, this.state.markers,
-                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+            this.state.markerCluster = new MarkerClusterer(this.map, this.state.markers, clusterOptions);
         }
 
     }
@@ -225,8 +231,6 @@ class GMap extends Component {
             const userInputMapBounds = this.props.userInput.value;  // TODO fix this
             userInputMapBounds.mapBounds = mapBounds;
             this.props.mapBoundsInput(userInputMapBounds);
-            console.log('map boundsInput', this.props.boundsInput);
-            console.log('Map calling get schools');
             this.props.searchForSchools(userInputMapBounds);
         }
     }

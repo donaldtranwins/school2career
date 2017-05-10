@@ -46,10 +46,12 @@ class SchoolList extends Component {
             let list = '';
             let noSchool = null;
             const data = this.props.schools.all;
-            if (this.props.schools.noSchool !== false) {
-                noSchool = this.props.schools.noSchool.length;
-            } else {
-                noSchool = this.props.schools.noSchool
+            if (this.props.schools.noSchool) {
+                if (this.props.schools.noSchool !== false) {
+                    noSchool = this.props.schools.noSchool.length;
+                } else {
+                    noSchool = this.props.schools.noSchool
+                }
             }
             if(noSchool == 1) {
                 list = <div>No Schools Match The Current Criteria</div>;
@@ -98,7 +100,7 @@ class SchoolList extends Component {
                         </Paper>
                     )
                 });
-
+            };
             return (
                 <div className='schoolListScroll'>
                     <div id="schoolList" className="listContainer">
@@ -106,7 +108,6 @@ class SchoolList extends Component {
                     </div>
                 </div>
             );
-            };
         }
     }
 }

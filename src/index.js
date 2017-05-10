@@ -42,7 +42,8 @@ const landingImage = {
 const paperForm = () => (
     <div>
         <div className='landingImg'></div>
-        <img className="landingImg hidden-sm-down mt-3" style={landingImage} src="images/sky-garden-school.jpg"/>
+        <img className="landingImg hidden-sm-down mt-3" style={landingImage} src="images/washingtonstate.jpg"/>
+        {/*<img className="landingImg hidden-sm-down mt-3" style={landingImage} src="images/sky-garden-school.jpg"/>*/}
         {/*<img className="landingImg hidden-md-down mt-3" style={landingImage} src="images/college.jpg"/>*/}
         <img className="landingImg hidden-md-up mt-3" style={landingImage} src="images/flagler_college.png"/>
         <LandingFormPaper className='landingForm' />

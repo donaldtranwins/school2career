@@ -17,15 +17,15 @@ class School extends Component {
         this.context.router.push('/school_search');
     };
     componentDidMount() {
-        var pathArray = window.location.pathname.split( '/' );
+        let pathArray = window.location.pathname.split( '/' );
         this.props.searchOneSchool(pathArray[pathArray.length -1]);
     };
 
     render() {
         let data = this.props.school.single;
-        if(!data){
+        if(!data ){
             return <p>Loading...</p>
-        };
+        }
         data = data.school;
         //Admissions Rate Math
         let admissionRate = parseFloat(data.adm_rate);
