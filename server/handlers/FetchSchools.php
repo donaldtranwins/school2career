@@ -4,6 +4,32 @@ class FetchSchools{
     public $values;
     private $fullQuery;
     function __construct($passedValues){
+        $validate = [
+            "latLng" => [
+                "lat" => FILTER_VALIDATE_FLOAT,
+                "lng" => FILTER_VALIDATE_FLOAT
+            ],
+            "location" => FILTER_SANITIZE_STRING,
+            "mapBounds" => [
+                "ne" => [
+                    "lat" => FILTER_VALIDATE_FLOAT,
+                    "lng" => FILTER_VALIDATE_FLOAT
+                ],
+                "sw" => [
+                    "lat" => FILTER_VALIDATE_FLOAT,
+                    "lng" => FILTER_VALIDATE_FLOAT
+                ]
+            ],
+            "pickAMajor" => FILTER_SANITIZE_STRING,
+            "aa" => FILTER_VALIDATE_BOOLEAN,
+            "bs" => FILTER_VALIDATE_BOOLEAN,
+            "private" => FILTER_VALIDATE_BOOLEAN,
+            "public" => FILTER_VALIDATE_BOOLEAN,
+            "voc" => FILTER_VALIDATE_BOOLEAN
+        ];
+//        foreach ($passedValues as $key=>$value){
+//            $passedValues[$key] = addslashes($value);
+//        }
         $this->values = $passedValues;
         $queryStart =     "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.alias, s.size, s.demog_men, s.demog_women, s.adm_rate, s.sat_avg, s.ownership, s.tuition_in, s.tuition_out ";
         $queryMiddle =    "FROM `schools` s ";
@@ -31,14 +57,14 @@ class FetchSchools{
         if (isset($this->values['pickAMajor'])){
             array_push($tables, "pts", 'programs');
             $this->filters[] = ' Major';
-            $sanitizedMajors = addslashes($this->values['pickAMajor']);
-            $queryEnd .=      "p.external=\"$sanitizedMajors\" AND ";
+            $queryEnd .=      "p.external=\"{$this->values['pickAMajor']}\" AND ";
         }
         if (isset($this->values['tuitionSlider'])){ //This block never fires on Landing Page since there is no slider
             $this->filters[] = ' Tuition';
-            $sanitizedTuition = floatval(addslashes($this->values['tuitionSlider']));
-            if ($sanitizedTuition)
-                $queryEnd .=      "s.tuition_out<$sanitizedTuition AND ";
+//            $sanitizedTuition = floatval(addslashes($this->values['tuitionSlider']));
+//            if ($sanitizedTuition)
+//                $queryEnd .=      "s.tuition_out<$sanitizedTuition AND ";
+                $queryEnd .=      "s.tuition_out<{$this->values['tuitionSlider']} AND ";
 
             if ($this->values['private'] === true && $this->values['public'] === false){
                 $this->filters[] = ' Public';
@@ -59,7 +85,7 @@ class FetchSchools{
             if ($this->values['bs'] === false){
                 array_push($tables, "pts", 'programs');
                 $this->filters[] = ' Bachelors';
-                $queryEnd .=      " pts.deg_4=0 AND ";
+                $queryEnd .=      "pts.deg_4=0 AND ";
             }
         }
         $queryEnd = substr($queryEnd,0,-4);
@@ -78,10 +104,10 @@ class FetchSchools{
         require_once 'connectDb.php';
         RequestError::validateClientRequest('FetchSchools',$this->values);
 
-        $result = $dbConn->query($dbConn->real_escape_string($this->fullQuery));
+        $result = $dbConn->query($this->fullQuery);
         if(empty($result)) {
             $this->output['status'][] = '422 - Unprocessable Entity, Bad Query';
-            $this->output['debug'] = $this->output['status'];
+            $this->output['debug'][] = $dbConn->error;
         } else {
             if(mysqli_num_rows($result) > 0){
                 $this->output['status'] = 200;
