@@ -263,6 +263,7 @@ body{
     }
     .listContainer {
         width: 100%;
+        margin-left: 5%;
     }
     .GMap {
         width: 95%;
@@ -291,6 +292,5 @@ body{
         width: 130%;
         position: relative;
         left: -15%;
-
     }
 }

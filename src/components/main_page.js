@@ -21,7 +21,7 @@ class drawerForm extends Component {
 
     render() {
         const style = {
-            marginLeft: '4.5%',
+            marginLeft: '5%',
             marginBottom: '7px'
         };
         return (
