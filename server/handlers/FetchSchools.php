@@ -9,7 +9,6 @@ class FetchSchools{
                 "lat" => FILTER_VALIDATE_FLOAT,
                 "lng" => FILTER_VALIDATE_FLOAT
             ],
-            "location" => FILTER_SANITIZE_STRING,
             "mapBounds" => [
                 "ne" => [
                     "lat" => FILTER_VALIDATE_FLOAT,
@@ -20,6 +19,7 @@ class FetchSchools{
                     "lng" => FILTER_VALIDATE_FLOAT
                 ]
             ],
+            "location" => FILTER_SANITIZE_STRING,
             "pickAMajor" => FILTER_SANITIZE_STRING,
             "aa" => FILTER_VALIDATE_BOOLEAN,
             "bs" => FILTER_VALIDATE_BOOLEAN,
