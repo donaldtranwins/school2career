@@ -31,16 +31,19 @@ class FetchSchools{
         if (isset($this->values['pickAMajor'])){
             array_push($tables, "pts", 'programs');
             $this->filters[] = ' Major';
-            $queryEnd .=      "p.external=\"{$this->values['pickAMajor']}\" AND ";
+            $sanitizedMajors = addslashes($this->values['pickAMajor']);
+            $queryEnd .=      "p.external=\"$sanitizedMajors\" AND ";
         }
         if (isset($this->values['tuitionSlider'])){ //This block never fires on Landing Page since there is no slider
             $this->filters[] = ' Tuition';
-            $queryEnd .=      "s.tuition_out<{$this->values['tuitionSlider']} AND ";
+            $sanitizedTuition = floatval(addslashes($this->values['tuitionSlider']));
+            if ($sanitizedTuition)
+                $queryEnd .=      "s.tuition_out<$sanitizedTuition AND ";
 
-            if ($this->values['private'] && !$this->values['public']){
+            if ($this->values['private'] === true && $this->values['public'] === false){
                 $this->filters[] = ' Public';
                 $queryEnd .=          "s.ownership<>1 AND ";
-            } else if ($this->values['public'] && !$this->values['private']){
+            } else if ($this->values['public'] === true && $this->values['private'] === false){
                 $this->filters[] = ' Private';
                 $queryEnd .=          "s.ownership=1 AND ";
             }
@@ -75,7 +78,7 @@ class FetchSchools{
         require_once 'connectDb.php';
         RequestError::validateClientRequest('FetchSchools',$this->values);
 
-        $result = $dbConn->query($this->fullQuery);
+        $result = $dbConn->query($dbConn->real_escape_string($this->fullQuery));
         if(empty($result)) {
             $this->output['status'][] = '422 - Unprocessable Entity, Bad Query';
             $this->output['debug'] = $this->output['status'];
