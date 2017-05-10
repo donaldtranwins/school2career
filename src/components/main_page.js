@@ -39,7 +39,7 @@ class drawerForm extends Component {
                 <RaisedButton onTouchTap={this.handleToggle} className='refineSearch' label="Refine Search" style={style} />
                 <div className='mapContent'>
                     <Map id="mapShowing"/>
-                    <SchoolList />
+                    <SchoolList handleToggle = {this.handleToggle} />
                 </div>
             </div>
         );

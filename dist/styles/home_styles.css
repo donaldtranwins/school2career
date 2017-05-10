@@ -36,5 +36,9 @@ a, a:hover {
         position: -webkit-sticky; top: 10px;
         position: sticky; top: 10px;
         z-index: 10;
+        margin-left: 23px;
+    }
+    .mainPage {
+
     }
 }

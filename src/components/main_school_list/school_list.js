@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { showLoader } from '../../actions/actions_index'
 import Paper from 'material-ui/Paper';
-// import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
 import Loader from '../loader/loading';
 
