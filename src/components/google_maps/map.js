@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchForSchools, mapBoundsInput } from '../../actions/actions_index';
 
@@ -59,7 +59,6 @@ class GMap extends Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        // debugger;
         // if(nextProps.userInput.value.mapBounds === undefined){
         //     let userInputMapBounds = nextProps.userInput.value;  // TODO fix this
         //     userInputMapBounds.mapBounds = this.props.userInput.value.mapBounds;

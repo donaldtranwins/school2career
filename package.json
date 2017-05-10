@@ -18,6 +18,7 @@
     "axios": "^0.16.1",
     "google-maps-react": "^1.0.19",
     "material-ui": "^0.17.4",
+    "prop-types": "^15.5.9",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-places-autocomplete": "^5.0.0",
