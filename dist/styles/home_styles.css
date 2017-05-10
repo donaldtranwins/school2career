@@ -22,20 +22,28 @@ a, a:hover {
     display: inline-block;
     padding: inherit;
 }
+/*might not need*/
 .smallSearch {
     display: none;
 }
 .refineSearch {
+    margin-top: 10px;
     width: 40%;
+    position: absolute;
 }
 @media only screen and (max-width: 550px) {
     .smallSearch {
-        display: inherit;
+        display: none;
+    }
+    .refineSearch {
+        width: 90%;
+        position: sticky; top: 10px;
+        z-index: 10;
     }
 }
-@media only screen and (max-width: 550px) {
+/*@media only screen and (max-width: 550px) {
     .refineSearch {
         display: none !important
     }
-}
+}*/
 /* Portrait and Landscape */

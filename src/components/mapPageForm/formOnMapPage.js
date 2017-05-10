@@ -96,7 +96,6 @@ class mapPageForm extends Component {
             values.latLng = latLng;
             this.getCenterCoords(values);
         });
-        debugger;
         if (this.props.mapB.mapBoundsInput !== null) {
             let bounds = this.props.mapB.mapBoundsInput.mapBounds;
             let latLng = this.props.mapB;

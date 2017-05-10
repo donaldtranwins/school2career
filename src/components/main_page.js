@@ -41,12 +41,11 @@ class drawerForm extends Component {
                 <div className='searchImgDiv'>
                     <div className="jumboImg" />
                 </div>
+                <RaisedButton onTouchTap={this.handleToggle} className='refineSearch' label="Refine Search" style={style} />
                 <div className='mapContent'>
                     <Map id="mapShowing"/>
-                    <RaisedButton onTouchTap={this.handleToggle} className='refineSearch' label="Refine Search" style={style} />
                     <SchoolList />
                 </div>
-
             </div>
         );
     }
