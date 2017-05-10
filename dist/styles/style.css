@@ -147,8 +147,8 @@ body{
 }
 .placesContainer{
     margin-top: 20px;
-    width: 250.99px;
-    height: 37.08px;
+    width: 250px;
+    height: 37px;
 }
 .placesAuto {
     position: absolute;
@@ -157,10 +157,9 @@ body{
 }
 .autoCompleteForm, .autoCompleteForm:focus {
     font-family: roboto;
-    max-resolution: 20px;
-    width: 255.56px;
+    width: 255px;
     color: rgb(144, 164, 174);
-    border: 0px;
+    border: 0;
     border-bottom: 1px solid #E0E0E0;
     outline:none;
 }

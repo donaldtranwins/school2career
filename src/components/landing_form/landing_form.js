@@ -75,19 +75,30 @@ class LandingForm extends Component {
         this.context.router.push('/school_search');
       });
     };
+    handlePress = () => {
+        return majorDrop = ""
+    };
+
+    handleBlur = () => {
+        return ( majorDrop = <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
+            {majors}
+        </Field>)
+    };
+
     render(){
+        let majorDrop = <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
+            {majors}
+        </Field>;
         const { handleSubmit, pristine, reset, submitting } = this.props;
         return (
           <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
             <div>
-              <Field name="location" component={renderTextField} label="LOCATION">
+              <Field name="location" component={renderTextField} onkeydown={()=>this.handlePress}  label="LOCATION">
                 {  <span >errorText</span> }
                 </Field>
             </div>
             <div>
-                <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
-                    {majors}
-                </Field>
+                {majorDrop}
             </div>
             <div>
               <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting }/>
