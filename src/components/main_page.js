@@ -26,11 +26,6 @@ class drawerForm extends Component {
         };
         return (
             <div className='mainPage'>
-                <div className="refineBox smallSearch" onTouchTap={this.handleToggle}>
-                    <div className="searchIcon refineText">
-                        <i className="material-icons searchIcon" >search</i>
-                    </div>
-                </div>
                 <Drawer
                     docked={false}
                     width={290}
