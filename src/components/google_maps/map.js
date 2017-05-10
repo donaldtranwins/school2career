@@ -65,6 +65,7 @@ class GMap extends Component {
         //     userInputMapBounds.mapBounds = this.props.userInput.value.mapBounds;
         //     this.props.mapBoundsInput(userInputMapBounds);
         // }
+        console.log('map cwrp: ', this.props)
         if(this.props.userInput.value === null) {
             if(nextProps.center.lat !== this.props.center.lat) {
                 this.initMap();

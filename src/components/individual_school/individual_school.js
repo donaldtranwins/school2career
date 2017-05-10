@@ -62,7 +62,14 @@ class School extends Component {
         if(tuitionOut === '$0'){
             tuitionOut = 'Not Provided';
         }
-        let url = data.url.slice(4);
+        let www = data.url.indexOf('www.')
+        let url = null;
+        if (www < 0){
+            url = data.url;
+            return;
+        } else {
+            url = data.url.slice(www + 4);
+        }
         const findForwardSlash = url.lastIndexOf('/');
         if(findForwardSlash === url.length -1){
             url = url.substring(0, url.length - 1)
