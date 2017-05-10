@@ -26,7 +26,6 @@ a, a:hover {
     display: none;
 }
 .refineSearch {
-    margin: 10 auto;
     width: 40%;
 }
 @media only screen and (max-width: 550px) {
