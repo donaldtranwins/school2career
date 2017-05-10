@@ -1,9 +1,8 @@
 <?php
     spl_autoload_register(function ($class_name) {
-        require_once '../../server/handlers/'.$class_name . '.php';
+        require_once '../server/handlers/'.$class_name . '.php';
     });
     header::declare();
-
     $clientRequest = isset($_GET['schid'])
         ? new OneSchool()
         : (
@@ -13,7 +12,5 @@
                 : new RequestError('Please configure application json!'))
             : new RequestError('Invalid URL Parameters')
         );
-
     echo json_encode($clientRequest ->processRequest());
-
 ?>
