@@ -12,7 +12,7 @@ import { searchForSchools, centerOfMap, userInput, showLoader } from '../../acti
 import GeoCode from '../geocoding/geocoding';
 
 const style = {
-    margin: 12
+    marginLeft: 80
 };
 
 const validate = values => {
@@ -161,7 +161,7 @@ class mapPageForm extends Component {
                 />
             </div>
             <div>
-                <RaisedButton label="Submit" style={style} type="submit" />
+                <RaisedButton className='submitBtnMapForm' label="Submit" style={style} type="submit" />
             </div>
         </form>
     )};
