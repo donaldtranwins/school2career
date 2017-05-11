@@ -85,7 +85,6 @@ class SchoolList extends Component {
                         url = url.substring(0, url.length - 1);
                     }
                     const uniqueID = `a${school.uid}`;
-                    console.log(uniqueID);
                     return(
                         <Paper className="listOfSchools" style={style} key={index} >
                             <ul style={mainUl} id={uniqueID}>
