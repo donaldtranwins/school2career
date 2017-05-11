@@ -10,14 +10,14 @@ class FetchSchools{
         $queryEnd = isset($this->data['mapBounds']) && isset($this->data['latLng'])
             ? "WHERE (
                                   `lat` BETWEEN 
-                                      ".intval($this->data['mapBounds']['sw']['lat'])." 
+                                      ".floatval($this->data['mapBounds']['sw']['lat'])." 
                                       AND 
-                                      ".intval($this->data['mapBounds']['ne']['lat'])."
+                                      ".floatval($this->data['mapBounds']['ne']['lat'])."
                           ) AND (
                                   `lng` BETWEEN 
-                                      ".intval($this->data['mapBounds']['sw']['lng'])." 
+                                      ".floatval($this->data['mapBounds']['sw']['lng'])." 
                                       AND 
-                                      ".intval($this->data['mapBounds']['ne']['lng'])."
+                                      ".floatval($this->data['mapBounds']['ne']['lng'])."
                           ) AND "
             : "WHERE     " ;
 
