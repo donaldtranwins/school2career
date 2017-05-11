@@ -77,7 +77,7 @@ class FetchSchools{
 
         $result = $dbConn->query($this->fullQuery);
         if(empty($result)) {
-            $this->output['status'][] = '422 - Unprocessable Entity, Bad Query';
+            $this->output['status'] = '422 - Unprocessable Entity, Bad Query';
             $this->output['debug'][] = $dbConn->error;
         } else {
             if(mysqli_num_rows($result) > 0){
@@ -102,12 +102,13 @@ class FetchSchools{
                 while ($filter = array_shift($this->filters)){
                     $code .= $filter;
                 }
-                $this->output['status'][] = $code;
+                $this->output['status'] = $code;
             }
         }
         $this->output['debug']['request'] = $this->data;
         $this->output['debug']['query'] = $this->fullQuery;
         $this->output['debug']['filters'] = $this->filters;
+        $dbConn->close();
         return $this->output;
     }
 
