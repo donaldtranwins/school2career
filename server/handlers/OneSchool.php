@@ -29,7 +29,7 @@
                 $output = [];
                 if ($result->num_rows) {
                     while ($row = $result->fetch_assoc()) {
-                        $object[] = $row;
+                        $output[] = $row;
                     }
                 }
                 $stmt->close();
@@ -51,7 +51,7 @@
             $dbConn->close();
             return $this->output;
 
-//            // old way
+//            // Query without using Prepared Statements
 //            $metadata = $dbConn->query($this->metadataQuery . $_GET['schid']); //remove ? from constant before running
 //            $programs = $dbConn->query($this->programsQuery . $_GET['schid']); //remove ? from constant before running
 //
