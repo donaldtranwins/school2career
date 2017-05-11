@@ -21,15 +21,11 @@ class drawerForm extends Component {
 
     render() {
         const style = {
-            marginLeft: '4.5%',
+            marginLeft: '5%',
+            marginBottom: '7px'
         };
         return (
             <div className='mainPage'>
-                <div className="refineBox smallSearch" onTouchTap={this.handleToggle}>
-                    <div className="searchIcon refineText">
-                        <i className="material-icons searchIcon" >search</i>
-                    </div>
-                </div>
                 <Drawer
                     docked={false}
                     width={290}
@@ -40,12 +36,11 @@ class drawerForm extends Component {
                 <div className='searchImgDiv'>
                     <div className="jumboImg" />
                 </div>
+                <RaisedButton onTouchTap={this.handleToggle} className='refineSearch' label="Refine Search" style={style} />
                 <div className='mapContent'>
                     <Map id="mapShowing"/>
-                    <RaisedButton onTouchTap={this.handleToggle} className='refineSearch' label="Refine Search" style={style} />
-                    <SchoolList id="schoolListShowing"/>
+                    <SchoolList handleToggle = {this.handleToggle} />
                 </div>
-
             </div>
         );
     }

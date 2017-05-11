@@ -2,6 +2,9 @@
     font-size: 20px;
     color: #4CAF50;
 }
+/*.submitBtnMapForm{
+    margin: 0 auto;
+}*/
 .schoolListAddressli {
     display: inline-block;
     margin-top: 5px;
@@ -22,21 +25,20 @@ a, a:hover {
     display: inline-block;
     padding: inherit;
 }
-.smallSearch {
-    display: none;
-}
 .refineSearch {
-    margin: 10 auto;
+    margin-top: 10px;
     width: 40%;
-}
-@media only screen and (max-width: 550px) {
-    .smallSearch {
-        display: inherit;
-    }
+    position: absolute;
 }
 @media only screen and (max-width: 550px) {
     .refineSearch {
-        display: none !important
+        width: 90%;
+        position: -webkit-sticky; top: 10px;
+        position: sticky; top: 10px;
+        z-index: 10;
+        margin-left: 23px;
+    }
+    .mainPage {
+
     }
 }
-/* Portrait and Landscape */

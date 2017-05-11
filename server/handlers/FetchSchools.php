@@ -1,5 +1,4 @@
 <?php
-
 class FetchSchools{
     public $data;
     private $fullQuery;
@@ -9,20 +8,19 @@ class FetchSchools{
         $queryMiddle =    "FROM `schools` s ";
         $queryEnd = isset($this->data['mapBounds']) && isset($this->data['latLng'])
             ? "WHERE (
-                                  `lat` BETWEEN 
-                                      ".intval($this->data['mapBounds']['sw']['lat'])." 
-                                      AND 
-                                      ".intval($this->data['mapBounds']['ne']['lat'])."
-                          ) AND (
-                                  `lng` BETWEEN 
-                                      ".intval($this->data['mapBounds']['sw']['lng'])." 
-                                      AND 
-                                      ".intval($this->data['mapBounds']['ne']['lng'])."
-                          ) AND "
+                                `lat` BETWEEN 
+                                    ".intval($this->data['mapBounds']['sw']['lat'])." 
+                                    AND 
+                                    ".intval($this->data['mapBounds']['ne']['lat'])."
+                        ) AND (
+                                `lng` BETWEEN 
+                                    ".intval($this->data['mapBounds']['sw']['lng'])." 
+                                    AND 
+                                    ".intval($this->data['mapBounds']['ne']['lng'])."
+                        ) AND "
             : "WHERE     " ;
 
         $this->filters = [];
-
         $tables = [];
         $reference = [
             "programs" => "JOIN programs p ON pts.pid=p.pid ",
@@ -60,18 +58,16 @@ class FetchSchools{
                 $queryEnd .=      "pts.deg_4=0 AND ";
             }
         }
-        $queryEnd = substr($queryEnd,0,-4);
-
         $uniqueTables = array_keys(array_flip($tables));
         while($tablesToJoin = array_shift($uniqueTables)){
             $queryMiddle .= $reference[$tablesToJoin];
         }
-
         $this->fullQuery = $queryStart.$queryMiddle.$queryEnd;
     }
-
-    public $output = ['status' => []];
-
+    public $output = [
+        'success' => false,
+        'errors' => []
+    ];
     public function processRequest(){
         require_once 'connectDb.php';
         RequestError::validateClientRequest('FetchSchools',$this->data);
@@ -82,7 +78,7 @@ class FetchSchools{
             $this->output['debug'][] = $dbConn->error;
         } else {
             if(mysqli_num_rows($result) > 0){
-                $this->output['status'] = 200;
+                $this->output['success'] = true;
                 $this->output['schools']=[];
                 while($row = mysqli_fetch_assoc($result)){
                     $this->output['schools'][] = $row;
@@ -96,14 +92,9 @@ class FetchSchools{
                 }
                 usort($this->output['schools'], array($this, "cmp"));
                 $this->output['schools'] = array_slice($this->output['schools'],0,500,true);
-
-                $this->output['debug']['total results'] = count($this->output['schools']);
             } else {
-                $code = "200 - Search returned zero results on the following filters:";
-                while ($filter = array_shift($this->filters)){
-                    $code .= $filter;
-                }
-                $this->output['status'][] = $code;
+                $this->output['success'] = true;
+                $this->output['errors'][] = 'Search returned zero results';
             }
         }
         $this->output['debug']['request'] = $this->data;
@@ -111,7 +102,6 @@ class FetchSchools{
         $this->output['debug']['filters'] = $this->filters;
         return $this->output;
     }
-
     public function getDistance($centerLatitude, $centerLongitude, $schoolLatitude, $schoolLongitude) {
         $earth_radius = 6371;
         $dLat = deg2rad($schoolLatitude - $centerLatitude);
@@ -120,10 +110,8 @@ class FetchSchools{
         $c = 2 * asin(sqrt($a));
         return $earth_radius * $c;
     }
-
     public function cmp($a, $b){
         return $a['distance'] < $b['distance'] ? -1 : 1;
     }
 }
-
 ?>

@@ -45,12 +45,13 @@ class SchoolList extends Component {
         } else {
             let list = '';
             let noSchool = null;
-            console.log('this.props school list', this.props.schools);
             const data = this.props.schools.all;
-            if (this.props.schools.noSchool !== false) {
-                noSchool = this.props.schools.noSchool.length;
-            } else {
-                noSchool = this.props.schools.noSchool
+            if (this.props.schools.noSchool) {
+                if (this.props.schools.noSchool !== false) {
+                    noSchool = this.props.schools.noSchool.length;
+                } else {
+                    noSchool = this.props.schools.noSchool
+                }
             }
             if(noSchool == 1) {
                 list = <div>No Schools Match The Current Criteria</div>;
@@ -69,8 +70,16 @@ class SchoolList extends Component {
                     } else {
                         satAvg = 'SAT Avg: ' + satAvg;
                     }
-                    const distance = school.distance.toFixed(2)
-                    let url = school.url.slice(4);
+                    const distance = Math.round(school.distance);
+
+                    let www = school.url.indexOf('www.')
+                    let url = null;
+                    if (www < 0){
+                        url = school.url;
+                        return;
+                    } else {
+                        url = school.url.slice(www + 4);
+                    }
                     const findForwardSlash = url.lastIndexOf('/');
                     if(findForwardSlash === url.length -1){
                         url = url.substring(0, url.length - 1)
@@ -91,7 +100,7 @@ class SchoolList extends Component {
                         </Paper>
                     )
                 });
-
+            };
             return (
                 <div className='schoolListScroll'>
                     <div id="schoolList" className="listContainer">
@@ -99,7 +108,6 @@ class SchoolList extends Component {
                     </div>
                 </div>
             );
-            };
         }
     }
 }
