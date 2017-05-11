@@ -1,6 +1,6 @@
 /*appbar*/
 body{
-    height: 100vh;
+    /*height: 100vh;*/
 }
 
 .navBarLink {
@@ -25,7 +25,11 @@ body{
 }
 .schoolListScroll {
     overflow: scroll;
-    height: 100%;
+    /*height: 94%;*/
+    position: absolute;
+    width: 100%;
+    top: 50px;
+    height: 90%;
 }
 .locationArea {
     margin-bottom: 15px;
@@ -62,35 +66,12 @@ body{
     margin-top: 2%;
     margin-left: 2%;
 }
-/*searchButton*/
-.searchIcon {
-    position: fixed;
-    color: rgb(144, 164, 174);
-    font-size: 40px;
-    cursor: pointer;
-    /*border: 1px solid #E0E0E0;*/
-    background-color: white;
-    box-shadow: 2px 2px 2px gray;
-    /*margin-top: 5px;
-    margin-left: 5px;*/
-}
-
 .schoolImg{
     width: 100%;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 }
-.refineText {
-    z-index: 10;
-}
-.refineBox {
-    position: absolute;
-    background-color: white;
-    z-index: 10;
-}
-/*end searchButton*/
-
 /*googlemaps*/
 .GMap {
     height: 100%;
@@ -282,14 +263,14 @@ body{
     }
     .listContainer {
         width: 100%;
+        margin-left: 5%;
     }
     .GMap {
-        width: 100%;
-        margin: auto;
+        width: 95%;
     }
     .schoolListScroll{
         width: 100vw;
-        margin: auto;
+        margin: 0 auto;
         overflow: initial;
         position: absolute;
         top: 100%;
@@ -311,6 +292,5 @@ body{
         width: 130%;
         position: relative;
         left: -15%;
-
     }
 }

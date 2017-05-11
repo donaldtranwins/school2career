@@ -13,7 +13,6 @@
                 : new RequestError('Please configure application json!'))
             : new RequestError('Invalid URL Parameters')
         );
-
     echo json_encode($clientRequest ->processRequest());
 
 ?>

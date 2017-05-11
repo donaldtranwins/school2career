@@ -12,7 +12,7 @@ import { searchForSchools, centerOfMap, userInput, showLoader } from '../../acti
 import GeoCode from '../geocoding/geocoding';
 
 const style = {
-    margin: 12
+    marginLeft: 80
 };
 
 const validate = values => {
@@ -96,28 +96,27 @@ class mapPageForm extends Component {
             values.latLng = latLng;
             this.getCenterCoords(values);
         });
-        let bounds =  this.props.mapB.mapBoundsInput.mapBounds;
-        let latLng = this.props.mapB;
-        this.props.showLoader(true);
-        console.log('formSubmitted', latLng);
-        if(values.location === this.props.input.value.location && this.props.mapB.mapBoundsInput.mapBounds.ne !== undefined){
-            values.mapBounds = bounds;
-            values.latLng = this.props.input.value.latLng;
-            console.log('Form calling get schools IF');
-            this.props.clickClosed();
-            this.props.searchForSchools(values);
-            this.props.clickClosed();
-        } else {
-            console.log('Form calling get schools ELSE');
-            // this.props.searchForSchools(values);
-            this.props.clickClosed();
+        if (this.props.mapB.mapBoundsInput !== null) {
+            let bounds = this.props.mapB.mapBoundsInput.mapBounds;
+            let latLng = this.props.mapB;
         }
+        this.props.showLoader(true);
+        if (this.props.input.value !== null) {
+            if (values.location == this.props.input.value.location && this.props.mapB.mapBoundsInput.mapBounds.ne !== undefined) {
+                values.mapBounds = bounds;
+                values.latLng = this.props.input.value.latLng;
+                console.log('Form calling get schools IF');
+                // this.props.clickClosed();
+                this.props.searchForSchools(values);
+            } else {
+                console.log('Form calling get schools ELSE');
+                // this.props.searchForSchools(values);
+                // this.props.clickClosed();
+            }
+        }
+        this.props.clickClosed();
     };
-    handleKeyPress = (event) => {
-      if(event.key == 'Enter'){
 
-      }
-    };
     render() {
         const { handleSubmit } = this.props;
         const sliderStyle = {
@@ -125,7 +124,7 @@ class mapPageForm extends Component {
             height: 4
         };
     return (
-        <form onKeyDown={this.handleKeyPress} className="locationName extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
+        <form  className="locationName extendedForm" onSubmit={handleSubmit((formValues)=>this.formSubmitted(formValues))}>
             <div className="locationArea">
                 <Field name="location" component={renderTextField} label="LOCATION"/>
             </div>
@@ -162,7 +161,7 @@ class mapPageForm extends Component {
                 />
             </div>
             <div>
-                <RaisedButton label="Submit" style={style} type="submit" />
+                <RaisedButton className='submitBtnMapForm' label="Submit" style={style} type="submit" />
             </div>
         </form>
     )};
@@ -180,18 +179,5 @@ function mapStateToProps(state){
         mapB: state.mapBoundsInput
     }
 }
-
-// function mapStateToProps(state) {
-//         let thisLocation = state.userInput.value.location;
-//         let major = state.userInput.value.pickAMajor;
-//
-//     return {
-//         initialValues: {
-//             location: thisLocation,
-//             aa: true, bs: true, voc: true, public: true, private: true,
-//             pickAMajor: major
-//         }
-//     };
-// }
 
 export default connect(mapStateToProps, { searchForSchools, centerOfMap, userInput, showLoader })(mapPageForm );
