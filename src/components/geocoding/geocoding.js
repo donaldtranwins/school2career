@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
 
 class GeoCode extends React.Component {
@@ -12,9 +12,9 @@ class GeoCode extends React.Component {
     }
     render() {
       const cssClasses = {
-        root: 'form-group', //everything  // react-places-autocomplete
-        input: 'autoCompleteForm', //input is the text
-        autocompleteContainer: 'autocomplete-container' //this is the container, likely pushing
+        root: 'form-group',
+        input: 'autoCompleteForm',
+        autocompleteContainer: 'autocomplete-container'
         };
         const inputProps = {
             value: this.state.address,

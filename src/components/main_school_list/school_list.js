@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { showLoader } from '../../actions/actions_index'
+import { showLoader } from '../../actions/actions_index';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
 import Loader from '../loader/loading';
@@ -50,7 +50,7 @@ class SchoolList extends Component {
                 if (this.props.schools.noSchool !== false) {
                     noSchool = this.props.schools.noSchool.length;
                 } else {
-                    noSchool = this.props.schools.noSchool
+                    noSchool = this.props.schools.noSchool;
                 }
             }
             if(noSchool == 1) {
@@ -82,7 +82,7 @@ class SchoolList extends Component {
                     }
                     const findForwardSlash = url.lastIndexOf('/');
                     if(findForwardSlash === url.length -1){
-                        url = url.substring(0, url.length - 1)
+                        url = url.substring(0, url.length - 1);
                     }
                     return(
                         <Paper className="listOfSchools" style={style} key={index}>

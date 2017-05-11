@@ -1,0 +1,91 @@
+/*Individual School Pages*/
+.schoolInfo {
+    margin: 10px 0 20px;
+    background-color: mediumseagreen;
+    padding: 15px;
+    color: white;
+    box-shadow: 3px 3px 10px black;
+}
+.webAddress {
+    padding: 0;
+}
+.scores {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+.statsWrapper {
+    padding: 15px;
+    margin: 15px 0;
+}
+.titleMenWomanChart, .degreeList, .majorPercent {
+    text-align: center;
+    padding-top: 10px;
+}
+.titleMenWomanChart {
+    margin-bottom: 0;
+    padding-top: 0;
+}
+.degreePaper {
+    padding: 15px;
+    margin: 5px;
+    background-color: mediumseagreen;
+}
+.degree {
+    color: white;
+}
+.mfChart{
+    margin: 0 auto;
+    height: 300px;
+    width: 80%;
+}
+.schoolImg{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.imageDiv {
+    height: 50vh;
+    position: relative;
+    overflow: hidden;
+}
+.schoolName {
+    position: absolute;
+    bottom: 0;
+    margin-left: 5%;
+    color: white;
+}
+.schoolName a {
+    text-decoration: none;
+}
+.universityText{
+    font-weight: 400;
+    text-shadow: 1px 1px 1px black;
+}
+.mapPaper {
+    margin-top: 15px;
+}
+.circleChart {
+    margin: 0 auto;
+}
+.singleStats {
+    font-size: 16px;
+    text-align: center;
+    color: rgb(144, 164, 174);
+    font-weight: 400;
+}
+.majorsChart {
+    margin: 0 auto;
+}
+.majorsChartDiv {
+    margin: 0 auto;
+    height: 800px;
+    width: 100%;
+}
+.distanceList {
+    text-align: right;
+}
+.satList {
+    text-align: center;
+}

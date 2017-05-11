@@ -1,0 +1,86 @@
+/*map search Page Form styles*/
+.mainPage{
+    height: 71vh;
+}
+.mapContent{
+    margin-top: 1%;
+    width: 100%;
+    height: 70vh;
+    position: relative;
+}
+.schoolListScroll {
+    overflow: scroll;
+    position: absolute;
+    top: 50px;
+    height: 90%;
+    width: 48vw;
+}
+.locationArea {
+    margin-bottom: 15px;
+}
+.checkbox {
+    width: 125px;
+    display: inline-block;
+}
+.checkboxDeg {
+    width: 250px;
+    display: inline-block;
+}
+.extendedForm {
+    width: 280px;
+    padding: 15px;
+}
+.searchImgDiv {
+    position: relative;
+    margin: 0 auto;
+    width: 80%;
+    height: 20vh;
+    overflow: hidden;
+}
+.jumboImg {
+    width: 100%;
+    background-image: url(/images/group_students.png);
+    background-position: center 18%;
+    background-size: cover;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.listContainer {
+    margin-top: 2%;
+    margin-left: 2%;
+}
+.schoolImg{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.schoolListSchool {
+    font-size: 20px;
+    color: #4CAF50;
+}
+.schoolListAddressli {
+    display: inline-block;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 0px;
+}
+.schoolListUrl{
+    list-style-type: none;
+    display: inline-block;
+    float:right;
+}
+a, a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+.listViewStats {
+    display: inline-block;
+    padding: inherit;
+}
+.refineSearch {
+    margin-top: 10px;
+    width: 40%;
+    position: absolute;
+}

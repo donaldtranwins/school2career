@@ -31,7 +31,6 @@ class AboutUs extends Component {
                         United States. Each school can be seen on a map and, with a basic list structure providing some of the most pertinent
                         information. Each school can also be selected giving a more in depth look.</p>
                     </div>
-
                 </div>
             </div>
         )

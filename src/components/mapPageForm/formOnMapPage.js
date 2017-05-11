@@ -5,6 +5,7 @@ import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import Slider from 'material-ui/Slider';
+
 import { geocodeByAddress } from 'react-places-autocomplete';
 import majors from '../landing_form/majors';
 import { searchForSchools, centerOfMap, userInput, showLoader } from '../../actions/actions_index';
@@ -107,10 +108,6 @@ class mapPageForm extends Component {
                 values.latLng = this.props.input.value.latLng;
                 this.props.searchForSchools(values);
             }
-            // else {
-            //     console.log('Form calling get schools ELSE');
-            //     // this.props.searchForSchools(values);
-            // }
         }
         this.props.clickClosed();
     };
@@ -166,7 +163,7 @@ class mapPageForm extends Component {
 };
 
 mapPageForm = reduxForm({
-    form: 'mapPageForm',  // a unique identifier for this form]
+    form: 'mapPageForm',
     validate,
     initialValues: {aa: true, bs: true, voc: true, public: true, private: true}
 })(mapPageForm);
