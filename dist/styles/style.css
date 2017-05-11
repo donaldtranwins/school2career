@@ -15,7 +15,7 @@ body{
 
 /*Main Page Form styles*/
 .mainPage{
-    height: 92vh;
+    height: 71vh;
 }
 .mapContent{
     margin-top: 1%;
@@ -27,9 +27,9 @@ body{
     overflow: scroll;
     /*height: 94%;*/
     position: absolute;
-    width: 100%;
     top: 50px;
     height: 90%;
+    width: 48vw;
 }
 .locationArea {
     margin-bottom: 15px;
@@ -62,7 +62,6 @@ body{
     background-repeat: no-repeat;
 }
 .listContainer {
-    width: 50%;
     margin-top: 2%;
     margin-left: 2%;
 }
@@ -262,8 +261,8 @@ body{
         height: 200vh;
     }
     .listContainer {
-        width: 100%;
-        margin-left: 5%;
+        width: 95%;
+        margin-left: 3%;
     }
     .GMap {
         width: 95%;

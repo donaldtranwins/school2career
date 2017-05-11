@@ -25,21 +25,23 @@ class drawerForm extends Component {
             marginBottom: '7px'
         };
         return (
-            <div className='mainPage'>
-                <Drawer
-                    docked={false}
-                    width={290}
-                    open={this.state.open}
-                    onRequestChange={(open) => this.setState({open})}>
-                    <MapForm clickClosed = {this.handleClose}/>
-                </Drawer>
+            <div>
                 <div className='searchImgDiv'>
                     <div className="jumboImg" />
                 </div>
                 <RaisedButton onTouchTap={this.handleToggle} className='refineSearch' label="Refine Search" style={style} />
-                <div className='mapContent'>
-                    <Map id="mapShowing"/>
-                    <SchoolList handleToggle = {this.handleToggle} />
+                <div className='mainPage'>
+                    <Drawer
+                        docked={false}
+                        width={290}
+                        open={this.state.open}
+                        onRequestChange={(open) => this.setState({open})}>
+                        <MapForm clickClosed = {this.handleClose}/>
+                    </Drawer>
+                    <div className='mapContent'>
+                        <Map id="mapShowing"/>
+                        <SchoolList handleToggle = {this.handleToggle} />
+                    </div>
                 </div>
             </div>
         );
