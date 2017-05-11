@@ -3,6 +3,7 @@
         require_once '../server/handlers/'.$class_name . '.php';
     });
     header::declare();
+
     $clientRequest = isset($_GET['schid'])
         ? new OneSchool()
         : (
@@ -13,4 +14,5 @@
             : new RequestError('Invalid URL Parameters')
         );
     echo json_encode($clientRequest ->processRequest());
+
 ?>
