@@ -1,6 +1,8 @@
+Options -Indexes
 RewriteEngine on
 RewriteRule ^fetch_schools request.php [NC]
 RewriteRule ^one_school/id/(.*) request.php?schid=$1 [NC]
+RewriteRule ^assessment traitify.php?schid=$1 [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* index.html [L]

@@ -39,7 +39,7 @@ const landingImage = {
     zIndex : -10
 };
 
-const paperForm = () => (
+const PaperForm = () => (
     <div>
         <div className='landingImg'></div>
         <img className="landingImg hidden-sm-down mt-3" style={landingImage} src="images/washingtonstate.jpg"/>
@@ -53,7 +53,7 @@ ReactDOM.render(
         <Provider store={createStoreWithMiddleware(rootReducer)}>
             <Router history={browserHistory}>
                 <Route path="/" component={App}>
-                    <IndexRoute component={paperForm}/>
+                    <IndexRoute component={PaperForm}/>
                     <Route path="school_search" component={MainPage}/>
                     <Route path="school/:id" component={School}/>
                     <Route path="about" component={About}/>
