@@ -29,7 +29,9 @@ class NavBar extends Component {
         return(
             <AppBar
                 title={<span onClick={() => this.handleTouchTap()} style={styles.title}>School2Career</span>}
-                showMenuIconButton={false}>
+                showMenuIconButton={false}
+                className="appBar"
+                >
                 <Tabs>
                     <Tab style={styles.stylesTab} className="navBarLink" label="&nbsp;Search&nbsp;" containerElement={<Link to="/school_search"/>}/>
                     <Tab style={styles.stylesTab} className="navBarLink" label="&nbsp;About&nbsp;" containerElement={<Link to="/about"/>}/>

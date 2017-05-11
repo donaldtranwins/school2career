@@ -32,11 +32,17 @@ a, a:hover {
 }
 @media only screen and (max-width: 550px) {
     .refineSearch {
-        width: 90%;
-        position: -webkit-sticky; top: 10px;
-        position: sticky; top: 10px;
+        width: 93%;
+        position: fixed;
+        top: 39px;
         z-index: 10;
         margin-left: 23px;
+        overflow:auto;
+        margin-left: 3% !important;
+
+    }
+    .searchImgDiv {
+        margin-top: 85px !important;
     }
     .mainPage {
 
