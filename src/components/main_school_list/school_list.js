@@ -84,9 +84,11 @@ class SchoolList extends Component {
                     if(findForwardSlash === url.length -1){
                         url = url.substring(0, url.length - 1);
                     }
+                    const uniqueID = `a${school.uid}`;
+                    console.log(uniqueID);
                     return(
-                        <Paper className="listOfSchools" style={style} key={index}>
-                            <ul style={mainUl}>
+                        <Paper className="listOfSchools" style={style} key={index} >
+                            <ul style={mainUl} id={uniqueID}>
                                 <li className='schoolListSchool'><Link to={`/school/${school.uid}`}>{school.name} </Link></li>
                                 <li className='schoolListAddressli'>{school.city}, </li>
                                 <li className='schoolListAddressli'>{school.state}</li>

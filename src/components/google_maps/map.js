@@ -182,13 +182,14 @@ class GMap extends Component {
         this.setState({
             markers : [ ...markers ]
         });
-        let content = '<div><h6><a href=http://localhost:3000/school/' + data.uid + '>' + data.name + '</a></h6></div>'
+        let content = '<div><h6><a href=#a' + data.uid + '>' + data.name + '</a></h6></div>'
             + '<div>' + data.city + ', ' + data.state + '</div>'
             + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         let infoWindow =  new google.maps.InfoWindow({
             map: this.map,
             anchor: newMarker,
-            content: content
+            content: content,
+            disableAutoPan: true
         });
         newMarker.addListener('click', function() {
             infoWindow.open(this.map, newMarker);
