@@ -58,7 +58,7 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
 );
 class LandingForm extends Component {
     static contextTypes = {
-        router:     PropTypes.object
+        router: PropTypes.object
     };
     getCenterCoords = (values) => {
         const center = {
