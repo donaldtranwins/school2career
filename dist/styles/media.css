@@ -1,0 +1,57 @@
+/*media breaks*/
+@media only screen and (max-width: 550px) {
+    /*appBar*/
+    .appBar {
+        position: fixed !important;
+        top: 0 !important;
+    }
+    /*end appBar*/
+    /*mainPage*/
+    .listContainer {
+        width: 95%;
+        margin-left: 3%;
+    }
+    .GMap {
+        width: 93%;
+        right: 4%;
+    }
+    .schoolListScroll{
+        width: 100vw;
+        margin: 0 auto;
+        overflow: initial;
+        position: absolute;
+        top: 100%;
+    }
+    .refineSearch {
+        width: 93%;
+        position: fixed;
+        top: 39px;
+        z-index: 10;
+        margin-left: 23px;
+        overflow:auto;
+        margin-left: 3% !important;
+    }
+    .searchImgDiv {
+        margin-top: 85px !important;
+    }
+    /*end mainPage*/
+    /*individual school*/
+    .distanceList {
+        text-align: inherit;
+    }
+    .satList {
+        text-align: inherit;
+    }
+    .schoolImgHolder {
+        width: 100%;
+        height: 100%;
+        position: relative
+    }
+    .schoolImg {
+        height: 100%;
+        width: 130%;
+        position: relative;
+        left: -15%;
+    }
+    /*end individual school*/
+}

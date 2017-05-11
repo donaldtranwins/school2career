@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
-import {toggleMap} from '../../actions/actions_index'
+import {toggleMap} from '../../actions/actions_index';
 
 class mapButton extends Component {
     handleButtonClick() {
@@ -49,5 +49,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {toggleMap:toggleMap})(mapButton); //this give us access to the action creator in
-//this case fetchTodos
+export default connect(mapStateToProps, {toggleMap:toggleMap})(mapButton);

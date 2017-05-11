@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { searchForSchools, mapBoundsInput } from '../../actions/actions_index';
 
 class GMap extends Component {
-
     constructor(props){
         super(props);
         this.state = {
@@ -18,39 +17,6 @@ class GMap extends Component {
                 <div className='GMap-canvas' ref="mapCanvas"></div>
             </div>
         )
-
-    }
-    initMap(){
-        const userInput = this.props.userInput.value;
-        if(!userInput){
-            return <p>Loading...</p>;
-        } else {
-            // create the map, marker and infoWindow after the component has
-            // been rendered because we need to manipulate the DOM for Google
-            this.map = this.createMap(userInput.latLng);
-            google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange());
-            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
-        }
-        this.createLegend();
-    }
-    createSchoolMarkers(nextProps){
-        const data = nextProps.schools.all;
-        for (let i = 0; i < this.state.markers.length; i++) {
-            this.state.markers[i].setMap(null);
-        }
-        if (this.state.markerCluster !== null) {
-            this.state.markerCluster.clearMarkers()
-        }
-        if(data){
-            this.setState({
-                markers: []
-            }, () => {
-                for (let i = 0; i < data.length; i++) {
-                    this.marker = this.createMarker(data[i]);
-                }
-                this.createCluster();
-            });
-        }
     }
     componentDidMount(){
         this.initMap();
@@ -59,11 +25,6 @@ class GMap extends Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        // if(nextProps.userInput.value.mapBounds === undefined){
-        //     let userInputMapBounds = nextProps.userInput.value;  // TODO fix this
-        //     userInputMapBounds.mapBounds = this.props.userInput.value.mapBounds;
-        //     this.props.mapBoundsInput(userInputMapBounds);
-        // }
         console.log('map cwrp: ', this.props)
         if(this.props.userInput.value === null) {
             if(nextProps.center.lat !== this.props.center.lat) {
@@ -76,9 +37,38 @@ class GMap extends Component {
         }
         this.createSchoolMarkers(nextProps);
     }
-    // clean up event listeners when component unmounts
     componentDidUnMount() {
-        google.maps.event.clearListeners(map, 'zoom_changed')
+        google.maps.event.clearListeners(map, 'zoom_changed');
+    }
+    initMap(){
+        const userInput = this.props.userInput.value;
+        if(!userInput){
+            return <p>Loading...</p>;
+        } else {
+            this.map = this.createMap(userInput.latLng);
+            google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange());
+            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
+        }
+        this.createLegend();
+    }
+    createSchoolMarkers(nextProps){
+        const data = nextProps.schools.all;
+        for (let i = 0; i < this.state.markers.length; i++) {
+            this.state.markers[i].setMap(null);
+        }
+        if (this.state.markerCluster !== null) {
+            this.state.markerCluster.clearMarkers();
+        }
+        if(data){
+            this.setState({
+                markers: []
+            }, () => {
+                for (let i = 0; i < data.length; i++) {
+                    this.marker = this.createMarker(data[i]);
+                }
+                this.createCluster();
+            });
+        }
     }
     setZoom() {
         let zoomLevel = null;
