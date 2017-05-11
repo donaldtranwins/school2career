@@ -103,6 +103,7 @@ class mapPageForm extends Component {
         this.props.showLoader(true);
         if (this.props.input.value !== null) {
             if (values.location == this.props.input.value.location && this.props.mapB.mapBoundsInput.mapBounds.ne !== undefined) {
+                let bounds = this.props.mapB.mapBoundsInput.mapBounds;
                 values.mapBounds = bounds;
                 values.latLng = this.props.input.value.latLng;
                 console.log('Form calling get schools IF');
