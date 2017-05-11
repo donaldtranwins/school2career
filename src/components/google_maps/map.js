@@ -30,15 +30,11 @@ class GMap extends Component {
             if(nextProps.center.lat !== this.props.center.lat) {
                 this.initMap();
             }
-        } else if(nextProps.center.lat !== this.props.center.lat ||
-            this.props.userInput.value.distanceSlider !== nextProps.userInput.value.distanceSlider){
+        } else if(nextProps.center.lat !== this.props.center.lat){
             this.initMap();
-            this.createSchoolMarkers(nextProps);
+            // this.createSchoolMarkers(nextProps);
         }
         this.createSchoolMarkers(nextProps);
-    }
-    componentDidUnMount() {
-        google.maps.event.clearListeners(map, 'zoom_changed');
     }
     initMap(){
         const userInput = this.props.userInput.value;
@@ -46,19 +42,24 @@ class GMap extends Component {
             return <p>Loading...</p>;
         } else {
             this.map = this.createMap(userInput.latLng);
-            google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange());
+            google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange(), ()=>this.clearOutMarkers());
             google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
+            google.maps.event.addListener(this.map, 'drag', () => this.clearOutMarkers());
         }
         this.createLegend();
     }
-    createSchoolMarkers(nextProps){
-        const data = nextProps.schools.all;
+    clearOutMarkers() {
+        console.log("Clearing Markers");
         for (let i = 0; i < this.state.markers.length; i++) {
             this.state.markers[i].setMap(null);
         }
         if (this.state.markerCluster !== null) {
             this.state.markerCluster.clearMarkers();
         }
+    }
+    createSchoolMarkers(nextProps){
+        const data = nextProps.schools.all;
+        // this.clearOutMarkers();
         if(data){
             this.setState({
                 markers: []
@@ -69,24 +70,6 @@ class GMap extends Component {
                 this.createCluster();
             });
         }
-    }
-    setZoom() {
-        let zoomLevel = null;
-        if(this.props.userInput.value.distanceSlider !== undefined) {
-            const distance = this.props.userInput.value.distanceSlider;
-            if (distance <= 100) {
-                zoomLevel = 15;
-            } else if (distance <= 200) {
-                zoomLevel = 10;
-            } else if (distance <= 300) {
-                zoomLevel = 4;
-            }
-        } else {
-            zoomLevel = 10;
-        }
-        this.setState({
-            zoom : zoomLevel
-        });
     }
     createLegendElement() {
         let outsideDiv = document.createElement('div');
@@ -115,18 +98,17 @@ class GMap extends Component {
         const legendDiv = this.createLegendElement();
         forLegend[0].appendChild(legendDiv);
         const legend = document.getElementById('legend');
-        for (var key in icons) {
-            var type = icons[key];
-            var name = type.name;
-            var icon = type.icon;
-            var div = document.createElement('div');
+        for (let key in icons) {
+            const type = icons[key];
+            const name = type.name;
+            const icon = type.icon;
+            const div = document.createElement('div');
             div.innerHTML = '<img src="' + icon + '">' + name;
             legend.appendChild(div);
         }
         this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
     }
     createMap(data) {
-        this.setZoom();
         let mapOptions = {
             zoom: this.state.zoom,
             center: this.createLatLng(data),
@@ -140,7 +122,6 @@ class GMap extends Component {
             pos.lng
         )
     }
-
     colorForMarker(sizeOfSchool) {
         switch (true) {
             case (sizeOfSchool < 10000):
@@ -157,8 +138,6 @@ class GMap extends Component {
                 break;
         }
     }
-
-
     createCluster() {
         let clusterOptions = {
             imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
@@ -168,7 +147,6 @@ class GMap extends Component {
         if(this.map) {
             this.state.markerCluster = new MarkerClusterer(this.map, this.state.markers, clusterOptions);
         }
-
     }
     createMarker(data) { //would add in (pos) as a parameter
         const iconForSchool = this.colorForMarker(parseInt(data.size));
@@ -182,27 +160,39 @@ class GMap extends Component {
         this.setState({
             markers : [ ...markers ]
         });
-        let content = '<div><h6><a href=#a' + data.uid + '>' + data.name + '</a></h6></div>'
+        const content = '<div><h6><a href=#a' + data.uid + '>' + data.name + '</a></h6></div>'
             + '<div>' + data.city + ', ' + data.state + '</div>'
             + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
-        let infoWindow =  new google.maps.InfoWindow({
+        const infoWindow =  new google.maps.InfoWindow({
             map: this.map,
             anchor: newMarker,
             content: content,
-            disableAutoPan: true
+            disableAutoPan: true,
         });
         newMarker.addListener('click', function() {
-            infoWindow.open(this.map, newMarker);
+            debugger;
+            if (infoWindow.getMap()) {
+                infoWindow.close();
+            }
+            if (!newMarker.open) {
+                infoWindow.open(this.map, newMarker);
+                newMarker.open = true;
+            } else {
+                infoWindow.close();
+                newMarker.open = false;
+            }
         });
         this.map.addListener('click', function () {
             infoWindow.close();
+            newMarker.open = false;
         });
         this.map.addListener('idle', function() {
             infoWindow.close();
+            newMarker.open = false;
         });
         infoWindow.close();
     }
-    getMapBounds(nextProps) {
+    getMapBounds() {
         const bounds = this.map.getBounds();
         const ne = bounds.getNorthEast();
         const sw = bounds.getSouthWest();
