@@ -7,7 +7,7 @@ import Loader from '../loader/loading';
 
 const style = {
     height: '20%',
-    width: '90%',
+    width: '98%',
     display: 'flex',
     alignItems: 'center',
     marginTop: '2%'
