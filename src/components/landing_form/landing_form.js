@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { geocodeByAddress } from 'react-places-autocomplete';
-import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
@@ -29,30 +28,30 @@ const renderTextField = ({ input: { onChange, name }, label, meta: { touched, er
     return (
         <div>
             <GeoCode hintText={label}
-                floatingLabelText={label}
-                onChange={ val => {
-                    onChange(val);
-                }}
-                name={name}
-                {...custom}
+                     floatingLabelText={label}
+                     onChange={ val => {
+                         onChange(val);
+                     }}
+                     name={name}
+                     {...custom}
             />
             <div>
-            {touched && (error && <span className="required">{error}</span>)}
+                {touched && (error && <span className="required">{error}</span>)}
             </div>
         </div>
     )
 };
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
     <SelectField
-    className='landingForm'
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    onChange={(event, index, value) => {
-        input.onChange(value)
-    }}
-    children={children}
-    {...custom}/>
+        className='landingForm'
+        floatingLabelText={label}
+        errorText={touched && error}
+        {...input}
+        onChange={(event, index, value) => {
+            input.onChange(value)
+        }}
+        children={children}
+        {...custom}/>
 );
 class LandingForm extends Component {
     static contextTypes = {
@@ -69,47 +68,37 @@ class LandingForm extends Component {
     formSubmitted = (values) => {
         this.props.showLoader(true);
         geocodeByAddress(values.location,  (err, latLng) => {
-        if (err) { console.warn('error', err) };
-        values.latLng = latLng;
-        this.getCenterCoords(values);
-        this.context.router.push('/school_search');
-      });
-    };
-    handlePress = () => {
-        return majorDrop = ""
-    };
-
-    handleBlur = () => {
-        return ( majorDrop = <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
-            {majors}
-        </Field>)
+            if (err) { console.warn('error', err) }
+            values.latLng = latLng;
+            this.getCenterCoords(values);
+            this.context.router.push('/school_search');
+        });
     };
 
     render(){
-        let majorDrop = <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
-            {majors}
-        </Field>;
         const { handleSubmit, pristine, reset, submitting } = this.props;
         return (
-          <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
-            <div>
-              <Field name="location" component={renderTextField} onkeydown={()=>this.handlePress}  label="LOCATION">
-                {  <span >errorText</span> }
-                </Field>
-            </div>
-            <div>
-                {majorDrop}
-            </div>
-            <div>
-              <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting }/>
-              <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}/>
-            </div>
-          </form>
+            <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
+                <div>
+                    <Field name="location" component={renderTextField} label="LOCATION">
+                        {  <span >errorText</span> }
+                    </Field>
+                </div>
+                <div>
+                    <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
+                        {majors}
+                    </Field>
+                </div>
+                <div>
+                    <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting }/>
+                    <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}/>
+                </div>
+            </form>
         )
     }
 }
 LandingForm = reduxForm({
-  form: 'LandingForm',
+    form: 'LandingForm',
     validate
 })(LandingForm);
 

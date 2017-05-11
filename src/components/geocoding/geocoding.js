@@ -19,8 +19,6 @@ class GeoCode extends React.Component {
         const inputProps = {
             value: this.state.address,
             onChange: this.onChange,
-            onBlur: () => {
-            },
             type: 'search',
             placeholder: 'LOCATION',
             autoFocus: true,
@@ -32,7 +30,7 @@ class GeoCode extends React.Component {
         return (
             <div className='placesContainer'>
                 <div className='placesAuto'>
-                    <PlacesAutocomplete inputProps={inputProps} classNames={cssClasses} options={options}/>
+                    <PlacesAutocomplete inputProps={inputProps} classNames={cssClasses} options={options} />
                 </div>
             </div>
         )
