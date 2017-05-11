@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Paper from 'material-ui/Paper';
 import LandingForm from './landing_form'
 

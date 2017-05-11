@@ -3,7 +3,7 @@ import Drawer from 'material-ui/Drawer';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import MapForm from './mapPageForm/formOnMapPage';
-import SchoolList from './main_school_list/school_list'
+import SchoolList from './main_school_list/school_list';
 import Map from './google_maps/map';
 
 
@@ -16,7 +16,6 @@ class drawerForm extends Component {
     }
 
     handleToggle = () => this.setState({open: !this.state.open});
-
     handleClose = () => this.setState({open: false});
 
     render() {

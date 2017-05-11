@@ -1,7 +1,6 @@
 import React from 'react';
 import MenuItem from 'material-ui/MenuItem';
 
-
 export default [
     <MenuItem key='Agriculture' value={'Agriculture'} primaryText="Agriculture"/>,
     <MenuItem key='Anthropology' value={'Anthropology'} primaryText="Anthropology"/>,

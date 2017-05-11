@@ -6,18 +6,16 @@ import showMapReducer from './reducer_showmap';
 import mapCenter from './reducer_centermap';
 import userInputReducer from './reducer_user_input';
 import mapBoundsReducer from './reducer_map_bounds'
-// import userInput from './reducer_user_input';
 import schoolImage from './reducer_school_image';
 
 
 const rootReducer = combineReducers({
-    schools: searchForSchoolsReducer, //what you call it here is what you call it everywhere
+    schools: searchForSchoolsReducer,
     showMap: showMapReducer,
     center: mapCenter,
     form: formReducer,
     userInput: userInputReducer,
     mapBoundsInput: mapBoundsReducer,
-//     userInput: userInput,
     schoolImgURL: schoolImage
 });
 

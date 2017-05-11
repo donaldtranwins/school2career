@@ -82,7 +82,7 @@ class Photo extends Component {
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }
     createLatLng(pos){                      //added this function, would set the lat and lng, may
-        //not be needed. could potentially do this all in create markers
+                                            //not be needed. could potentially do this all in create markers
         return new google.maps.LatLng(
             pos.lat,
             pos.lng
@@ -116,7 +116,7 @@ class Photo extends Component {
         const iconForSchool = this.colorForMarker(parseInt(data.size));
         const newMarker = new google.maps.Marker({
             position: this.createLatLng(data),  //this would have to change to likely take in positions and
-            //then create markers for specific positions. this.createLatLng(pos);
+                                                //then create markers for specific positions. this.createLatLng(pos);
             map: this.map,
             icon: iconForSchool
         });

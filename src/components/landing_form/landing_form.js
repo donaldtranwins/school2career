@@ -95,7 +95,6 @@ class LandingForm extends Component {
             </div>
             <div>
               <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting }/>
-              {/* <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}/> */}
             </div>
           </form>
         )

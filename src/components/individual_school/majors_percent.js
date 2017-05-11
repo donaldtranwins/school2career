@@ -30,25 +30,25 @@ class MajorChart extends Component{
                 height: majorHeight,
                 width: '100%'
             };
-      	return (
-            <div style={divStyle}>
-                <h4 className="majorPercent">Percentage Of Graduates By Major</h4>
-                <ResponsiveContainer width="100%" height="90%">
-                  <BarChart
-                      data={majors}
-                      layout="vertical"
-                      margin={{top: 5, right: 30, left: 0, bottom: 5}}
-                    >
-                      <XAxis scaleToFit={true} type="number"/>
-                      <YAxis width={250} tickLine={false} type="category" dataKey="name" />
-                      <CartesianGrid strokeDasharray="3 3"/>
-                      <Tooltip/>
-                      <Legend />
-                      <Bar dataKey="Graduation %" fill="#26A69A" />
-                    </BarChart>
-                </ResponsiveContainer>
-            </div>
-        );
+            return (
+                <div style={divStyle}>
+                    <h4 className="majorPercent">Percentage Of Graduates By Major</h4>
+                    <ResponsiveContainer width="100%" height="90%">
+                      <BarChart
+                          data={majors}
+                          layout="vertical"
+                          margin={{top: 5, right: 30, left: 0, bottom: 5}}
+                        >
+                          <XAxis scaleToFit={true} type="number"/>
+                          <YAxis width={250} tickLine={false} type="category" dataKey="name" />
+                          <CartesianGrid strokeDasharray="3 3"/>
+                          <Tooltip/>
+                          <Legend />
+                          <Bar dataKey="Graduation %" fill="#26A69A" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            );
       }
 }
 

@@ -12,7 +12,7 @@ import School from './components/individual_school/individual_school';
 import About from './components/about_us/about';
 import rootReducer from './reducers/reducers_index';
 import LandingFormPaper from './components/landing_form/landing_form_paper';
-import NotFound from './components/notfoundpage/not_found'
+import NotFound from './components/notfoundpage/not_found';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {blueGrey300, green300} from 'material-ui/styles/colors';
 
@@ -21,7 +21,7 @@ const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 injectTapEventPlugin();
 
 const muiTheme = getMuiTheme({
-    // fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'Roboto, sans-serif',
     palette: {
         textColor: blueGrey300,
         primary1Color: green300,
@@ -43,8 +43,6 @@ const paperForm = () => (
     <div>
         <div className='landingImg'></div>
         <img className="landingImg hidden-sm-down mt-3" style={landingImage} src="images/washingtonstate.jpg"/>
-        {/*<img className="landingImg hidden-sm-down mt-3" style={landingImage} src="images/sky-garden-school.jpg"/>*/}
-        {/*<img className="landingImg hidden-md-down mt-3" style={landingImage} src="images/college.jpg"/>*/}
         <img className="landingImg hidden-md-up mt-3" style={landingImage} src="images/flagler_college.png"/>
         <LandingFormPaper className='landingForm' />
     </div>

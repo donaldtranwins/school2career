@@ -3,7 +3,6 @@ import Paper from 'material-ui/Paper';
 
 import SchoolList from './school_list';
 
-
 const style = {
   height: '100vh',
   width: '80vw',
