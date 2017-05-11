@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { geocodeByAddress } from 'react-places-autocomplete';
 import SelectField from 'material-ui/SelectField';
@@ -10,6 +11,8 @@ import GeoCode from '../geocoding/geocoding';
 
 const btnStyle = {
     margin: 12,
+    marginLeft: '85px',
+    // marginRight: 30,
     textAlign: 'center',
 };
 const selectStyle = {
@@ -78,22 +81,23 @@ class LandingForm extends Component {
     render(){
         const { handleSubmit, pristine, reset, submitting } = this.props;
         return (
-            <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
-                <div>
-                    <Field name="location" component={renderTextField} label="LOCATION">
-                        {  <span >errorText</span> }
-                    </Field>
-                </div>
-                <div>
-                    <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
-                        {majors}
-                    </Field>
-                </div>
-                <div>
-                    <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting }/>
-                    <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}/>
-                </div>
-            </form>
+
+          <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
+            <div>
+              <Field name="location" component={renderTextField} label="LOCATION">
+                {  <span >errorText</span> }
+                </Field>
+            </div>
+            <div>
+                <Field name="pickAMajor" style={selectStyle} component={renderSelectField} label="PICK A MAJOR">
+                    {majors}
+                </Field>
+            </div>
+            <div>
+              <RaisedButton label="Submit" style={btnStyle} type="submit" disabled={pristine || submitting }/>
+              {/* <RaisedButton label="Clear" style={btnStyle} type="button" disabled={pristine || submitting} onClick={reset}/> */}
+            </div>
+          </form>
         )
     }
 }
