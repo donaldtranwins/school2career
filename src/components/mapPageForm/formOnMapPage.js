@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -105,14 +104,12 @@ class mapPageForm extends Component {
             if (values.location == this.props.input.value.location && this.props.mapB.mapBoundsInput.mapBounds.ne !== undefined) {
                 values.mapBounds = bounds;
                 values.latLng = this.props.input.value.latLng;
-                console.log('Form calling get schools IF');
-                // this.props.clickClosed();
                 this.props.searchForSchools(values);
-            } else {
-                console.log('Form calling get schools ELSE');
-                // this.props.searchForSchools(values);
-                // this.props.clickClosed();
             }
+            // else {
+            //     console.log('Form calling get schools ELSE');
+            //     // this.props.searchForSchools(values);
+            // }
         }
         this.props.clickClosed();
     };
