@@ -51,7 +51,7 @@ class FetchSchools{
                 $queryEnd .=      "pts.deg_4=0 AND ";
             }
         }
-        $queryEnd = substr($queryEnd,0,-4);
+        $queryEnd = substr($queryEnd,0,-4)."GROUP BY s.uid";
 
         $uniqueTables = array_keys(array_flip($tables));
         while($tablesToJoin = array_shift($uniqueTables)){
