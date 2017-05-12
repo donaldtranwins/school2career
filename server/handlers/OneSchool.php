@@ -16,13 +16,13 @@
                             WHERE uid=? ";
 
             function doPreparedQuery($conn, $query, $param){
-                if (!($stmt = $conn->prepare($query))){
+                if ( !($stmt = $conn->prepare($query)) ){
                     return "422 Unprocessible Entity - Statement failed to prepare: ".$conn->error;
                 }
-                if (!($stmt->bind_param("i",$param))){
+                if ( !($stmt->bind_param("i",$param)) ){
                     return "422 Unprocessible Entity - Parameters failed to bind: ".$stmt->error;
                 }
-                if (!($stmt->execute())){
+                if ( !($stmt->execute()) ){
                     return "422 Unprocessible Entity - Statement failed to execute: ".$stmt->error;
                 }
                 $result = $stmt->get_result();
