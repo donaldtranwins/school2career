@@ -94,7 +94,7 @@ class FetchSchools{
                         floatval($school['lng']));
                 }
                 usort($this->output['schools'], array($this, "cmp"));
-                $this->output['schools'] = array_slice($this->output['schools'],0,500,true);
+                $this->output['schools'] = array_slice($this->output['schools'],0,100,true);
 
                 $this->output['debug']['total results'] = count($this->output['schools']);
             } else {
