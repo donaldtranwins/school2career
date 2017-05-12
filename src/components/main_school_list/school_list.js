@@ -53,7 +53,7 @@ class SchoolList extends Component {
                     noSchool = this.props.schools.noSchool;
                 }
             }
-            if(noSchool == 1) {
+            if(!data || noSchool == 1) {
                 list = <div>No Schools Match The Current Criteria</div>;
             } else {
                 list = data.map((school, index) => {
@@ -76,7 +76,6 @@ class SchoolList extends Component {
                     let url = null;
                     if (www < 0){
                         url = school.url;
-                        return;
                     } else {
                         url = school.url.slice(www + 4);
                     }
@@ -84,7 +83,7 @@ class SchoolList extends Component {
                     if(findForwardSlash === url.length -1){
                         url = url.substring(0, url.length - 1);
                     }
-                    const uniqueID = `a${school.uid}`;
+                    const uniqueID = `sch${school.uid}`;
                     return(
                         <Paper className="listOfSchools" style={style} key={index} >
                             <ul style={mainUl} id={uniqueID}>
@@ -101,7 +100,7 @@ class SchoolList extends Component {
                         </Paper>
                     )
                 });
-            };
+            }
             return (
                 <div className='schoolListScroll'>
                     <div id="schoolList" className="listContainer">
