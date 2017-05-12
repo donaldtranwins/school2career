@@ -34,8 +34,6 @@ class GMap extends Component {
             // this.createSchoolMarkers(nextProps);
         }
         this.createSchoolMarkers(nextProps);
-
-        // debugger;
         // if(this.props.userInput.value === null) {
         //         this.initMap();
         // } else if(nextProps.center.lat !== this.props.center.lat){
