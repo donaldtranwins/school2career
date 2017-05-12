@@ -25,9 +25,6 @@ class GMap extends Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        console.log('map cwrp: ', this.props);
-        console.log("map cwrp nextprops", nextProps);
-
         if(this.props.userInput.value === null) {
             if(nextProps.center.lat !== this.props.center.lat) {
                 this.initMap();
@@ -66,7 +63,6 @@ class GMap extends Component {
         this.createLegend();
     }
     clearOutMarkers() {
-        console.log("Clearing Markers");
         for (let i = 0; i < this.state.markers.length; i++) {
             this.state.markers[i].setMap(null);
         }
@@ -76,7 +72,7 @@ class GMap extends Component {
     }
     createSchoolMarkers(nextProps){
         const data = nextProps.schools.all;
-        // this.clearOutMarkers();
+        this.clearOutMarkers();
         if(data){
             this.setState({
                 markers: []
@@ -177,7 +173,7 @@ class GMap extends Component {
         this.setState({
             markers : [ ...markers ]
         });
-        const content = '<div><h6><a href=#a' + data.uid + '>' + data.name + '</a></h6></div>'
+        const content = '<div><h6><a href=#sch' + data.uid + '>' + data.name + '</a></h6></div>'
             + '<div>' + data.city + ', ' + data.state + '</div>'
             + '<div><a target="_blank" href=http://' + data.url + '>' + data.url + '</a></div>';
         const infoWindow =  new google.maps.InfoWindow({
@@ -187,7 +183,6 @@ class GMap extends Component {
             disableAutoPan: true,
         });
         newMarker.addListener('click', function() {
-            debugger;
             if (infoWindow.getMap()) {
                 infoWindow.close();
             }
@@ -210,7 +205,7 @@ class GMap extends Component {
         infoWindow.close();
     }
     getMapBounds() {
-        this.clearOutMarkers();
+        // this.clearOutMarkers();
         const bounds = this.map.getBounds();
         const ne = bounds.getNorthEast();
         const sw = bounds.getSouthWest();
