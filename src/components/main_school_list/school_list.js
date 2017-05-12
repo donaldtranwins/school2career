@@ -45,6 +45,7 @@ class SchoolList extends Component {
         } else {
             let list = '';
             let noSchool = null;
+            debugger;
             const data = this.props.schools.all;
             if (this.props.schools.noSchool) {
                 if (this.props.schools.noSchool !== false) {
@@ -55,7 +56,7 @@ class SchoolList extends Component {
             }
             if(noSchool == 1) {
                 list = <div>No Schools Match The Current Criteria</div>;
-            } else {
+            } else if (!data) {
                 list = data.map((school, index) => {
                     let admissionRate = parseFloat(school.adm_rate);
                     if (parseFloat(admissionRate) > 0) {
@@ -84,7 +85,7 @@ class SchoolList extends Component {
                     if(findForwardSlash === url.length -1){
                         url = url.substring(0, url.length - 1);
                     }
-                    const uniqueID = `a${school.uid}`;
+                    const uniqueID = `sch${school.uid}`;
                     return(
                         <Paper className="listOfSchools" style={style} key={index} >
                             <ul style={mainUl} id={uniqueID}>
@@ -101,7 +102,7 @@ class SchoolList extends Component {
                         </Paper>
                     )
                 });
-            };
+            }
             return (
                 <div className='schoolListScroll'>
                     <div id="schoolList" className="listContainer">

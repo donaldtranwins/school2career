@@ -25,16 +25,22 @@ class GMap extends Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        console.log('map cwrp: ', this.props)
+        console.log('map cwrp: ', this.props);
+        console.log("map cwrp nextprops", nextProps);
         if(this.props.userInput.value === null) {
-            if(nextProps.center.lat !== this.props.center.lat) {
                 this.initMap();
-            }
         } else if(nextProps.center.lat !== this.props.center.lat){
-            this.initMap();
+                this.initMap();
             // this.createSchoolMarkers(nextProps);
         }
-        this.createSchoolMarkers(nextProps);
+        if (nextProps.schools.all !== undefined) {
+            if ( nextProps.schools.all.length > this.props.schools.all.length) {
+                this.createSchoolMarkers(nextProps)
+            }
+            // else if (nextProps.schools.all.length>0) {
+            //     this.createSchoolMarkers(nextProps);
+            // }
+        }
     }
     initMap(){
         const userInput = this.props.userInput.value;
@@ -42,9 +48,9 @@ class GMap extends Component {
             return <p>Loading...</p>;
         } else {
             this.map = this.createMap(userInput.latLng);
-            google.maps.event.addListener(this.map, 'zoom_changed', () => this.handleZoomChange(), ()=>this.clearOutMarkers());
-            google.maps.event.addListener(this.map, 'idle', () => this.getMapBounds());
-            google.maps.event.addListener(this.map, 'drag', () => this.clearOutMarkers());
+            this.map.addListener('zoom_changed', () => this.handleZoomChange(), ()=>this.clearOutMarkers());
+            this.map.addListener('idle', () => this.getMapBounds());
+            this.map.addListener('dragstart', () => this.clearOutMarkers());
         }
         this.createLegend();
     }
@@ -80,7 +86,7 @@ class GMap extends Component {
         return outsideDiv;
     }
     createLegend() {
-        var icons = {
+        const icons = {
             sm_school: {
                 name: '   < 10,000',
                 icon: '/images/md_school.png'
