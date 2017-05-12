@@ -67,7 +67,6 @@ class School extends Component {
         let url = null;
         if (www < 0){
             url = data.url;
-            return;
         } else {
             url = data.url.slice(www + 4);
         }

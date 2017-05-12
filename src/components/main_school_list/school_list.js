@@ -56,6 +56,7 @@ class SchoolList extends Component {
             if(!data || noSchool == 1) {
                 list = <div>No Schools Match The Current Criteria</div>;
             } else {
+                debugger;
                 list = data.map((school, index) => {
                     let admissionRate = parseFloat(school.adm_rate);
                     if (parseFloat(admissionRate) > 0) {

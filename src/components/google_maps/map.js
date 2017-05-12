@@ -35,20 +35,20 @@ class GMap extends Component {
         }
         this.createSchoolMarkers(nextProps);
 
-        //
+        // debugger;
         // if(this.props.userInput.value === null) {
         //         this.initMap();
         // } else if(nextProps.center.lat !== this.props.center.lat){
         //         this.initMap();
         //     // this.createSchoolMarkers(nextProps);
         // }
-        // if (nextProps.schools.all !== undefined) {
-        //     if ( nextProps.schools.all.length > this.props.schools.all.length) {
-        //         this.createSchoolMarkers(nextProps)
+        // if (nextProps.schools.all !== undefined && this.props.schools.all !== undefined) {
+        //     if ( this.props.schools.all.length > nextProps.schools.all.length) {
+        //         this.createSchoolMarkers(this.props)
         //     }
-            // else if (nextProps.schools.all.length>0) {
-            //     this.createSchoolMarkers(nextProps);
-            // }
+        //     else if (nextProps.schools.all.length>0) {
+        //         this.createSchoolMarkers(nextProps);
+        //     }
         // }
     }
     initMap(){
