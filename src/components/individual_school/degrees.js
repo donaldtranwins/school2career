@@ -12,7 +12,7 @@ class DegreeList extends Component{
         };
         const degrees = this.props.school.single.school.programs.map(function(obj){
             let degreeInfo = "";
-            if (obj.associates !== "0" || obj.bachelors !== "0") {
+            if (obj.associates !== 0 || obj.bachelors !== 0) {
                 if (obj.associates == 1) {
                     degreeInfo += 'Associates, '
                 } else if (obj.associates == 2) {
