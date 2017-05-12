@@ -45,7 +45,6 @@ class SchoolList extends Component {
         } else {
             let list = '';
             let noSchool = null;
-            debugger;
             const data = this.props.schools.all;
             if (this.props.schools.noSchool) {
                 if (this.props.schools.noSchool !== false) {
@@ -77,7 +76,6 @@ class SchoolList extends Component {
                     let url = null;
                     if (www < 0){
                         url = school.url;
-                        return;
                     } else {
                         url = school.url.slice(www + 4);
                     }

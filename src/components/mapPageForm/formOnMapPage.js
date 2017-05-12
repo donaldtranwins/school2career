@@ -91,7 +91,6 @@ class mapPageForm extends Component {
         this.props.centerOfMap(center);
     };
     formSubmitted(values) {
-        debugger;
         geocodeByAddress(values.location, (err, latLng) => {
             if(err) { console.warn('error: ', err)}
             values.latLng = latLng;
