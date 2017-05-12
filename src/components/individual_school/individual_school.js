@@ -119,7 +119,6 @@ class School extends Component {
     }
 }
 function mapStateToProps(state) {
-    console.log(state.schoolImgURL)
     return {
         school: state.schools,
         schoolImgURL: state.schoolImgURL.image

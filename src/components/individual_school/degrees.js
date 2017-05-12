@@ -10,34 +10,41 @@ class DegreeList extends Component{
             backgroundColor : green300,
             color: 'white'
         };
-        const degrees = this.props.school.single.school.programs.map(function(obj){
-            let degreeInfo = "";
-            if (obj.associates !== 0 || obj.bachelors !== 0) {
-                if (obj.associates == 1) {
-                    degreeInfo += 'Associates, '
-                } else if (obj.associates == 2) {
-                    degreeInfo += 'Associates (distance only),'
+        if (!this.props.school.single.school.programs == undefined) {
+            const degrees = this.props.school.single.school.programs.map(function (obj) {
+                let degreeInfo = "";
+                if (obj.associates !== 0 || obj.bachelors !== 0) {
+                    if (obj.associates == 1) {
+                        degreeInfo += 'Associates, '
+                    } else if (obj.associates == 2) {
+                        degreeInfo += 'Associates (distance only),'
+                    }
+                    if (obj.bachelors == 1) {
+                        degreeInfo += ' Bachelors,'
+                    } else if (obj.bachelors == 2) {
+                        degreeInfo += ' Bachelors (distance only),'
+                    }
+                    degreeInfo += ' offered in ' + obj.name;
+                    return <div key={obj.name}>{degreeInfo}</div>
+                } else {
+                    return <div key={obj.name}>Certificate offered in {obj.name}</div>
                 }
-                if (obj.bachelors == 1) {
-                    degreeInfo += ' Bachelors,'
-                } else if (obj.bachelors == 2) {
-                    degreeInfo += ' Bachelors (distance only),'
-                }
-                degreeInfo += ' offered in ' + obj.name;
-                return <div key={obj.name}>{degreeInfo}</div>
-            } else {
-                return <div key={obj.name}>Certificate offered in {obj.name}</div>
-            }
-        });
+            });
 
 
-
+            return (
+                <div>
+                    <h4 className="degreeList">Degrees Offered</h4>
+                    <Paper className="degreePaper" style={styles}>
+                        {degrees}
+                    </Paper>
+                </div>
+            );
+        }
         return (
             <div>
                 <h4 className="degreeList">Degrees Offered</h4>
-                <Paper className="degreePaper" style={styles}>
-                    {degrees}
-                </Paper>
+                <p>No Information Provided</p>
             </div>
         );
     }
