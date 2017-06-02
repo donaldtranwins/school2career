@@ -5,7 +5,8 @@ import LandingForm from './landing_form'
 const style = {
     height: 300,
     width: 380,
-    margin: '15% auto',
+    margin: '0 auto',
+    marginTop: '16%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
