@@ -25,9 +25,24 @@
 Summary
 --------------------
 
-The project is going to be built in phases. The first phase will be creating a basic college finder. Given certain parameters like city/state or zip, we will pull up colleges in a given area. From there it can be fine tuned within a given radius, and choices based on degree interested in as well as searching for a specific college. 
+The application is a college find. It allow you to search for colleges based on a series of filters. From either a list or directly from the goolge map, schools can be picked to pull up a page dedicated to just that school. This provides more in depth information about an individual school.
 
-The second phase will be about helping students find possible career paths. Based on some form of assessment test, we will provide a list of careeers as well as some basic info about those careersk that may help a potential student make decisions about their future.
+Feature List
+--------------------
 
-The idea for this came about with the idea that most students have no idea what they want to study and, there are so many jobs out there that most people would have no idea even exist. So when faced with making this kind of decision, it is our goal to help offer suggestions based on general interests and areas that a person feels they are strong in.
+• Filter schools by location, major, type of degree, school type and/or tuition.
+• See schools in list format as well as on a Google map.
+• Google map repopulates schools when dragged or on zoom level change.
+• All schools have a dedicated page that show more in-depth information.
 
+Technologies
+--------------------
+
+• React.js
+• Redux
+• HTML
+• CSS
+• PHP
+• MariaDB
+• Apache
+• Ubuntu
