@@ -31,8 +31,11 @@ Feature List
 --------------------
 
 • Filter schools by location, major, type of degree, school type and/or tuition.
+
 • See schools in list format as well as on a Google map.
+
 • Google map repopulates schools when dragged or on zoom level change.
+
 • All schools have a dedicated page that show more in-depth information.
 
 Technologies
