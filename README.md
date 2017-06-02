@@ -45,6 +45,8 @@ Technologies
 • Redux
 • HTML
 • CSS
+• BootStrap
+• Material UI
 • PHP
 • MariaDB
 • Apache
