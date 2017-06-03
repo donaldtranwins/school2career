@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { searchOneSchool } from '../../actions/actions_index';
+import { searchOneSchool, schoolURL } from '../../actions/actions_index';
 import Map from './places_image';
 import Paper from 'material-ui/Paper';
 import MajorsChart from './majors_percent';
 import MfChart from './male_female_chart';
 import ReturnToListbtn from './btn_return_list';
 import DegreeList from './degrees';
+import Loader from '../loader/loading';
 
 class School extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            imageSrc: ''
+        };
+    }
     //allows for the route to be changed back to school search page from the individual schools page
     static contextTypes = {
         router: PropTypes.object
@@ -78,48 +85,99 @@ class School extends Component {
             url = url.substring(0, url.length - 1)
         }
         //this returns all of the material for the individual school page
-        return (
-            <div>
-                <div className='imageDiv'>
-                    <div className="schoolImgHolder">
-                        <img className="schoolImg col-sm-12 " src={this.props.schoolImgURL} />
-                        <div className="schoolName">
-                            <h2 className='universityText'>{data.name} </h2>
-                            <h4 className='universityText'>{data.city}, {data.state}</h4>
-                            <h5 className="webAddress universityText col-md-5"><a target="_blank" href={'http://' + data.url}>{url}</a></h5>
+        if (this.state.imageSrc == this.props.schoolImgURL) {
+            this.state.imageSrc = '';
+            return (
+                <div>
+                    <div className='imageDiv'>
+                        <div className="schoolImgHolder">
+                            <Loader/>
+                            <div className="schoolName">
+                                <h2 className='universityText'>{data.name} </h2>
+                                <h4 className='universityText'>{data.city}, {data.state}</h4>
+                                <h5 className="webAddress universityText col-md-5"><a target="_blank"
+                                                                                      href={'http://' + data.url}>{url}</a>
+                                </h5>
+                            </div>
                         </div>
                     </div>
+                    <ReturnToListbtn onClick={() => this.handleClick()}/>
+                    <div className="container">
+                        <Paper className="statsWrapper">
+                            <div className="row">
+                                <h4 className="col-md-4 singleStats">Admissions Rate: {admissionRate}</h4>
+                                <h4 className="col-md-4 singleStats">SAT Avg: {satAvg}</h4>
+                                <h4 className="col-md-4 singleStats">Undergrad Size: {data.size} students</h4>
+                            </div>
+                            <br/>
+                            <div className="row">
+                                <h4 className="col-md-4 singleStats">{instType} School</h4>
+                                <h4 className="col-md-4 singleStats">Tuition (in state): {tuitionIn}</h4>
+                                <h4 className="col-md-4 singleStats">Tuition (out of state): {tuitionOut}</h4>
+                            </div>
+                        </Paper>
+                        <Paper className="mapPaper">
+                            <Map id="mapShowing"/>
+                        </Paper>
+                        <Paper className="statsWrapper">
+                            <MfChart />
+                        </Paper>
+                        <Paper >
+                            <MajorsChart className="majorsChart"/>
+                        </Paper>
+                        <Paper className="statsWrapper">
+                            <DegreeList/>
+                        </Paper>
+                    </div>
                 </div>
-                <ReturnToListbtn onClick={() => this.handleClick()}/>
-                <div className="container">
-                    <Paper className="statsWrapper">
-                        <div className="row">
-                            <h4 className="col-md-4 singleStats">Admissions Rate: {admissionRate}</h4>
-                            <h4 className="col-md-4 singleStats">SAT Avg: {satAvg}</h4>
-                            <h4 className="col-md-4 singleStats">Undergrad Size: {data.size} students</h4>
+            );
+        } else {
+            this.state.imageSrc = this.props.schoolImgURL;
+            return (
+                <div>
+                    <div className='imageDiv'>
+                        <div className="schoolImgHolder">
+                            <img className="schoolImg col-sm-12 " src={this.state.imageSrc}/>
+                            <div className="schoolName">
+                                <h2 className='universityText'>{data.name} </h2>
+                                <h4 className='universityText'>{data.city}, {data.state}</h4>
+                                <h5 className="webAddress universityText col-md-5"><a target="_blank"
+                                                                                      href={'http://' + data.url}>{url}</a>
+                                </h5>
+                            </div>
                         </div>
-                        <br/>
-                        <div className="row">
-                            <h4 className="col-md-4 singleStats">{instType} School</h4>
-                            <h4 className="col-md-4 singleStats">Tuition (in state): {tuitionIn}</h4>
-                            <h4 className="col-md-4 singleStats">Tuition (out of state): {tuitionOut}</h4>
-                        </div>
-                    </Paper>
-                    <Paper className="mapPaper">
-                        <Map id="mapShowing"/>
-                    </Paper>
-                    <Paper className="statsWrapper">
-                        <MfChart />
-                    </Paper>
-                    <Paper >
-                        <MajorsChart className="majorsChart" />
-                    </Paper>
-                    <Paper className="statsWrapper">
-                        <DegreeList/>
-                    </Paper>
+                    </div>
+                    <ReturnToListbtn onClick={() => this.handleClick()}/>
+                    <div className="container">
+                        <Paper className="statsWrapper">
+                            <div className="row">
+                                <h4 className="col-md-4 singleStats">Admissions Rate: {admissionRate}</h4>
+                                <h4 className="col-md-4 singleStats">SAT Avg: {satAvg}</h4>
+                                <h4 className="col-md-4 singleStats">Undergrad Size: {data.size} students</h4>
+                            </div>
+                            <br/>
+                            <div className="row">
+                                <h4 className="col-md-4 singleStats">{instType} School</h4>
+                                <h4 className="col-md-4 singleStats">Tuition (in state): {tuitionIn}</h4>
+                                <h4 className="col-md-4 singleStats">Tuition (out of state): {tuitionOut}</h4>
+                            </div>
+                        </Paper>
+                        <Paper className="mapPaper">
+                            <Map id="mapShowing"/>
+                        </Paper>
+                        <Paper className="statsWrapper">
+                            <MfChart />
+                        </Paper>
+                        <Paper >
+                            <MajorsChart className="majorsChart"/>
+                        </Paper>
+                        <Paper className="statsWrapper">
+                            <DegreeList/>
+                        </Paper>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 //allows specific parts of state to be used within the component
@@ -130,4 +188,4 @@ function mapStateToProps(state) {
     };
 }
 //connects the state to props and an action creator
-export default connect(mapStateToProps, { searchOneSchool })(School);
+export default connect(mapStateToProps, { searchOneSchool, schoolURL })(School);
