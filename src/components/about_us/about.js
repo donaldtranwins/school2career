@@ -15,7 +15,7 @@ class AboutUs extends Component {
                             Rarely does a student know exactly what path in life they want to take.  
                             With thousands of professions to choose from, it is amazing how many jobs remain unknown.  
                             But, given the right kind of degree, you can prepare for a wide range of possibilities.  
-                            And that all begins with school.  Let School2Career help you find the school to start your career.
+                            And that all begins with school.
                         </p>
                         <p>
                             At its core, School2Career provides a college finding experience that allows you to find schools throughout the United States.
@@ -24,15 +24,9 @@ class AboutUs extends Component {
                             School2Career provides the tools to help you make the most informed decisions about your future.
                         </p>
                         <p>
-                            One way to find the path to your future is to understand what subjects you are strong in and equating that to a degree. 
-                            Another way would be to start with a particular interest and expand that into a career path.  
-                            School2Career combines the two methods into a fun, quick, and easy skills assessment.
-                        </p>
-                        <p>
-                            The assessment we provide uses the same psychology as many popular traditional assessments. 
-                            (It passes Cronbach&#39;s Alpha at alpha level 0.94.)  
-                            The assessment uncovers specific personality types/traits and suggests paths you may be interested in.  
-                            That said, the assessment results are merely suggestions to give you an idea of the many career possibilities you may have overlooked.
+                            One way to find the path to your future is to understand what subjects you are strong in and equate that to a degree.
+                            Another way would be to start with a particular interest and expand that into a career path. Regardless of your chosen
+                            path, let School2Career help you find the school to start your career.
                         </p>
                     </div>
                 </div>
