@@ -18,7 +18,6 @@ const btnStyle = {
 const selectStyle = {
     textAlign: 'none'
 };
-
 const validate = values => {
     const errors = {};
     if (!values.location) {
@@ -26,7 +25,7 @@ const validate = values => {
     }
     return errors
 };
-
+//creates a text field
 const renderTextField = ({ input: { onChange, name }, label, meta: { touched, error }, ...custom }) => {
     return (
         <div>
@@ -44,6 +43,7 @@ const renderTextField = ({ input: { onChange, name }, label, meta: { touched, er
         </div>
     )
 };
+//creates a select field
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
     <SelectField
         className='landingForm'
@@ -57,9 +57,11 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
         {...custom}/>
 );
 class LandingForm extends Component {
+    //allows for routing to change to school search page
     static contextTypes = {
         router: PropTypes.object
     };
+    // gets the coordinates for the map, sets the center location and user input
     getCenterCoords = (values) => {
         const center = {
             lng: values.latLng.lng,
@@ -68,6 +70,7 @@ class LandingForm extends Component {
         this.props.centerOfMap(center);
         this.props.userInput(values);
     };
+    //when form is submitted, the loader gets set and geocoding occurs and page is pushed to school search
     formSubmitted = (values) => {
         this.props.showLoader(true);
         geocodeByAddress(values.location,  (err, latLng) => {
@@ -77,9 +80,9 @@ class LandingForm extends Component {
             this.context.router.push('/school_search');
         });
     };
-
+    //returns the form that will appear on landing page
     render(){
-        const { handleSubmit, pristine, reset, submitting } = this.props;
+        const { handleSubmit, pristine, submitting } = this.props;
         return (
 
           <form onSubmit={handleSubmit((formValues) => this.formSubmitted(formValues))}>
@@ -100,9 +103,10 @@ class LandingForm extends Component {
         )
     }
 }
+//uses redux form to create the form
 LandingForm = reduxForm({
     form: 'LandingForm',
     validate
 })(LandingForm);
-
+//connects several action creators to be used in this component. Null is used as mapstatetoprops is not needed
 export default connect(null, { searchForSchools, centerOfMap, userInput, showLoader })(LandingForm);

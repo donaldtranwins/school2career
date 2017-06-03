@@ -4,22 +4,20 @@
 
 
 const COLORS = ['#BA68C8', '#0088FE'];
-
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x  = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy  + radius * Math.sin(-midAngle * RADIAN);
-
     return (
         <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
         </text>
     );
 };
-
- class MF extends Component{
+//returns pie chart for male/female on individual school page
+class MF extends Component{
      render () {
-         const school = this.props.schools.school
+         const school = this.props.schools.school;
          let male = school.demog_men * 100;
          male = Math.round(parseFloat(male));
          let female = school.demog_women * 100;
@@ -28,7 +26,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
              {name: 'female', value: female },
              {name: 'male', value: male }
          ];
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x  = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy  + radius * Math.sin(-midAngle * RADIAN);
@@ -62,13 +60,12 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
             </div>
          );
      }
- }
-
-
- function mapStateToProps(state) {
+}
+//allows state to be used within the component
+function mapStateToProps(state) {
      return {
          schools: state.schools.single,
      };
- }
-
- export default connect(mapStateToProps)(MF);
+}
+//connects state to props
+export default connect(mapStateToProps)(MF);

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import {toggleMap} from '../../actions/actions_index';
 
 class mapButton extends Component {
+    //created a check for a button that would allow a toggle between just the list view and just
+    //the google map.
     handleButtonClick() {
         const mapArea = document.getElementById('mapBox');
         const schools = document.getElementById('schoolList');
@@ -43,10 +45,12 @@ class mapButton extends Component {
     }
 }
 
+//this allows us to pass props into the component. Here we have the value of showMap
 function mapStateToProps(state) {
     return {
         showMap: state.showMap
     }
 }
 
+//this connects us to the redux store, it connects both the state and specific actions in this case togglemap
 export default connect(mapStateToProps, {toggleMap:toggleMap})(mapButton);

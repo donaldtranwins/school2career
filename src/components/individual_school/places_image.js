@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { schoolURL } from '../../actions/actions_index';
 
 class Photo extends Component {
+    //state that is used on google maps that keeps track of zoom and the marker
     constructor(props){
         super(props);
         this.state = {
@@ -10,11 +11,16 @@ class Photo extends Component {
             markers: []
         };
     }
+    //return back the actual map.
     render() {
-        return <div id="mapBox" className="soloMap col-xs-12"  >
-            <div className='solo-canvas' ref="mapCanvas"></div>
-        </div>
+        return (
+            <div id="mapBox" className="soloMap col-xs-12"  >
+                <div className='solo-canvas' ref="mapCanvas"></div>
+            </div>
+        )
     }
+    //creates a call back that gets photos from google places. it places it into state to be used within
+    //a different component
     callback = (place) => {
         let holder = place[0].photos;
         if(holder !== undefined){
@@ -25,6 +31,7 @@ class Photo extends Component {
             this.props.schoolURL(imageURL);
         }
     };
+    //creates the request to google places to get the photo.
     componentWillReceiveProps(nextProps) {
         this.clearMarkers();
         const data = nextProps.school.school;
@@ -34,6 +41,8 @@ class Photo extends Component {
             };
         } else {
             this.map = this.createMap(data);
+            //using a query string, we are using the name of the school along with admin so better chance
+            //of getting an image of the school
             let request = {
                 query: `${data.name} admin`
             };
@@ -46,6 +55,7 @@ class Photo extends Component {
             // because we can't add listeners on the map until its created
         }
     }
+    //creates the request to google places to get the photo.
     componentDidMount(){
         const data = this.props.school.school;
         this.clearMarkers();
@@ -53,6 +63,8 @@ class Photo extends Component {
             return () => { return <p>Loading...</p>};
         } else {
             this.map = this.createMap(data);
+            //using a query string, we are using the name of the school along with admin so better chance
+            //of getting an image of the school
             let request = {
                 query: `${data.name} admin`
             };
@@ -69,6 +81,7 @@ class Photo extends Component {
     componentDidUnMount() {
         google.maps.event.clearListeners(map, 'zoom_changed')
     }
+    //creates map with most options turned off
     createMap(data) {
         let mapOptions = {
             zoom: this.state.zoom,
@@ -88,6 +101,7 @@ class Photo extends Component {
             pos.lng
         )
     }
+    //clear markers from state
     clearMarkers() {
         for (let m in this.state.markers) {
             this.state.markers[m].setMap(null)
@@ -96,6 +110,7 @@ class Photo extends Component {
             markers : []
         });
     }
+    //creates specific icons for schools based on size
     colorForMarker(sizeOfSchool) {
         switch (true) {
             case (sizeOfSchool < 10000):
@@ -112,6 +127,7 @@ class Photo extends Component {
                 break;
         }
     }
+    //create marker for individual school page
     createMarker(data) { //would add in (pos) as a parameter
         const iconForSchool = this.colorForMarker(parseInt(data.size));
         const newMarker = new google.maps.Marker({
@@ -128,10 +144,11 @@ class Photo extends Component {
         return newMarker;
     }
 }
-
+//allows this state to be used within the component
 function mapStateToProps(state){
     return{
         school: state.schools.single
     }
 }
+//connects the state to props and allows a specific action creator to be used.
 export default connect(mapStateToProps, {schoolURL})(Photo);

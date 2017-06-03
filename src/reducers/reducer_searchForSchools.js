@@ -6,7 +6,7 @@ const defaultState = {
     noSchool: false,
     showLoader: false
 };
-
+//reducer for getting all schools, getting one school and for showing the loader, also handles no schools.
 export default function(state = defaultState, action){
     switch(action.type){
         case FETCH_SCHOOLS:

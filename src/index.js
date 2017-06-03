@@ -16,10 +16,11 @@ import NotFound from './components/notfoundpage/not_found';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {blueGrey300, green300} from 'material-ui/styles/colors';
 
-
 const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 injectTapEventPlugin();
 
+
+//changed theme for Material UI
 const muiTheme = getMuiTheme({
     fontFamily: 'Roboto, sans-serif',
     palette: {
@@ -39,6 +40,8 @@ const landingImage = {
     zIndex : -10
 };
 
+//created the landing page, this shows the images based on size screen as well as adds the form for choosing
+// location and majors
 const PaperForm = () => (
     <div>
         <div className='landingImg'></div>
@@ -48,6 +51,10 @@ const PaperForm = () => (
     </div>
 );
 
+//sets up the Material UI theme as well as creates the routes (ie paths for the navigation)
+//:id is a wild card that matches the ID of the school so every school will have it's own route based on it's id number
+//the * grabs everything not defined and will show off the 404 page.
+//using indexroute allows the / to have a default child for the app component, ie giving us a home page with just the /
 ReactDOM.render(
     <MuiThemeProvider muiTheme={muiTheme}>
         <Provider store={createStoreWithMiddleware(rootReducer)}>

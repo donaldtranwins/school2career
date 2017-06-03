@@ -11,7 +11,7 @@ const style = {
     alignItems: 'center',
     justifyContent: 'center'
 };
-
+//creates the paper with the landing form already made inside of it.
 const PaperExampleSimple = () => (
     <Paper style={style} zDepth={4} >
         <LandingForm />

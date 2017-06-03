@@ -1,12 +1,11 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import ActionAndroid from 'material-ui/svg-icons/action/android';
-import FontIcon from 'material-ui/FontIcon';
 
 const style = {
   margin: 12,
 };
 
+//creates button to go from individual schools page back to list of schools
 const ReturnToListbtn = (props) => (
   <div>
     <RaisedButton

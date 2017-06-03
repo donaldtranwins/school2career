@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class AboutUs extends Component {
-
+    //creates the about us page with photo and text.
     render() {
         return (
             <div className="container mt-3">
