@@ -9,16 +9,16 @@ class FetchSchools{
         $queryMiddle =    "FROM `schools` s ";
         $queryEnd = isset($this->data['mapBounds']) && isset($this->data['latLng'])
             ? "WHERE (
-                                  `lat` BETWEEN 
+                        `lat` BETWEEN 
                                       ".floatval($this->data['mapBounds']['sw']['lat'])." 
                                       AND 
                                       ".floatval($this->data['mapBounds']['ne']['lat'])."
-                          ) AND (
-                                  `lng` BETWEEN 
+                     ) AND (
+                        `lng` BETWEEN 
                                       ".floatval($this->data['mapBounds']['sw']['lng'])." 
                                       AND 
                                       ".floatval($this->data['mapBounds']['ne']['lng'])."
-                          ) AND "
+                     ) AND "
             : "WHERE     " ;
 
         $tables = [];

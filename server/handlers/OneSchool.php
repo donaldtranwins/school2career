@@ -51,9 +51,9 @@
             $dbConn->close();
             return $this->output;
 
-//            // Query without using Prepared Statements
-//            $metadata = $dbConn->query($this->metadataQuery . $_GET['schid']); //remove ? from constant before running
-//            $programs = $dbConn->query($this->programsQuery . $_GET['schid']); //remove ? from constant before running
+//            // Example Query without using Prepared Statements
+//            $metadata = $dbConn->query($this->metadataQuery . $_GET['schid']); //remove ? from the end of constant $metadataQuery before running
+//            $programs = $dbConn->query($this->programsQuery . $_GET['schid']); //remove ? from the end of constant $programsQuery before running
 //
 //            if(empty($metadata)) {
 //                $this->output['status'][] = '422 - Unprocessable Entity, Bad Query';
