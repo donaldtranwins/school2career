@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import Drawer from 'material-ui/Drawer';
 import RaisedButton from 'material-ui/RaisedButton';
-
 import MapForm from './mapPageForm/formOnMapPage';
 import SchoolList from './main_school_list/school_list';
 import Map from './google_maps/map';
-
-
 
 class drawerForm extends Component {
 
@@ -47,7 +44,4 @@ class drawerForm extends Component {
         );
     }
 }
-
-
-
 export default drawerForm;
