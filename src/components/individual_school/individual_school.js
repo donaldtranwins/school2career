@@ -4,26 +4,29 @@ import { connect } from 'react-redux';
 import { searchOneSchool } from '../../actions/actions_index';
 import Map from './places_image';
 import Paper from 'material-ui/Paper';
-
 import MajorsChart from './majors_percent';
 import MfChart from './male_female_chart';
 import ReturnToListbtn from './btn_return_list';
 import DegreeList from './degrees';
 
 class School extends Component {
+    //allows for the route to be changed back to school search page from the individual schools page
     static contextTypes = {
         router: PropTypes.object
     };
     handleClick() {
         this.context.router.push('/school_search');
     };
+    //on mounting this grabs the path name, splits it and then finds the end of it to use as the ID which
+    //is necessary to find all the data about that particular school
     componentDidMount() {
         let pathArray = window.location.pathname.split( '/' );
         this.props.searchOneSchool(pathArray[pathArray.length -1]);
     };
-
+    //creates the page for each individual school
     render() {
         let data = this.props.school.single;
+        //until the page has data loading will come up on screen
         if(!data ){
             return <p>Loading...</p>
         }
@@ -74,6 +77,7 @@ class School extends Component {
         if(findForwardSlash === url.length -1){
             url = url.substring(0, url.length - 1)
         }
+        //this returns all of the material for the individual school page
         return (
             <div>
                 <div className='imageDiv'>
@@ -118,11 +122,12 @@ class School extends Component {
         );
     }
 }
+//allows specific parts of state to be used within the component
 function mapStateToProps(state) {
     return {
         school: state.schools,
         schoolImgURL: state.schoolImgURL.image
     };
 }
-
+//connects the state to props and an action creator
 export default connect(mapStateToProps, { searchOneSchool })(School);

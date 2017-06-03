@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { searchForSchools, mapBoundsInput } from '../../actions/actions_index';
 
 class GMap extends Component {
+    // state was created to keep track of zoom, hold markers for google maps and set up initial marker clusters.
     constructor(props){
         super(props);
         this.state = {
@@ -11,6 +12,7 @@ class GMap extends Component {
             markerCluster : null
         };
     }
+    //returns back the actual map.
     render() {
         return (
             <div className="GMap">
@@ -18,12 +20,15 @@ class GMap extends Component {
             </div>
         )
     }
+    //when the page loads this initializes the map and if bounds exist it calls to place the markers on the page
     componentDidMount(){
         this.initMap();
         if(this.props.boundsInput.mapBoundsInput){
             this.createSchoolMarkers(this.props);
         }
     }
+    //when props change, the map gets reinitialized and then markers get dropped. This specifically helps
+    //with the drag and drop and magnification change
     componentWillReceiveProps(nextProps){
         if(this.props.userInput.value === null) {
             if(nextProps.center.lat !== this.props.center.lat) {
@@ -34,21 +39,9 @@ class GMap extends Component {
             // this.createSchoolMarkers(nextProps);
         }
         this.createSchoolMarkers(nextProps);
-        // if(this.props.userInput.value === null) {
-        //         this.initMap();
-        // } else if(nextProps.center.lat !== this.props.center.lat){
-        //         this.initMap();
-        //     // this.createSchoolMarkers(nextProps);
-        // }
-        // if (nextProps.schools.all !== undefined && this.props.schools.all !== undefined) {
-        //     if ( this.props.schools.all.length > nextProps.schools.all.length) {
-        //         this.createSchoolMarkers(this.props)
-        //     }
-        //     else if (nextProps.schools.all.length>0) {
-        //         this.createSchoolMarkers(nextProps);
-        //     }
-        // }
     }
+    //this initializes the map, places a loading statement until input has been received. Also
+    //puts a listener on the map for when it goes idle for drag/drop and zoom change
     initMap(){
         const userInput = this.props.userInput.value;
         if(!userInput){
@@ -60,6 +53,7 @@ class GMap extends Component {
         }
         this.createLegend();
     }
+    //clear out markers within the state. This is so markers are removed and not just continually piled on.
     clearOutMarkers() {
         for (let i = 0; i < this.state.markers.length; i++) {
             this.state.markers[i].setMap(null);
@@ -68,6 +62,8 @@ class GMap extends Component {
             this.state.markerCluster.clearMarkers();
         }
     }
+    //creates the markers from state this both calls clearing out markers, create actual markers
+    //create clusters for groups of markers
     createSchoolMarkers(nextProps){
         const data = nextProps.schools.all;
         this.clearOutMarkers();
@@ -82,6 +78,7 @@ class GMap extends Component {
             });
         }
     }
+    //this set of functions creates the legend that gets set on top of the google map.
     createLegendElement() {
         let outsideDiv = document.createElement('div');
         outsideDiv.id = 'legend';
@@ -119,6 +116,7 @@ class GMap extends Component {
         }
         this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
     }
+    //creates the map with set options.
     createMap(data) {
         let mapOptions = {
             zoom: this.state.zoom,
@@ -127,12 +125,14 @@ class GMap extends Component {
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions)
     }
+    //this takes the data and creates lat and lng as required by google maps.
     createLatLng(pos){
         return new google.maps.LatLng(
             pos.lat,
             pos.lng
         )
     }
+    //sends out an icon based on size of school. each is a different color and size.
     colorForMarker(sizeOfSchool) {
         switch (true) {
             case (sizeOfSchool < 10000):
@@ -149,6 +149,7 @@ class GMap extends Component {
                 break;
         }
     }
+    //creates clusters from the markers with a minimum of 3 markers to form a group.
     createCluster() {
         let clusterOptions = {
             imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
@@ -159,6 +160,7 @@ class GMap extends Component {
             this.state.markerCluster = new MarkerClusterer(this.map, this.state.markers, clusterOptions);
         }
     }
+    //creates actual marker and add in various listeners.
     createMarker(data) { //would add in (pos) as a parameter
         const iconForSchool = this.colorForMarker(parseInt(data.size));
         const newMarker = new google.maps.Marker({
@@ -202,8 +204,8 @@ class GMap extends Component {
         });
         infoWindow.close();
     }
+    //gets bounds for map based on ne and sw coordinates.
     getMapBounds() {
-        // this.clearOutMarkers();
         const bounds = this.map.getBounds();
         const ne = bounds.getNorthEast();
         const sw = bounds.getSouthWest();
@@ -225,12 +227,15 @@ class GMap extends Component {
             this.props.searchForSchools(userInputMapBounds);
         }
     }
+    //handles zoom change and sets state to current zoom
     handleZoomChange() {
         this.setState({
             zoom: this.map.getZoom()
         })
     }
 }
+
+//passes in these states so that each of these can be used within the component
 function mapStateToProps(state){
     return{
         schools: state.schools,
@@ -239,4 +244,5 @@ function mapStateToProps(state){
         boundsInput: state.mapBoundsInput
     }
 }
+//allows state to be connected as well as to other action creators.
 export default connect(mapStateToProps, { searchForSchools, mapBoundsInput })(GMap);

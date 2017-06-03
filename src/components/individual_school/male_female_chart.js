@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {ResponsiveContainer, PieChart, Pie, Sector, Cell, Legend} from 'recharts';
 
-
 const COLORS = ['#BA68C8', '#0088FE'];
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -15,7 +14,7 @@ const y = cy  + radius * Math.sin(-midAngle * RADIAN);
         </text>
     );
 };
-
+//returns pie chart for male/female on individual school page
 class MF extends Component{
     render () {
         const school = this.props.schools.school
@@ -64,12 +63,11 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         );
     }
 }
-
-
+//allows state to be used within the component
 function mapStateToProps(state) {
     return {
         schools: state.schools.single,
     };
 }
-
+//connects state to props
 export default connect(mapStateToProps)(MF);

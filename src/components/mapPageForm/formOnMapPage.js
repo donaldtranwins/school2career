@@ -5,7 +5,6 @@ import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import Slider from 'material-ui/Slider';
-
 import { geocodeByAddress } from 'react-places-autocomplete';
 import majors from '../landing_form/majors';
 import { searchForSchools, centerOfMap, userInput, showLoader } from '../../actions/actions_index';
@@ -14,7 +13,7 @@ import GeoCode from '../geocoding/geocoding';
 const style = {
     marginLeft: 80
 };
-
+//simple validation for form
 const validate = values => {
     const errors = {};
     if (!values.location) {
@@ -22,7 +21,7 @@ const validate = values => {
     }
     return errors
 };
-
+//allows text field to be created
 const renderTextField = ({ input: { onChange, name }, label, meta: { touched, error }, ...custom }) => {
     return (
         <div>
@@ -40,11 +39,13 @@ const renderTextField = ({ input: { onChange, name }, label, meta: { touched, er
         </div>
     )
 };
+//allows checkboxes to be created
 const renderCheckbox = ({ input, label }) => (
     <Checkbox label={label}
               checked={input.value ? true : false}
               onCheck={input.onChange}/>
 );
+//allows select field to be created
 const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
     <SelectField
         floatingLabelText={label}
@@ -59,6 +60,7 @@ class mapPageForm extends Component {
     constructor(props) {
         super(props);
     }
+    //creates the sliders for the larger form on school search page.
     renderSlider({input: {onChange, value, name}, defaultValue, min, max}){
         let numb = value;
         numb = numb.toLocaleString();
@@ -82,6 +84,7 @@ class mapPageForm extends Component {
             )
         }
     }
+    //gets and sets center coordinates and values for google maps
     getCenterCoords = (values) => {
         const center = {
             lat: values.latLng.lat,
@@ -90,6 +93,7 @@ class mapPageForm extends Component {
         this.props.userInput(values);
         this.props.centerOfMap(center);
     };
+    //on form submitted geocode, get bands, and then show loader before forcing form closed.
     formSubmitted(values) {
         geocodeByAddress(values.location, (err, latLng) => {
             if(err) { console.warn('error: ', err)}
@@ -112,6 +116,7 @@ class mapPageForm extends Component {
         this.props.clickClosed();
     };
 
+    //creates the form for the school search page.
     render() {
         const { handleSubmit } = this.props;
         const sliderStyle = {
@@ -161,18 +166,18 @@ class mapPageForm extends Component {
         </form>
     )};
 };
-
+//uses redux form to create the form
 mapPageForm = reduxForm({
     form: 'mapPageForm',
     validate,
     initialValues: {aa: true, bs: true, voc: true, public: true, private: true}
 })(mapPageForm);
-
+//allows state to be used within the component
 function mapStateToProps(state){
     return {
         input: state.userInput,
         mapB: state.mapBoundsInput
     }
 }
-
+//connects state to props and allows action creators to be used.
 export default connect(mapStateToProps, { searchForSchools, centerOfMap, userInput, showLoader })(mapPageForm );
