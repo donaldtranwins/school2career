@@ -32,8 +32,8 @@ const school = {
     color: 'red'
 };
 class SchoolList extends Component {
-
     render(){
+        //shows loader if no data has been found
         if (this.props.schools.showLoader) {
             return (
                 <div className='schoolListScroll'>
@@ -46,6 +46,7 @@ class SchoolList extends Component {
             let list = '';
             let noSchool = null;
             const data = this.props.schools.all;
+            //checks to see if there are no schools
             if (this.props.schools.noSchool) {
                 if (this.props.schools.noSchool !== false) {
                     noSchool = this.props.schools.noSchool.length;
@@ -56,6 +57,7 @@ class SchoolList extends Component {
             if(!data || noSchool == 1) {
                 list = <div>No Schools Match The Current Criteria</div>;
             } else {
+                //if schools exist the list array is created by using map
                 list = data.map((school, index) => {
                     let admissionRate = parseFloat(school.adm_rate);
                     if (parseFloat(admissionRate) > 0) {
@@ -84,6 +86,7 @@ class SchoolList extends Component {
                         url = url.substring(0, url.length - 1);
                     }
                     const uniqueID = `sch${school.uid}`;
+                    //creates the individual papers for each school that is found
                     return(
                         <Paper className="listOfSchools" style={style} key={index} >
                             <ul style={mainUl} id={uniqueID}>
@@ -101,6 +104,7 @@ class SchoolList extends Component {
                     )
                 });
             }
+            //this returns the list to be shown on the school search page
             return (
                 <div className='schoolListScroll'>
                     <div id="schoolList" className="listContainer">
@@ -111,9 +115,11 @@ class SchoolList extends Component {
         }
     }
 }
+//allows state to be used within this component
 function mapStateToProps(state){
     return{
         schools: state.schools
     }
 }
+//connects state to props and allows action creator to be used.
 export default connect(mapStateToProps, {showLoader})(SchoolList);

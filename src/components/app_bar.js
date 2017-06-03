@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { AppBar, Tabs, Tab, Value } from 'material-ui';
 import { Link } from 'react-router';
 
-
 const styles = {
     stylesTab: {
         color: 'white',
@@ -16,7 +15,7 @@ const styles = {
 };
 
 class NavBar extends Component {
-
+    //combination of th is and the function allow us to change routing so we can go to a specific page on a tap.
     static contextTypes = {
         router: PropTypes.object
     };
@@ -24,7 +23,8 @@ class NavBar extends Component {
     handleTouchTap() {
         this.context.router.push('/');
     }
-
+    //creates the navBar on screen, using material UI's <AppBar> and <Tabs> the title is clickable and will
+    //route to the landing page and, the others using <Link> allowing them to route to specific pages.
     render() {
         return(
             <AppBar

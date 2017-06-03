@@ -1,6 +1,7 @@
 import React from 'react';
 import MenuItem from 'material-ui/MenuItem';
 
+// a list of all the majors which are used within the forms.
 export default [
     <MenuItem key='Agriculture' value={'Agriculture'} primaryText="Agriculture"/>,
     <MenuItem key='Anthropology' value={'Anthropology'} primaryText="Anthropology"/>,

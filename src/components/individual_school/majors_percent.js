@@ -4,6 +4,7 @@ import {ResponsiveContainer, BarChart, Bar, Brush, ReferenceLine, XAxis, YAxis, 
 
 
 class MajorChart extends Component{
+    //creates a chart based on majors
     	render () {
             const majors = this.props.school.single.school.programs.map(function (obj) {
                 let returnObj = {};
@@ -51,11 +52,11 @@ class MajorChart extends Component{
             );
       }
 }
-
+//allows this state to be used within the component
 function mapStateToProps(state){
     return({
     school: state.schools
     })
 }
-
+//connects thet state to props
 export default connect(mapStateToProps)(MajorChart);

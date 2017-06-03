@@ -10,6 +10,7 @@ class DegreeList extends Component{
             backgroundColor : green300,
             color: 'white'
         };
+        //creates an array of all the degrees offered in a school
         const degrees = this.props.school.single.school.programs.map(function(obj){
             let degreeInfo = "";
             if (obj.associates !== 0 || obj.bachelors !== 0) {
@@ -29,9 +30,7 @@ class DegreeList extends Component{
                 return <div key={obj.name}>Certificate offered in {obj.name}</div>
             }
         });
-
-
-
+        //returns a div that contains all the degrees styled for the individual schools page
         return (
             <div>
                 <h4 className="degreeList">Degrees Offered</h4>
@@ -42,11 +41,11 @@ class DegreeList extends Component{
         );
     }
 }
-
+//allows this state to be used within the component
 function mapStateToProps(state){
     return({
         school: state.schools
     })
 }
-
+//connects the state to props
 export default connect(mapStateToProps)(DegreeList);

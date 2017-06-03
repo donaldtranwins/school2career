@@ -2,6 +2,7 @@ import React from 'react';
 import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
 
 class GeoCode extends React.Component {
+    //created state to track the address for geocoding. this updates on change within the auto complete box
     constructor(props) {
         super(props);
         this.state = { address: '' };
@@ -23,10 +24,12 @@ class GeoCode extends React.Component {
             placeholder: 'LOCATION',
             autoFocus: true,
         };
+        //allows country restrictions and other options based on what google maps will allow
         const options = {
             types: ['geocode'],
             componentRestrictions: {country:'us'}
         };
+        // returns out the autocomplete box to be placed on forms
         return (
             <div className='placesContainer'>
                 <div className='placesAuto'>
