@@ -25,14 +25,14 @@
 Summary
 --------------------
 
-The application is a college find. It allow you to search for colleges based on a series of filters. From either a list or directly from the goolge map, schools can be picked to pull up a page dedicated to just that school. This provides more in depth information about an individual school.
+The application is a college finder that allows you to search for colleges based on a series of filters. From either a list or directly from the google map, schools can be selected to pull up a page dedicated to just that school. This provides more in depth information about an individual school.
 
 Feature List
 --------------------
 
-• Filter schools by location, major, type of degree, school type and/or tuition.
+• Filter schools by location, major, type of degree, school type, and/or tuition.
 
-• See schools in list format as well as on a Google map.
+• See schools in list format, as well as on a Google map.
 
 • Google map repopulates schools when dragged or on zoom level change.
 
@@ -42,12 +42,21 @@ Technologies
 --------------------
 
 • React.js
+
 • Redux
+
 • HTML
+
 • CSS
-• BootStrap
+
+• Bootstrap
+
 • Material UI
+
 • PHP
+
 • MariaDB
+
 • Apache
+
 • Ubuntu
