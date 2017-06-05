@@ -1,7 +1,18 @@
 <?php
-print("hi <br>");
+/** Imports the US Department of Education Data Dumps for a single year.
+ *
+ *  Only imports the data that School2Career needs out of the 7700+ rows of schools and 8 million cells of data.
+ *
+ *  !! Update 06/01/2017 -- The Import Script now requires a few changes in order to work.  Since the creation
+ *      of this script, the database schema has been restructured from 5 tables down to 3.
+ *      The changes needed to make this script work:
+ *          + includes/columns_to_import.php is up-to-date with the latest columns to use
+ *          + data only needs to be imported into 1 table instead of 2
+ *          + column's data type is no longer used and can be ignored
+ *      Essentially, the database schema changes will make this import script even more simple and reduces complexity
+ */
 
-set_time_limit(120);
+set_time_limit(120); //Average run time is ~65 seconds
 
 /** @var    boolean $ignore_header  If true, will run fgetcsv once */
 /** @var    string  $filename       Path to csv file to import*/
@@ -11,21 +22,13 @@ $filename = 'includes/private/MERGED2014_15_PP.csv';
 /** Require:  Imports a @var object $conn       Object returned from mysqli_connect
     Include:  Imports a @var array  $columns    Columns to import from the CSV */
 $handle = fopen($filename, "r") or exit("Could not open file ($filename)");
-//require("includes/private/connect_to_dev.php");
-require("includes/connect_to_localbox.php");    // $conn
-require("includes/columns_to_import.php");      // $columns
+require("includes/private/connect_to_dev.php");  // $conn
+require("3-import-lookup_table-columns.php");      // $columns
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     die();
 }
 
-//$initiateQuery = file_get_contents('includes/create_both_tables.sql');
-//if (mysqli_query($conn,$initiateQuery)){
-//    unset($initiateQuery);
-//} else {
-//    print $initiateQuery;
-//    die('Could not create initial tables');
-//};
 
 if($ignore_header){
     fgetcsv($handle, "r");
@@ -40,23 +43,14 @@ while($data = fgetcsv($handle, "r")){
         continue;
     }
 
-    //$query = "INSERT INTO `database` ({$columns[0]}`, `{$columns[3]}`) VALUES (\"{$data[0]}\", \"{$data[3]}\")";
+    //$sampleQueryStructure = "INSERT INTO `database` ({$columns[0]}`, `{$columns[3]}`) VALUES (\"{$data[0]}\", \"{$data[3]}\")";
     $insertStart = "INSERT INTO `";
     $dataColumns = "metadata_imported` (";
     $queryColumns = "query_imported` (";
     $dataValues = ') VALUES (';
     $queryValues = ') VALUES (';
     $insertEnd = ');';
-//    $firstValue = true;
     foreach($columns as $index => $column) {
-//        if ($firstValue){
-//            $firstValue = false;
-//        } else {
-//            $dataColumns .= ', ';
-//            $queryColumns .= ', ';
-//            $dataValues .= ', ';
-//            $queryValues .= ', ';
-//        }
         if ($column['table'] === 'query_imported') {
             $queryColumns .= ", `$column[name]`";
             $queryValues .= ", \"{$data[$index]}\"";
@@ -83,8 +77,6 @@ while($data = fgetcsv($handle, "r")){
     }
 }
 
-
-//include("truncate.php"); //deprecated  //comment in, if you want to modify the data after creating everything
 
 mysqli_close($conn);
 fclose($handle);

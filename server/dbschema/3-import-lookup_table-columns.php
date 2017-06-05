@@ -6,31 +6,16 @@ $columns = [
         'type' => 'number',
         'table' => 'both'
     ],
-//    1 => [
-//        'name' => 'id_school',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
-    6 => [
-        'name' => 'zip',
-        'type' => 'string',
-        'table' => 'query_imported'
-    ],
-    21 => [
-        'name' => 'lat',
+    1 => [
+        'name' => 'id_school',
         'type' => 'number',
-        'table' => 'query_imported'
+        'table' => 'metadata_imported'
     ],
-    22 => [
-        'name' => 'lng',
+    2 => [
+        'name' => 'id_system',
         'type' => 'number',
-        'table' => 'query_imported'
+        'table' => 'metadata_imported'
     ],
-//    2 => [
-//        'name' => 'id_system',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
     3 => [
         'name' => 'name',
         'type' => 'string',
@@ -46,6 +31,16 @@ $columns = [
         'type' => 'string',
         'table' => 'metadata_imported'
     ],
+    21 => [
+        'name' => 'lat',
+        'type' => 'number',
+        'table' => 'query_imported'
+    ],
+    22 => [
+        'name' => 'lng',
+        'type' => 'number',
+        'table' => 'query_imported'
+    ],
     8 => [
         'name' => 'url',
         'type' => 'string',
@@ -56,21 +51,6 @@ $columns = [
         'type' => 'string',
         'table' => 'metadata_imported'
     ],
-//    18 => [
-//        'name' => 'region',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
-//    19 => [
-//        'name' => 'locale',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
-//    25 => [
-//        'name' => 'cc_setting_size_time',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
     290 => [
         'name' => 'size',
         'type' => 'string',
@@ -86,11 +66,6 @@ $columns = [
         'type' => 'number',
         'table' => 'metadata_imported'
     ],
-//    35 => [
-//        'name' => 'religion',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
     36 => [
         'name' => 'adm_rate',
         'type' => 'number',
@@ -101,16 +76,6 @@ $columns = [
         'type' => 'number',
         'table' => 'metadata_imported'
     ],
-//    24 => [
-//        'name' => 'cc_selective_time',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
-//    23 => [
-//        'name' => 'cc_focus',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
     16 => [
         'name' => 'ownership',
         'type' => 'number',
@@ -126,16 +91,8 @@ $columns = [
         'type' => 'number',
         'table' => 'metadata_imported'
     ],
-//    385 => [
-//        'name' => 'aid_grant',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
-//    437 => [
-//        'name' => 'aid_loan',
-//        'type' => 'number',
-//        'table' => 'metadata_imported'
-//    ],
+
+
     61 => [
         'name' => 'prog_agri',
         'type' => 'number',
@@ -207,7 +164,7 @@ $columns = [
         'table' => 'query_imported'
     ],
     73 => [
-        'name' => 'prog_fam_cnsmr_sci',
+        'name' => 'prog_fam_con_sci',
         'type' => 'number',
         'table' => 'query_imported'
     ],
@@ -267,7 +224,7 @@ $columns = [
         'table' => 'query_imported'
     ],
     62 => [
-        'name' => 'prog_nat_resources',
+        'name' => 'prog_resources',
         'type' => 'number',
         'table' => 'query_imported'
     ],
@@ -469,12 +426,12 @@ $columns = [
         'table' => 'query_imported'
     ],
     161 => [
-        'name' => 'deg_fam_cnsmr_sci_2',
+        'name' => 'deg_fam_con_sci_2',
         'type' => 'number',
         'table' => 'query_imported'
     ],
     163 => [
-        'name' => 'deg_fam_cnsmr_sci_4',
+        'name' => 'deg_fam_con_sci_4',
         'type' => 'number',
         'table' => 'query_imported'
     ],
@@ -589,12 +546,12 @@ $columns = [
         'table' => 'query_imported'
     ],
     106 => [
-        'name' => 'deg_nat_resources_2',
+        'name' => 'deg_resources_2',
         'type' => 'number',
         'table' => 'query_imported'
     ],
     108 => [
-        'name' => 'deg_nat_resources_4',
+        'name' => 'deg_resources_4',
         'type' => 'number',
         'table' => 'query_imported'
     ],
