@@ -30,6 +30,19 @@ class School extends Component {
         let pathArray = window.location.pathname.split( '/' );
         this.props.searchOneSchool(pathArray[pathArray.length -1]);
     };
+    //checks to see if the image url has changed or not. If it hasn't, it is set to blank otherwise it is set to
+    //the new image URL.
+    componentWillReceiveProps(nextProps) {
+        if (this.props.schoolImgURL === nextProps.schoolImgURL) {
+            this.setState({
+                imageSrc: ''
+            })
+        } else {
+            this.setState({
+                imageSrc: nextProps.schoolImgURL
+            })
+        }
+    }
     //creates the page for each individual school
     render() {
         let data = this.props.school.single;
@@ -85,8 +98,7 @@ class School extends Component {
             url = url.substring(0, url.length - 1)
         }
         //this returns all of the material for the individual school page
-        if (this.state.imageSrc == this.props.schoolImgURL) {
-            this.state.imageSrc = '';
+        if (this.state.imageSrc == '') {
             return (
                 <div>
                     <div className='imageDiv'>
@@ -132,7 +144,6 @@ class School extends Component {
                 </div>
             );
         } else {
-            this.state.imageSrc = this.props.schoolImgURL;
             return (
                 <div>
                     <div className='imageDiv'>
