@@ -5,9 +5,6 @@ class FetchSchools{
     private $fullQuery;
     function __construct($request){
         $this->data = $request;
-        /**
-         * Dynamic Query is built here.  Base variables are declared which we will concatenate onto.
-         */
         $queryStart =     "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.size, s.adm_rate, s.sat_avg ";
         $queryMiddle =    "FROM `schools` s ";
         $queryEnd = isset($this->data['mapBounds']) && isset($this->data['latLng'])
@@ -23,14 +20,10 @@ class FetchSchools{
                                       ".floatval($this->data['mapBounds']['ne']['lng'])."
                      ) AND "
             : "WHERE     " ;
-
-        /**
-         * We must only JOIN tables to our search when columns from those other tables are actually are used.
-         * We must also not join the same table twice.  Thus, the lookup table $reference with tables to use $tables.
-         *      $tables         array of names of tables to search, non-unique
-         *      $uniqueTables   array of names of unique table names parsed from $tables
-         *      $reference      a lookup table which contains the actual string to concat to the query
-         */
+        $queryEndFormatted = isset($this->data['mapBounds']) && isset($this->data['latLng'])
+            ? "WHERE (`lat` BETWEEN ".floatval($this->data['mapBounds']['sw']['lat'])." AND  ".floatval($this->data['mapBounds']['ne']['lat']).") AND (`lng` BETWEEN ".floatval($this->data['mapBounds']['sw']['lng'])." AND ".floatval($this->data['mapBounds']['ne']['lng']).") AND "
+            : "WHERE " ;
+        $this->filters = [];
         $tables = [];
         $reference = [
             "programs" => "JOIN programs p ON pts.pid=p.pid ",
@@ -38,32 +31,47 @@ class FetchSchools{
         ];
         if (isset($this->data['pickAMajor'])){
             array_push($tables, "pts", 'programs');
+            $this->filters[] = ' Major';
             $queryEnd .=      'p.external="'.addslashes($this->data['pickAMajor']).'" AND ';
+            $queryEndFormatted .=      'p.external="'.addslashes($this->data['pickAMajor']).'" AND ';
         }
         if (isset($this->data['tuitionSlider'])){ //This block never fires on Landing Page since there is no slider
-            /**
-             * We also check for String "false" because axios.post(url,[input]) followed by json_decode(file_get_contents('php://input'), true)
-             *      converts a Boolean FALSE to String "false"
-             * */
+
+            if ($tuition_sanitized = floatval($this->data['tuitionSlider'])) {
+                $this->filters[] = ' Tuition';
+                $queryEnd .= "s.tuition_out<$tuition_sanitized AND ";
+                $queryEndFormatted .= "s.tuition_out<$tuition_sanitized AND ";
+            }
             if ($this->data['public'] === false || $this->data['public'] === "false"){
+                $this->filters[] = ' Public';
                 $queryEnd .=          "s.ownership<>1 AND ";
+                $queryEndFormatted .=          "s.ownership<>1 AND ";
             }
             if ($this->data['private'] === false || $this->data['private'] === "false"){
+                $this->filters[] = ' Private';
                 $queryEnd .=          "s.ownership=1 AND ";
+                $queryEndFormatted .=          "s.ownership=1 AND ";
             }
             if ($this->data['voc'] === false || $this->data['voc'] === "false"){
+                $this->filters[] = ' Vocational';
                 $queryEnd .=      "s.vocational=0 AND ";
+                $queryEndFormatted .=      "s.vocational=0 AND ";
             }
             if ($this->data['aa'] === false || $this->data['aa'] === "false"){
+                $this->filters[] = ' Associates';
                 array_push($tables, "pts", 'programs');
                 $queryEnd .=      "pts.deg_2=0 AND ";
+                $queryEndFormatted .=      "pts.deg_2=0 AND ";
             }
             if ($this->data['bs'] === false || $this->data['bs'] === "false"){
+                $this->filters[] = ' Bachelors';
                 array_push($tables, "pts", 'programs');
                 $queryEnd .=      "pts.deg_4=0 AND ";
+                $queryEndFormatted .=      "pts.deg_4=0 AND ";
             }
         }
         $queryEnd = substr($queryEnd,0,-4)."GROUP BY s.uid";
+        $queryEndFormatted = substr($queryEndFormatted,0,-4)."GROUP BY s.uid";
 
         $uniqueTables = array_keys(array_flip($tables));
         while($tablesToJoin = array_shift($uniqueTables)){
@@ -71,6 +79,7 @@ class FetchSchools{
         }
 
         $this->fullQuery = $queryStart.$queryMiddle.$queryEnd;
+        $this->formattedQuery = $queryStart.$queryMiddle.$queryEndFormatted;
     }
 
     public $output = ['status' => []];
@@ -98,10 +107,15 @@ class FetchSchools{
                 }
                 usort($this->output['schools'], array($this, "cmp"));
                 $this->output['schools'] = array_slice($this->output['schools'],0,100,true);
+                $this->output['debug']['total results'] = count($this->output['schools']);
             } else {
                 $this->output['status'] = "200 - Search returned zero results";
             }
         }
+        $this->output['debug']['request'] = $this->data;
+        $this->output['debug']['filters'] = $this->filters;
+        $this->output['debug']['full query'] = $this->fullQuery;
+        $this->output['debug']['formatted query'] = $this->formattedQuery;
         $dbConn->close();
         return $this->output;
     }
