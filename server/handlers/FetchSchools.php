@@ -42,17 +42,8 @@ class FetchSchools{
         }
         if (isset($this->data['tuitionSlider'])){ //This block never fires on Landing Page since there is no slider
             /**
-             * The reason we check for string FALSE is because somewhere along the way, the booleans are converted to a string.
-             *
-             * Example:
-             *      In Postman, POST request sends an object containing boolean FALSE ->
-             *          PHP receives boolean FALSE, as expected
-             *      In React, Material-UI Form's checkbox sets boolean FALSE ->
-             *          AXIOS sends a POST request with an object containing boolean FALSE ->
-             *              ???
-             *              PHP receives string "false", unexpectedly
-             *
-             * Somewhere, the boolean is re-cast as a string, possibly during the bundling process (npm) or compiling process (babel).
+             * We also check for String "false" because axios.post(url,[input]) followed by json_decode(file_get_contents('php://input'), true)
+             *      converts a Boolean FALSE to String "false"
              * */
             if ($this->data['public'] === false || $this->data['public'] === "false"){
                 $queryEnd .=          "s.ownership<>1 AND ";
