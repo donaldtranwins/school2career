@@ -7,15 +7,21 @@ import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT, SCHOOL_
 // const BASE_URL = 'https://school2career.net/fetch_schools';
 // const ONESCHOOL_URL = 'https://school2career.net/one_school/id/';
 
-// for testing on localhost
-const BASE_URL = 'http://dev.school2career.net/fetch_schools';
-const ONESCHOOL_URL = 'http://dev.school2career.net/one_school/id/';
+// // for testing on localhost
+// const BASE_URL = 'http://dev.school2career.net/fetch_schools';
+// const ONESCHOOL_URL = 'http://dev.school2career.net/one_school/id/';
+
+// for testing on localhost, pointed to staging
+const BASE_URL = 'http://s2c.donaldjtran.com/fetch_schools';
+const ONESCHOOL_URL = 'http://s2c.donaldjtran.com/one_school/id/';
+
+
 
 //calls the database via axios to get all schools available
 export function searchForSchools(value) {
     value.newInfo=true;
     const newVal = JSON.stringify(value);
-    const request = axios.post(`${BASE_URL}`, newVal)
+    const request = axios.post(`${BASE_URL}`, newVal);
     return {
         type: FETCH_SCHOOLS,
         payload: request
