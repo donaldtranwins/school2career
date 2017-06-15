@@ -21,7 +21,26 @@ const ONESCHOOL_URL = 'https://school.donaldjtran.com/one_school/id/';
 
 //calls the database via axios to get all schools available
 export function searchForSchools(value) {
-    value.newInfo=true;
+    console.log(value);
+    value.newInfo = true;
+    if (value.aa !== undefined) {
+        if (value.aa === false) {
+            value.aa = 0;
+        } else {
+            value.aa = 1;
+        }
+        if (value.voc === false) {
+            value.voc = 0;
+        } else {
+            value.voc = 1;
+        }
+        if (value.bs === false) {
+            value.bs = 0;
+        } else {
+            value.bs = 1;
+        }
+    }
+    console.log('value: ', value);
     const newVal = JSON.stringify(value);
     const request = axios.post(`${BASE_URL}`, newVal);
     return {
