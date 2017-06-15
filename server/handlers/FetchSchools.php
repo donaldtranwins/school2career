@@ -40,29 +40,29 @@ class FetchSchools{
             array_push($tables, "pts", 'programs');
             $queryEnd .=      'p.external="'.addslashes($this->data['pickAMajor']).'" AND ';
         }
-        if (isset($this->data['tuitionSlider'])){ //This block never fires on Landing Page since there is no slider
-            /**
-             * We also check for String "false" because axios.post(url,[input]) followed by json_decode(file_get_contents('php://input'), true)
-             *      converts a Boolean FALSE to String "false"
-             * */
-            if ($this->data['public'] === false){
-                $queryEnd .=          "s.ownership<>1 AND ";
-            }
-            if ($this->data['private'] === false){
-                $queryEnd .=          "s.ownership=1 AND ";
-            }
-            if ($this->data['voc'] === false){
-                $queryEnd .=      "s.vocational=0 AND ";
-            }
-            if ($this->data['aa'] === false){
-                array_push($tables, "pts", 'programs');
-                $queryEnd .=      "pts.deg_2=0 AND ";
-            }
-            if ($this->data['bs'] === false){
-                array_push($tables, "pts", 'programs');
-                $queryEnd .=      "pts.deg_4=0 AND ";
+        if (isset($this->data['tuitionSlider'])){
+            if ($tuition_sanitized = floatval($this->data['tuitionSlider'])) {
+                $queryEnd .= "s.tuition_out<$tuition_sanitized AND ";
             }
         }
+        if ($this->data['public'] === false){
+            $queryEnd .=          "s.ownership<>1 AND ";
+        }
+        if ($this->data['private'] === false){
+            $queryEnd .=          "s.ownership=1 AND ";
+        }
+        if ($this->data['voc'] === false){
+            $queryEnd .=      "s.vocational=0 AND ";
+        }
+        if ($this->data['aa'] === false){
+            array_push($tables, "pts", 'programs');
+            $queryEnd .=      "pts.deg_2=0 AND ";
+        }
+        if ($this->data['bs'] === false){
+            array_push($tables, "pts", 'programs');
+            $queryEnd .=      "pts.deg_4=0 AND ";
+        }
+      
         $queryEnd = substr($queryEnd,0,-4)."GROUP BY s.uid";
 
         $uniqueTables = array_keys(array_flip($tables));
