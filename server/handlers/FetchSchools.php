@@ -45,20 +45,20 @@ class FetchSchools{
              * We also check for String "false" because axios.post(url,[input]) followed by json_decode(file_get_contents('php://input'), true)
              *      converts a Boolean FALSE to String "false"
              * */
-            if ($this->data['public'] === false || $this->data['public'] === "false"){
+            if ($this->data['public'] === false){
                 $queryEnd .=          "s.ownership<>1 AND ";
             }
-            if ($this->data['private'] === false || $this->data['private'] === "false"){
+            if ($this->data['private'] === false){
                 $queryEnd .=          "s.ownership=1 AND ";
             }
-            if ($this->data['voc'] === false || $this->data['voc'] === "false"){
+            if ($this->data['voc'] === false){
                 $queryEnd .=      "s.vocational=0 AND ";
             }
-            if ($this->data['aa'] === false || $this->data['aa'] === "false"){
+            if ($this->data['aa'] === false){
                 array_push($tables, "pts", 'programs');
                 $queryEnd .=      "pts.deg_2=0 AND ";
             }
-            if ($this->data['bs'] === false || $this->data['bs'] === "false"){
+            if ($this->data['bs'] === false){
                 array_push($tables, "pts", 'programs');
                 $queryEnd .=      "pts.deg_4=0 AND ";
             }
