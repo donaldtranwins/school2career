@@ -12,10 +12,12 @@ import { FETCH_SCHOOLS, ONE_SCHOOL, SHOW_MAP, CENTER_COORDS, USER_INPUT, SCHOOL_
 // const ONESCHOOL_URL = 'http://dev.school2career.net/one_school/id/';
 
 // for testing on localhost, pointed to staging
-const BASE_URL = 'http://s2c.donaldjtran.com/fetch_schools';
-const ONESCHOOL_URL = 'http://s2c.donaldjtran.com/one_school/id/';
+//const BASE_URL = 'http://s2c.donaldjtran.com/fetch_schools';
+//const ONESCHOOL_URL = 'http://s2c.donaldjtran.com/one_school/id/';
 
-
+// for live site alternative
+const BASE_URL = 'https://school.donaldjtran.com/fetch_schools';
+const ONESCHOOL_URL = 'https://school.donaldjtran.com/one_school/id/';
 
 //calls the database via axios to get all schools available
 export function searchForSchools(value) {
