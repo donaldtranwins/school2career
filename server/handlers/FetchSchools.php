@@ -45,24 +45,23 @@ class FetchSchools{
                 $queryEnd .= "s.tuition_out<$tuition_sanitized AND ";
             }
         }
-        if ($this->data['public'] === false){
+        if ((bool)$this->data['public'] === false){
             $queryEnd .=          "s.ownership<>1 AND ";
         }
-        if ($this->data['private'] === false){
+        if ((bool)$this->data['private'] === false){
             $queryEnd .=          "s.ownership=1 AND ";
         }
-        if ($this->data['voc'] === false){
+        if ((bool)$this->data['voc'] === false){
             $queryEnd .=      "s.vocational=0 AND ";
         }
-        if ($this->data['aa'] === false){
+        if ((bool)$this->data['aa'] === false){
             array_push($tables, "pts", 'programs');
             $queryEnd .=      "pts.deg_2=0 AND ";
         }
-        if ($this->data['bs'] === false){
+        if ((bool)$this->data['bs'] === false){
             array_push($tables, "pts", 'programs');
             $queryEnd .=      "pts.deg_4=0 AND ";
         }
-      
         $queryEnd = substr($queryEnd,0,-4)."GROUP BY s.uid";
 
         $uniqueTables = array_keys(array_flip($tables));
