@@ -14,7 +14,7 @@
 
 set_time_limit(120); //Average run time is ~65 seconds
 
-/** @var    boolean $ignore_header  If true, will run fgetcsv once */
+/** @var    boolean $ignore_header  If true, will run fgetcsv once before the script runs */
 /** @var    string  $filename       Path to csv file to import*/
 $ignore_header = true;
 $filename = 'includes/private/MERGED2014_15_PP.csv';
@@ -22,14 +22,14 @@ $filename = 'includes/private/MERGED2014_15_PP.csv';
 /** Require:  Imports a @var object $conn       Object returned from mysqli_connect
     Include:  Imports a @var array  $columns    Columns to import from the CSV */
 $handle = fopen($filename, "r") or exit("Could not open file ($filename)");
-require("includes/private/connect_to_dev.php");  // $conn
-require("3-import-lookup_table-columns.php");      // $columns
+require("includes/private/connect_to_dev.php");         // $conn
+require("3-data-import-lookup_table-columns.php");      // $columns
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     die();
 }
 
-
+// Skips the first row of the CSV document
 if($ignore_header){
     fgetcsv($handle, "r");
     $ignore_header = false;
