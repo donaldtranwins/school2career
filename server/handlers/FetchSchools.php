@@ -5,6 +5,9 @@ class FetchSchools{
     private $fullQuery;
     function __construct($request){
         $this->data = $request;
+        /**
+         * Dynamic Query is built here.  Base variables are declared which we will concatenate onto.
+         */
         $queryStart =     "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.size, s.adm_rate, s.sat_avg ";
         $queryMiddle =    "FROM `schools` s ";
         $queryEnd = isset($this->data['mapBounds']) && isset($this->data['latLng'])
@@ -21,6 +24,13 @@ class FetchSchools{
                      ) AND "
             : "WHERE     " ;
 
+        /**
+         * We must only JOIN tables to our search when columns from those other tables are actually are used.
+         * We must also not join the same table twice.  Thus, the lookup table $reference with tables to use $tables.
+         *      $tables         array of names of tables to search, non-unique
+         *      $uniqueTables   array of names of unique table names parsed from $tables
+         *      $reference      a lookup table which contains the actual string to concat to the query
+         */
         $tables = [];
         $reference = [
             "programs" => "JOIN programs p ON pts.pid=p.pid ",
@@ -30,27 +40,29 @@ class FetchSchools{
             array_push($tables, "pts", 'programs');
             $queryEnd .=      'p.external="'.addslashes($this->data['pickAMajor']).'" AND ';
         }
-        if (isset($this->data['tuitionSlider'])){ //This block never fires on Landing Page since there is no slider
-            if ($tuition_sanitized = floatval($this->data['tuitionSlider']))
-                $queryEnd .=      "s.tuition_out<$tuition_sanitized AND ";
-
-            if ($this->data['private'] === true && $this->data['public'] === false){
-                $queryEnd .=          "s.ownership<>1 AND ";
-            } else if ($this->data['public'] === true && $this->data['private'] === false){
-                $queryEnd .=          "s.ownership=1 AND ";
-            }
-            if ($this->data['voc'] === false){
-                $queryEnd .=      "s.vocational=0 AND ";
-            }
-            if ($this->data['aa'] === false){
-                array_push($tables, "pts", 'programs');
-                $queryEnd .=      "pts.deg_2=0 AND ";
-            }
-            if ($this->data['bs'] === false){
-                array_push($tables, "pts", 'programs');
-                $queryEnd .=      "pts.deg_4=0 AND ";
+        if (isset($this->data['tuitionSlider'])){
+            if ($tuition_sanitized = floatval($this->data['tuitionSlider'])) {
+                $queryEnd .= "s.tuition_out<$tuition_sanitized AND ";
             }
         }
+        if ((bool)$this->data['public'] === false){
+            $queryEnd .=          "s.ownership<>1 AND ";
+        }
+        if ((bool)$this->data['private'] === false){
+            $queryEnd .=          "s.ownership=1 AND ";
+        }
+        if ((bool)$this->data['voc'] === false){
+            $queryEnd .=      "s.vocational=0 AND ";
+        }
+        if ((bool)$this->data['aa'] === false){
+            array_push($tables, "pts", 'programs');
+            $queryEnd .=      "pts.deg_2=0 AND ";
+        }
+        if ((bool)$this->data['bs'] === false){
+            array_push($tables, "pts", 'programs');
+            $queryEnd .=      "pts.deg_4=0 AND ";
+        }
+      
         $queryEnd = substr($queryEnd,0,-4)."GROUP BY s.uid";
 
         $uniqueTables = array_keys(array_flip($tables));
