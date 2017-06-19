@@ -45,20 +45,20 @@ class FetchSchools{
                 $queryEnd .= "s.tuition_out<$tuition_sanitized AND ";
             }
         }
-        if ((bool)$this->data['public'] === false){
+        if ($this->data['public'] === false){
             $queryEnd .=          "s.ownership<>1 AND ";
         }
-        if ((bool)$this->data['private'] === false){
+        if ($this->data['private'] === false){
             $queryEnd .=          "s.ownership=1 AND ";
         }
-        if ((bool)$this->data['voc'] === false){
+        if ($this->data['voc'] === false){
             $queryEnd .=      "s.vocational=0 AND ";
         }
-        if ((bool)$this->data['aa'] === false){
+        if ($this->data['aa'] === false){
             array_push($tables, "pts", 'programs');
             $queryEnd .=      "pts.deg_2=0 AND ";
         }
-        if ((bool)$this->data['bs'] === false){
+        if ($this->data['bs'] === false){
             array_push($tables, "pts", 'programs');
             $queryEnd .=      "pts.deg_4=0 AND ";
         }
