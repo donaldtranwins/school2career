@@ -3,6 +3,11 @@ require_once '../server/handlers/header.php';
 header::declare();
 $ch = curl_init();
 
+/**
+ * The front-end functionality for this feature has not yet been implemented.
+ *  This handler calls the Traitify API with the payload of the users responses from the assessment.
+ *  The response payload from the API is taken and delivered to the front-end.
+ */
 curl_setopt($ch, CURLOPT_URL, "https://api-sandbox.traitify.com/v1/assessments");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"deck_id\": \"career-deck\"}");

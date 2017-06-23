@@ -4,6 +4,7 @@
 
         public function processRequest(){
             $checkResult = RequestError::validateClientRequest('OneSchool');
+            // if the sanitized input for the OneSchool call returns a non-integer, we use a default school to return
             $_GET['schid'] = $checkResult === 0 ? 217014 : $checkResult;
             require_once 'connectDb.php';
 
@@ -15,6 +16,17 @@
                             JOIN programs p ON ps.pid=p.pid
                             WHERE uid=? ";
 
+            /**
+             *  Create a prepared statement to query our database.
+             *  This API call only searches for 1 school, and returns a specific set of data.
+             *      These are both great conditions for using a prepared statement.
+             * @var $conn   object      database connection
+             * @var $query  string      base query string to use
+             * @var $param  int         id of school to search for
+             *
+             * @return  mixed       on success, an associative array of values returned from the query
+             *                      on fail, a string containing the error message
+             */
             function doPreparedQuery($conn, $query, $param){
                 if ( !($stmt = $conn->prepare($query)) ){
                     return "422 Unprocessible Entity - Statement failed to prepare: ".$conn->error;
