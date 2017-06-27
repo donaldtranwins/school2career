@@ -3,11 +3,11 @@
 class FetchSchools{
     public $data;
     private $fullQuery;
+
     function __construct($request){
         $this->data = $request;
         /**
          * Dynamic Query is built here.  Base variables are declared which we will concatenate onto.
-         * Every we sanitize all variables before querying our database.
          */
         $queryStart =     "SELECT s.uid, s.name, s.city, s.state, s.lat, s.lng, s.url, s.size, s.adm_rate, s.sat_avg ";
         $queryMiddle =    "FROM `schools` s ";
@@ -25,15 +25,12 @@ class FetchSchools{
                      ) AND "
             : "WHERE     " ;
 
-        /** We have a whitelist of column names to accept and search for by explicitly checking for the specific fields,
-         * as opposed to looping through everything received from the $_GET.
-         *
-         * Some of these column names exist in separate tables, thus we must only JOIN tables to our search
-         * when columns from those other tables are actually are used.
-         *
-         * We must also not join the same table twice.  Thus, we have a lookup table $reference with tables to use $tables.
-         *  @var    $tables         array which will contain names of tables to be joined to the query.  not unique values
-         *  @var    $reference      array (associative) serving as a lookup table containing the actual string to concat to the query
+        /**
+         * We must only JOIN tables to our search when columns from those other tables are actually are used.
+         * We must also not join the same table twice.  Thus, the lookup table $reference with tables to use $tables.
+         *      $tables         array of names of tables to search, non-unique
+         *      $uniqueTables   array of names of unique table names parsed from $tables
+         *      $reference      a lookup table which contains the actual string to concat to the query
          */
         $tables = [];
         $reference = [
@@ -49,30 +46,26 @@ class FetchSchools{
                 $queryEnd .= "s.tuition_out<$tuition_sanitized AND ";
             }
         }
-        if ((bool)$this->data['public'] === false){
+        if ($this->data['public'] === false){
             $queryEnd .=          "s.ownership<>1 AND ";
         }
-        if ((bool)$this->data['private'] === false){
+        if ($this->data['private'] === false){
             $queryEnd .=          "s.ownership=1 AND ";
         }
-        if ((bool)$this->data['voc'] === false){
+        if ($this->data['voc'] === false){
             $queryEnd .=      "s.vocational=0 AND ";
         }
-        if ((bool)$this->data['aa'] === false){
+        if ($this->data['aa'] === false){
             array_push($tables, "pts", 'programs');
             $queryEnd .=      "pts.deg_2=0 AND ";
         }
-        if ((bool)$this->data['bs'] === false){
+        if ($this->data['bs'] === false){
             array_push($tables, "pts", 'programs');
             $queryEnd .=      "pts.deg_4=0 AND ";
         }
-      
+
         $queryEnd = substr($queryEnd,0,-4)."GROUP BY s.uid";
 
-        /** @var  $uniqueTables     array of unique table names parsed from the values of $tables
-         * @var   $tablesToJoin     string representing the keys to pair with values from $reference table.
-         *                              the values are JOIN clauses which we concatenate to our query.
-         */
         $uniqueTables = array_keys(array_flip($tables));
         while($tablesToJoin = array_shift($uniqueTables)){
             $queryMiddle .= $reference[$tablesToJoin];
@@ -104,7 +97,6 @@ class FetchSchools{
                         floatval($school['lat']),
                         floatval($school['lng']));
                 }
-                // sorts the schools from shortest distance to largest distance, then only keeps 100 schools
                 usort($this->output['schools'], array($this, "cmp"));
                 $this->output['schools'] = array_slice($this->output['schools'],0,100,true);
             } else {
@@ -115,10 +107,7 @@ class FetchSchools{
         return $this->output;
     }
 
-    /**
-     * @return  int     the distance between the school and the map center, accounting for curvature of the earth
-     * */
-    public function getDistance($centerLatitude, $centerLongitude, $schoolLatitude, $schoolLongitude) {
+    protected function getDistance($centerLatitude, $centerLongitude, $schoolLatitude, $schoolLongitude) {
         $earth_radius = 6371;
         $dLat = deg2rad($schoolLatitude - $centerLatitude);
         $dLon = deg2rad($schoolLongitude - $centerLongitude);
@@ -127,10 +116,7 @@ class FetchSchools{
         return $earth_radius * $c;
     }
 
-    /**
-     * @return  int     helper function used in our usort() that sorts the array of schools in ascending order
-     * */
-    public function cmp($a, $b){
+    private function cmp($a, $b){
         return $a['distance'] < $b['distance'] ? -1 : 1;
     }
 }
